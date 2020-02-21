@@ -8,7 +8,7 @@ class VGMap
 {
 //Attributes
 private:
-	vector<Building>* board;
+	vector <Building>* board (5) ;
 	int* points;
 	vector<Building>* adjBuilding;
 public:
@@ -45,14 +45,14 @@ public:
 		void flipping();
 	};
 	//Constructors
-	VGMap(vector<Building> board, int points, vector<Building> adjBuilding);
-	VGMap(vector<Building*>* board, int& points, vector<Building*>* adjBuilding);
+	VGMap (int points, vector<Building> adjBuilding);
+	VGMap(int& points, vector<Building*>* adjBuilding);
 	//Getters
 	inline vector<Building*>* getAdjBuilding{ return *adjBuilding; }
-	inline vector<Building> board{ return *adjBuilding; }
+	inline vector<Building> getBoard{ return *board; }
 	inline int getPoints{ return *points; }
 	//Setters
-	inline void setBoard(vector <Building> board)
+	inline void setBoard(vector < vector<Building> > board)
 	{
 		this.board(board.begin(), board.end());
 	}
@@ -65,7 +65,6 @@ public:
 		this.adjBuilding(adjBuilding.begin(),)
 	}
 	//Methods
-	void addBuilding(Building newBuilding);
 	void addEdge(int from, int to); //?
 	int countPoints(vector<Building> vect);
 	bool checkConnected(); //?

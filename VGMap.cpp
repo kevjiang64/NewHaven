@@ -34,23 +34,16 @@ Building :: void flipping()
 	}
 };
 //VGMap Constructor (pass by value)
-VGMap::VGMap(vector<Building> board, int points, vector<Building> adjBuilding)
+VGMap::VGMap(int points, vector<Building> adjBuilding)
 {
-	this.board(board.begin(), board.end());
 	*points = points;
 	this.adjBuild(adjBuild.begin().adjBuild.end());
 };
 //VGMap Constructor (pass by reference)
 VGMap::VGMap(vector<Building>* board, int* points, vector<Building>* adjBuilding)
 {
-	this.board(board.begin(), board.end());
 	*points = points;
 	this.adjBuild(adjBuild.begin().adjBuild.end());
-};
-//Add Building to VGMap
-VGMap :: void addBuilding(Building building)
-{
-	board.push_back(building);
 };
 //Add Edge from a building to another
 VGMap :: void addEdge(int from, int to)
