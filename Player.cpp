@@ -26,7 +26,7 @@ public:
 		this.*harvestVect = harvestVect;
 		this.*buildingVect = buildingVect;
 	}
-	//Method to calculate the amount of resources
+	//Method to calculate the amount of resources???
 	Resources CalculateResources(Building placed)
 	{
 
@@ -49,17 +49,24 @@ public:
 		cout << "The place is currently occupied by a building. Please Pick again";
 		return 1;
 	}
-	//Generating a random village/building
+	//Generating a random village/building???
 	Building randomBuilding()
 	{
-		Building random = new Bulding
+		//Random number range for resources and ID
+		int numResources = rand() % (7 - 1) + 1;
+		int numID = rand() % (121 - 1) + 1;
+		//Random string generator for type of resource
+		string resourcesTypes[] = "wood" "weat" "sheep" "stone";
+		string randType = resourcesTypes[rand() % sizeof(resourcesTypes) - 1];
+		Building random = Building(numberResources, true, numID, randType);
+		return random;
 	}
 	//Adding a random Building to the vector
 	Building DrawBuilding()
 	{
 		buildingVect->push_back(randomBuilding());
 	};
-	//Generating a random village/building
+	//Generating a random village/building???
 	Building randomTile()
 	{
 
