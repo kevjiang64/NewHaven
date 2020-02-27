@@ -5,7 +5,7 @@
 #include <iostream>
 using namespace std;
 
-//Building Constructor (pass by value)
+/*//Building Constructor (pass by value)
 Building::Building(int numOfResources, bool flipped, int buildingID, string resourceType)
 {
 	*numOfResources = numOfResources;
@@ -32,30 +32,53 @@ Building :: void flipping()
 	{
 		*filled = true;
 	}
-};
+};*/
 //VGMap Constructor (pass by value)
-VGMap::VGMap(int points, vector<Building> adjBuilding)
+VGMap::VGMap()
 {
-	*points = points;
-	this.adjBuild(adjBuild.begin().adjBuild.end());
+	//Create 2D vector of 30 Nodes
+	//(0,0) is at the top left	
+	*board = board{ 6, vector<Node> {5} };
+	
+	//Fill the board up.
+	//Clockwise => 0 : left , 1 : up, 2 : right, 3 : down
+	fillAdjNodes(*board);
 };
-//VGMap Constructor (pass by reference)
-VGMap::VGMap(vector<Building>* board, int* points, vector<Building>* adjBuilding)
-{
-	*points = points;
-	this.adjBuild(adjBuild.begin().adjBuild.end());
-};
-//Add Edge from a building to another
-VGMap :: void addEdge(int from, int to)
-{
-	(*board)[from - 1]->getAdjBuilding()->push_back((*board)[to - 1]);
-	(*board)[to - 1]->getAdjBuilding()->push_back((*board)[from - 1]);
-};
-//Check if the board is connected ??????
-VGMap :: bool checkConnected()
-{
+//Fill the board
+VGMap::vector<Node> fillAdjNodes(vector < vector <Node> > board) {
 
-}
+	//Creating the iterators for 2D vector
+	std::vector< std::vector<int> >::const_iterator row;
+	std::vector<int>::const_iterator col;
+
+	//Connecting establishing every node's vector of adjacent nodes
+	for (row = board.begin(); row != board.end(); ++row)
+	{
+		for (col = row->begin(); col != row->end(); ++col)
+		{
+			//For left adjNode
+			if (col - 1 >= 0)
+				adjBuilding[0]->board[row][col - 1];
+			else
+				adjBuidling[0]->NULL;
+			//For up adjNode
+			if (row - 1 >= 0)
+				adjBuilding[1]->board[row - 1][col];
+			else
+				adjBuilding[1]->NULL;
+			//For right adjNode
+			if (col + 1 < 4)
+				adjBuilding[1]->board[row][col + 1];
+			else
+				adjBuilding[1]->NULL;
+			//For down adjNode
+			if (row + 1 < 5)
+				adjBuilding[2]->board[row - 1][col];
+			else
+				adjBuilding[2]->NULL;
+		}
+	}
+};
 //Count the amount of points
 VGMap :: int countPoints(vector<Building> vect)
 {
@@ -63,14 +86,18 @@ VGMap :: int countPoints(vector<Building> vect)
 	for (std::vector<int>::iterator it = vect.begin(); it != vect.end(); ++it)
 	{
 		Building test = *it;
-		if (*(test.getFlipped()) == true);
+		
 	}
 }
 //Check if it's the first building of the inputed resource
-VGMap :: bool checkFirst(Building newBuilding, vector<Building> vect)
+VGMap :: bool checkFirst()
 {
+	//Creating the iterators for 2D vector
+	std::vector< std::vector<int> >::const_iterator row;
+	std::vector<int>::const_iterator col;
 	for (std::vector<int>::iterator it = vect.begin(); it != vect.end(); ++it)
 	{
+
 		Building test = *it;
 		if (*(test.getResourceType()).compare(*(newBuilding.getResourceType())) == 0) 
 		{
