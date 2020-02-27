@@ -2,47 +2,47 @@
 #include <vector>
 #include <set>
 #include <iostream>
+#include "Resources.h"
 using namespace std;
+
+#ifndef VGMap_h
+#define VGMap_h
 
 class VGMap
 {
+	class Node;
 //Attributes
 private:
-	vector <Node>* board;
+	vector<vector<Node>>* board;
 	int* points;
 public:
 	//Inner class
 	class Node
 	{
 	private:
-		Building* resource;
+		Building* building;
 		vector<Node>* adjNode;
 	public:
 		//Constructors
 		Node();
 		//Getters
-		inline Building getResource{ return *resource; };
-		inline vector<Node> getAdjNode{ return *adjNode; };
+		inline Building* getBuilding(){ return building; };
+		inline vector<Node> getAdjNode(){ return *adjNode; };
+		//Setters
+		inline void setBuilding(Building building2) { *building = building2; };
 		//Methods
 		vector<VGMap::Node> fillAdjNodes(vector <vector<VGMap::Node>> board);
 	};
 	//Constructors
-	VGMap (int points);
+	VGMap ();
 	//Getters
-	inline vector<Node> getBoard{ return *board; };
-	inline int getPoints{ return *points; };
-	//Setters
-	inline void setBoard(vector <Node> board)
-	{
-		this.board(board.begin(), board.end());
-	}
-	inline void setPoints(int points)
-	{
-		this.points = points;
-	}
+	inline vector<vector<Node>> getBoard(){ return *board; };
+	inline int getPoints(){ return *points; };
 	//Methods
-	int countPoints(vector<Building> vect);
-	bool checkFirst(Building newBuilding, vector<Building> vect);
+	int countPoints();
+	bool checkFirst(int resource);
+	bool canBuild(Building building, int row, int col);
+	void build(Building building, int row, int col);
 };
 
 #endif 

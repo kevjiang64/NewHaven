@@ -1,4 +1,5 @@
 #include "VGMap.h"
+#include "Resources.h"
 #include <string>
 #include <vector>
 #include <set>
@@ -10,7 +11,11 @@ VGMap::VGMap()
 {
 	//Create 2D vector of 30 Nodes
 	//(0,0) is at the top left	
-	*board = board{ 6, vector<Node> {5} };
+	//*board = board{ 6, vector<Node> {5} };
+	for (int i = 0; i < 6; i++) {
+		vector<Node> row;
+		(*board)[i] = row;
+	}
 	*points = 0;
 };
 
@@ -69,7 +74,7 @@ vector<VGMap::Node> VGMap::Node::fillAdjNodes(vector <vector<VGMap::Node>> board
 	return *adjNode;
 }
 //Count the amount of points
-int VGMap::countPoints(vector<Node> vect)
+int VGMap::countPoints()
 {
 	//Attributes
 	int totalPoints = 0;
@@ -83,9 +88,9 @@ int VGMap::countPoints(vector<Node> vect)
 		for (int col = 0; col < 5; ++col)
 		{
 			//Check if every node of the same row has a building
-			if (board[row][col].getBuilding != NULL)
+			if ((*board)[row][col].getBuilding() != NULL)
 			{
-				if (board[row][col].getBuilding.getFlipped() == true)
+				if ((*(*board)[row][col].getBuilding()).getFlipped() == true)
 				{
 					flipped = true;
 				}
@@ -99,7 +104,10 @@ int VGMap::countPoints(vector<Node> vect)
 		//Adding only if the rows are filled + counting doubles if flipped
 		if (filled)
 		{
-			if (row == 0 || flipped = false)
+			if (!flipped) totalPoints += 2 * 6-row;
+			else totalPoints += 6-row;
+
+			/*if (row == 0 || flipped = false)
 				totalPoints += 6 * 2;
 			else {
 				totalPoints += 6;
@@ -131,18 +139,18 @@ int VGMap::countPoints(vector<Node> vect)
 			}
 			else {
 				totalPoints += 1;
-			}
+			}*/
 		}
 	}
 	//Count points for each row (Vertically)
-	for (col = 0; col < 5; ++col)
+	for (int col = 0; col < 5; ++col)
 	{
-		for (row = 0; row < 6; ++row)
+		for (int row = 0; row < 6; ++row)
 		{
 			//Check if every node of the same row has a building
-			if (board[row][col].getBuilding != NULL)
+			if ((*board)[row][col].getBuilding() != NULL)
 			{
-				if (board[row][col].getBuilding.getFlipped() == true)
+				if ((*(*board)[row][col].getBuilding()).getFlipped() == true)
 				{ 
 					flipped = true;
 				}
@@ -156,7 +164,10 @@ int VGMap::countPoints(vector<Node> vect)
 		//Adding only if the rows are filled + counting doubles if flipped
 		if (filled)
 		{
-			if (col == 0 || flipped = false) {
+			if (flipped) totalPoints += 2 * (3 + abs(3 - col));
+			else totalPoints += 3 + abs(3 - col);
+
+			/*if (col == 0 || flipped = false) {
 				totalPoints += 5 * 2;
 			}
 			else {
@@ -185,25 +196,62 @@ int VGMap::countPoints(vector<Node> vect)
 			}
 			else {
 				totalPoints += 5;
-			}
+			}*/
 		}
 	}
 	return totalPoints;
 }
 //Check if it's the first building of the inputed resource
-VGMap :: bool checkFirst()
+bool VGMap:: checkFirst(int resource)
 {
 	//Creating the iterators for 2D vector
-	std::vector< std::vector<int> >::const_iterator row;
-	std::vector<int>::const_iterator col;
-	for (std::vector<int>::iterator it = vect.begin(); it != vect.end(); ++it)
-	{
-
-		Building test = *it;
-		if (*(test.getResourceType()).compare(*(newBuilding.getResourceType())) == 0) 
-		{
-			return false;
+	int row;
+	int col;
+	for ( row =0; row < 6; row ++) {
+		for (col = 0; col < 5; col++) {
+			if (*(*(*board)[row][col].getBuilding()).getLabel() == resource) {
+				return false;
+			}
 		}
+		
 	}
 	return true;
 };
+
+bool VGMap::canBuild(Building building, int row, int col) {
+	bool canBuildNum = true;
+	bool canBuildAdj = true;
+
+	
+	//find out how to look for the number...
+	VGMap::Node node = (*board)[row][col];
+	if (node.getBuilding() != nullptr) {
+		return false;
+	}
+	else {
+		if (*(building.getNumber()) != 6 - row) {
+			return false;
+		}
+		else {
+			if (checkFirst(*(building.getLabel()))) {
+				return true;
+			}
+			else {
+				for (int i = 0; i < (node.getAdjNode()).size(); i++) {
+					if (building.getLabel() == node.getAdjNode()[i].getBuilding()->getLabel())
+						return true;
+				}
+			}
+	
+		}
+	}
+	return false;
+}
+
+void VGMap::build(Building building, int row, int col) {
+	if (canBuild(building, row, col)) {
+		(*board)[row][col].setBuilding(building);
+	}
+}
+
+
