@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <cstdlib>
 #include <ctime>
+#include <random>
 
 using namespace std;
 
@@ -14,8 +15,11 @@ HarvestTile::HarvestTile() {
     resources = new int[4];
 
     while (index < 4) {
+        mt19937 rng;
+        rng.seed(random_device()());
+        uniform_int_distribution<mt19937::result_type> dist;
         
-        int output = rand() % 4;
+        int output = dist(rng) % 4;
 
 //        cout << output << endl;
         
@@ -89,10 +93,14 @@ Building::Building() {
     label = (int*)malloc(15*sizeof(int));
 //    color = (int*)malloc(15*sizeof(int));
     number = (int*)malloc(15*sizeof(int));
-    srand(static_cast<unsigned int>(time(nullptr)));
+    
+    mt19937 rng;
+    rng.seed(random_device()());
+    uniform_int_distribution<mt19937::result_type> dist;
+    
     while(!stop) {
-        int output = rand() % 4;
-        int numberOutput = rand() % 6 + 1;
+        int output = dist(rng) % 4;
+        int numberOutput = dist(rng) % 6 + 1;
         
         for(int i=0; i<4;i++) {
             for(int j=0; j<6; j++) {
@@ -153,7 +161,6 @@ Building* DeckBuilding::draw(int num) {
 
 
 int main() {
-    DeckBuilding b;
-    b.draw(5);
-	return 0;
+    DeckBuilding myDeck;
+    return 0;
 }
