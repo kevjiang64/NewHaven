@@ -5,47 +5,18 @@
 #include <iostream>
 using namespace std;
 
-/*//Building Constructor (pass by value)
-Building::Building(int numOfResources, bool flipped, int buildingID, string resourceType)
-{
-	*numOfResources = numOfResources;
-	*flipped = flipped;
-	*buildingID = building;
-	*resourceType = resourceType;
-};
-//Building Constructor (pass by reference)
-Building::Building(int& numOfResources, bool& flipped, int& buildingID, string& resourceType)
-{
-	*numOfResources = numOfResources;
-	*flipped = flipped;
-	*buildingID = building;
-	*resourceType = resourceType;
-};
-//Flipping method
-Building :: void flipping()
-{
-	if (*flipped == true)
-	{
-		*flipped = false;
-	}
-	else
-	{
-		*filled = true;
-	}
-};*/
 //VGMap Constructor (pass by value)
-VGMap::VGMap()
+VGMap::VGMap(int points)
 {
 	//Create 2D vector of 30 Nodes
 	//(0,0) is at the top left	
 	*board = board{ 6, vector<Node> {5} };
-	
-	//Fill the board up.
-	//Clockwise => 0 : left , 1 : up, 2 : right, 3 : down
-	fillAdjNodes(*board);
+	*points = 0;
 };
+
 //Fill the board
-VGMap::vector<Node> fillAdjNodes(vector < vector <Node> > board) {
+//Clockwise => 0 : left , 1 : up, 2 : right, 3 : down
+Node::vector<Node> fillAdjNodes(vector <Node> board) {
 
 	//Creating the iterators for 2D vector
 	std::vector< std::vector<int> >::const_iterator row;
@@ -78,16 +49,129 @@ VGMap::vector<Node> fillAdjNodes(vector < vector <Node> > board) {
 				adjBuilding[2]->NULL;
 		}
 	}
-};
+	return adjBuilding;
+}
 //Count the amount of points
-VGMap :: int countPoints(vector<Building> vect)
+VGMap :: int countPoints(vector<Node> vect)
 {
+	//Attributes
 	int totalPoints = 0;
-	for (std::vector<int>::iterator it = vect.begin(); it != vect.end(); ++it)
+	int addedPoints = 0;
+	bool flipped = false, filled = true;
+
+	//Count points for each row (HORIZONTALLY)
+	for (row = 0; row < 6; ++row)
 	{
-		Building test = *it;
-		
+		totalPoints += addedPoints;
+		for (col = 0; col < 5; ++col)
+		{
+			//Check if every node of the same row has a building
+			if (board[row][col].getBuilding != NULL)
+			{
+				if (board[row][col].getBuilding.getFlipped() == true)
+				{
+					flipped = true;
+				}
+			}
+			else
+			{
+				filled = false;
+				break;
+			}
+		}
+		//Adding only if the rows are filled + counting doubles if flipped
+		if (filled)
+		{
+			if (row == 0 || flipped = false)
+				totalPoints += 6 * 2;
+			else {
+				totalPoints += 6;
+			}
+			if (row == 1 || flipped = false)
+				totalPoints += 5 * 2;
+			else {
+				totalPoints += 5;
+			}
+			if (row == 0 || flipped = false)
+				totalPoints += 4 * 2;
+			else {
+				totalPoints += 4;
+			}
+			if (row == 0 || flipped = false)
+				totalPoints += 3 * 2;
+			else {
+				totalPoints += 3;
+			}
+			if (row == 0 || flipped = false)
+			{
+				totalPoints += 2 * 2;
+			}
+			else {
+				totalPoints += 2;
+			}
+			if (row == 0 || flipped = false) {
+				totalPoints += 1 * 2;
+			}
+			else {
+				totalPoints += 1;
+			}
+		}
 	}
+	//Count points for each row (Vertically)
+	for (col = 0; col < 5; ++col)
+	{
+		for (row = 0; row < 6; ++row)
+		{
+			//Check if every node of the same row has a building
+			if (board[row][col].getBuilding != NULL)
+			{
+				if (board[row][col].getBuilding.getFlipped() == true)
+				{ 
+					flipped = true;
+				}
+			}
+			else
+			{
+				filled = false;
+				break;
+			}
+		}
+		//Adding only if the rows are filled + counting doubles if flipped
+		if (filled)
+		{
+			if (col == 0 || flipped = false) {
+				totalPoints += 5 * 2;
+			}
+			else {
+				totalPoints += 5;
+			}
+			if (col == 1 || flipped = false) {
+			totalPoints += 4 * 2;
+			}
+			else {
+				totalPoints += 4;
+			}
+			if (col == 2 || flipped = false){
+				totalPoints += 3 * 2;
+			}
+			else {
+				totalPoints += 3;
+			}
+			if (col == 3 || flipped = false) {
+				totalPoints += 4 * 2;
+			}
+			else {
+				totalPoints += 4;
+			}
+			if (col == 4 || flipped = false) {
+				totalPoints += 5 * 2;
+			}
+			else {
+				totalPoints += 5;
+			}
+		}
+	}
+	return totalPoints;
 }
 //Check if it's the first building of the inputed resource
 VGMap :: bool checkFirst()
