@@ -1,88 +1,174 @@
-#include <VGMap.h>
+//
+//  Player.cpp
+//  Player
+//
+//  Created by Adèle Bédard on 2020-02-16.
+//  Copyright © 2020 Adèle Bédard. All rights reserved.
+//
+
+#include "Player.h"
 #include <vector>
-#include <VGMap.cpp>
-#include <Player.h>
-#include <string>
-#include <set>
+#include "VGMap.h"
 #include <iostream>
+
 using namespace std;
 
-class Player
-{
-	//Constructor passed by value
-public:
-	Player(Resources amount,VGMap playerMap, vector <Tile> harvestVect, vector <Building> buildingVect)
-	{
-		this.*amountOfResource = amount;
-		this.*playerMap = playerMap;
-		this.*resourceVect = harvestVect;
-		this.*buildingVect = buildingVect;
-	}
-	//Constructor passed by reference
-	Player(Resources& amount, VGMap& playerMap, vector <Tile*>* harvestVect, vector <Building*>* buildingVect)
-	{
-		this.*amountOfResources = amount;
-		this.*playerMap = playerMap;
-		this.*harvestVect = harvestVect;
-		this.*buildingVect = buildingVect;
-	}
-	//Method to calculate the amount of resources???
-	Resources CalculateResources(Building placed)
-	{
+Player::Player() {
+	vb = new VGMap();
 
-	};
-	//Method to place tiles in game board 
-	void PlaceHarvestTile(int row, int column, ) //Board parameter
-	{
+	for (int i = 0; i < 6; i++) {
+		(*buildings).push_back(new Building());
+	}
 
-	};
-	//Method to place building in player board
-	bool BuildVillage(VGMap playerMap, int row, int column, Building playerBuilding)
-	{
-		//Build Village only if the space is available
-		if(*(playerMap.getBoard())[row][column] == NULL)
-		{ 
-			*(playerMap.getBoard())[row][column]->push_back(playerBuilding);
-			return 0;
+	(*tiles)[0] = new HarvestTile();
+	(*tiles)[1] = new HarvestTile();
+
+	for (int i = 0; i < 4; i++) {
+		(*resourceMarkers).push_back(0);
+	}
+}
+
+//Copy constructors of VillageBoard, Building and HarvestTile have to be defined
+Player::Player(Player player) {
+	*vb = new VillageBoard(player.(*vb));
+
+	for (int i = 0; i < 6; i++) {
+		(*buildings).insert(buildings.begin() + i, new Building(player.(*buildings).at(i)));
+	}
+
+	(*tiles)[0] = new HarvestTile(player.(*tiles)[0]);
+	(*tiles)[1] = new HarvestTile(player.(*tiles)[1]);
+
+	for (int i = 0; i < 4; i++) {
+		(*resourceMarkers).push_back(player.(*resourceMarkers).at(i));
+	}
+}
+
+Player::~Player() {
+	delete[] vb;
+	delete[] tiles;
+	delete[] buildings;
+	delete[] resourceMarkers;
+
+	vb = NULL;
+	tiles = NULL;
+	buildings = NULL;
+	resourceMarkers = NULL;
+}
+
+bool Player::placeHarvestTile(int noTile, Position pos, GameBoard board) {
+	if (noTile == 0) {
+		board.placeHarvestTile((*tiles).at(0), pos);
+		drawHarvestTile(0);
+		return true;
+	}
+	else if (noTile == 1) {
+		board.placeHarvestTile((*tiles).at(1), pos);
+		drawHarvestTile(1);
+		return true;
+	}
+	else {
+		cout << "Error with the tile number";
+		return false;
+	}
+}
+
+void Player::drawBuilding(DeckBuilding deckBuilding) {
+	Building buildingDrawn = deckBuilding.draw();
+	*buildings.push_back(buildingDrawn);
+}
+
+void Player::drawHarvestTile(int no) {
+	//create a harvest tile and put it in the empty spot
+	//should I use the deck instead??
+	if (no == 0) {
+		(*tiles)[0] = new HarvestTile();
+	} 
+	else if (no == 1) {
+		(*tiles)[1] = new HarvestTile();
+	} 
+	else {
+		cout << "Error with the tile number";
+	}
+}
+
+void Player::calculateResources(Map board, Map::Node* nodesJustPlaced) {
+	std::vector<int> resources = calculResourceMarkers(board, nodesJustPlaced);
+	for (int i=0; i<4; i++) {
+		(*resourceMarkers)[i] = resources.at(i);
+	}
+	cout << "Resources placed";
+}
+
+
+//ONE OR THE OTHER
+
+//returns the pointer of resourceMarkers
+std::vector<int>* Player::resourceTracker() {
+	return resourceMarkers;
+}
+
+//returns the actual object
+ std::vector<int> Player::resourceTracker() {
+	return *resourceMarkers;
+}
+
+//outputs status of the resource markers
+ void Player::resourceTracker() {
+	cout << "Resources:\nName of resource 1:" << (*resourceMarkers).at(0) << "\nName of resource 2:" << (*resourceMarkers).at(1) << "\nName of resource 3:" << (*resourceMarkers).at(2) << "\nName of resource 4:" << (*resourceMarkers).at(3);
+}
+
+
+
+//Methods build and canBuild have to be implemented.
+ bool buildVillage(int buildingIndex, VGMap::Node position) {
+	Building building = (*buildings).at(buildingIndex);
+	if ((*vb).canBuild(building, position) { //or canBuild(*vb, building, position) {
+		*vb.build(building, position);
+		return true;
+	}
+	else {
+		cout << "Cannot build at this position, chose another one";
+		return false;
+	}
+	*buildings.remove(*buildings.begin() + buildingIndex);
+}
+
+//maybe implement canBuild here
+ //can also be done in the map itself, easier.
+
+ bool canBuild(VGMap board, Building building, VGMap::Node pos) {
+	bool canBuildNum = true;
+	bool canBuildAdj = true;
+
+	if (!building.isFlipped()) {
+		//find out how to look for the number...
+	}
+
+	if (board.resourceAlreadyThere(building.resource)) {
+		std::vector<VGMap::Node> adjacents = pos.getAdjacents();
+		bool nodeFound = false;
+		int in = 0;
+		while (!nodeFound && in<4){
+			if (adjacents.at(in).resource == building.resource) {
+				nodeFound = true;
+			} else {
+				in++;
+			}
 		}
-		//Otherwise...
-		cout << "The place is currently occupied by a building. Please Pick again";
-		return 1;
-	}
-	//Generating a random village/building???
-	Building randomBuilding()
-	{
-		//Random number range for resources and ID
-		int numResources = rand() % (7 - 1) + 1;
-		int numID = rand() % (121 - 1) + 1;
-		//Random string generator for type of resource
-		string resourcesTypes[] = "wood" "weat" "sheep" "stone";
-		string randType = resourcesTypes[rand() % sizeof(resourcesTypes) - 1];
-		Building random = Building(numberResources, true, numID, randType);
-		return random;
-	}
-	//Adding a random Building to the vector
-	Building DrawBuilding()
-	{
-		buildingVect->push_back(randomBuilding());
-	};
-	//Generating a random village/building???
-	Building randomTile()
-	{
+		if (nodeFound) {
+			canBuildAdj = true;
+		} else {
+			canBuildAdj = false;
+		}
+	} 
 
-	};
-	//Adding a random Harvest Tile to the vector
-	Tile DrawHarvestTile()
-	{
-		harvestVect->push_back(randomTile());
-	};
-	//Tracker for the amount of resources in one turn
-	void ResourceTracker(Resources playerResources)
-	{
-		cout << "The amount of stones left is " playerResources.getStone();
-		cout << "The amount of weats left is " playerResources.getWeat();
-		cout << "The amount of sheeps left is " playerResources.getSheep();
-		cout << "The amount of wood left is " playerResources.getWood();
-	};
+	if (canBuildNum && canBuildAdj) {
+		return true;
+	} else {
+		return false;
+	}
 
-};
+
+	//For VGMap: add property resource already there.
+}

@@ -8,51 +8,31 @@ class VGMap
 {
 //Attributes
 private:
-	vector <Building>* board (5) ;
+	vector <Node>* board;
 	int* points;
-	vector<Building>* adjBuilding;
 public:
-	class Building
+	//Inner class
+	class Node
 	{
 	private:
-		int* buildingID;
-		int* numOfResources;
-		bool* flipped;
-		string* resourceType;
+		Building* resource;
+		vector<Node>* adjNode;
 	public:
 		//Constructors
-		Building(int numOfResources, bool flipped, int buildingID, string resourceType);
-		Building(int& numOfResources, bool& flipped, int& buildingID, string& resourceType);
+		Node();
 		//Getters
-		inline int getNumberOfResources{ return *numOfResources; }
-		inline bool getFlipped{ return *flipped; }
-		inline string getResourceType{ return *resourceType; }
-		inline int getBuildingID{ return *buildingID };
-		//Setters
-		inline void setNumberOfResources(int number) 
-		{
-			*numOfResources = number;
-		}
-		inline void setFlipped(bool flip)
-		{
-			*flipped = flip;
-		}
-		inline void setResourceType(string type)
-		{
-			*resourceType = type;
-		}
+		inline Building getResource{ return *resource; };
+		inline vector<Node> getAdjNode{ return *adjNode; };
 		//Methods
-		void flipping();
+		vector<VGMap::Node> fillAdjNodes(vector <vector<VGMap::Node>> board);
 	};
 	//Constructors
-	VGMap (int points, vector<Building> adjBuilding);
-	VGMap(int& points, vector<Building*>* adjBuilding);
+	VGMap (int points);
 	//Getters
-	inline vector<Building*>* getAdjBuilding{ return *adjBuilding; }
-	inline vector<Building> getBoard{ return *board; }
-	inline int getPoints{ return *points; }
+	inline vector<Node> getBoard{ return *board; };
+	inline int getPoints{ return *points; };
 	//Setters
-	inline void setBoard(vector < vector<Building> > board)
+	inline void setBoard(vector <Node> board)
 	{
 		this.board(board.begin(), board.end());
 	}
@@ -60,14 +40,8 @@ public:
 	{
 		this.points = points;
 	}
-	inline void setAdjBuilding(vector <Building> adjBuilding)
-	{
-		this.adjBuilding(adjBuilding.begin(),)
-	}
 	//Methods
-	void addEdge(int from, int to); //?
 	int countPoints(vector<Building> vect);
-	bool checkConnected(); //?
 	bool checkFirst(Building newBuilding, vector<Building> vect);
 };
 
