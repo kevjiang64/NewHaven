@@ -6,7 +6,7 @@
 using namespace std;
 
 //VGMap Constructor (pass by value)
-VGMap::VGMap(int points)
+VGMap::VGMap()
 {
 	//Create 2D vector of 30 Nodes
 	//(0,0) is at the top left	
@@ -16,7 +16,7 @@ VGMap::VGMap(int points)
 
 //Fill the board
 //Clockwise => 0 : left , 1 : up, 2 : right, 3 : down
-Node::vector<Node> fillAdjNodes(vector <Node> board) {
+vector<VGMap::Node> VGMap::Node::fillAdjNodes(vector <VGMap::Node> board) {
 
 	//Creating the iterators for 2D vector
 	std::vector< std::vector<int> >::const_iterator row;
@@ -29,12 +29,12 @@ Node::vector<Node> fillAdjNodes(vector <Node> board) {
 		{
 			//For left adjNode
 			if (col - 1 >= 0)
-				adjBuilding[0]->board[row][col - 1];
+				(*adjNode)[0] = board[row][col - 1];
 			else
-				adjBuidling[0]->NULL;
+				adjNode[0]->NULL;
 			//For up adjNode
 			if (row - 1 >= 0)
-				adjBuilding[1]->board[row - 1][col];
+				adjNode[1]->board[row - 1][col];
 			else
 				adjBuilding[1]->NULL;
 			//For right adjNode

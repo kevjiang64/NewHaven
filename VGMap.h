@@ -21,10 +21,10 @@ public:
 		//Constructors
 		Node();
 		//Getters
-		inline Building getResource{ return *resource; }
-		inline vector<Node> getAdjNode{ return *adjNode; }
+		inline Building getResource{ return *resource; };
+		inline vector<Node> getAdjNode{ return *adjNode; };
 		//Methods
-		vector <Node> fillAdjNodes(vector <Node> board);
+		vector<VGMap::Node> fillAdjNodes(vector <VGMap::Node> board);
 	};
 	//Constructors
 	VGMap (int points);
