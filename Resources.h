@@ -17,9 +17,8 @@ class HarvestTile {
 		~HarvestTile();
 		void setResources(int r) { *resources = r;  };
 		void setTopLeft(int tl) { topLeft = &tl;  };
-//		int* getResources() { return *resources; }; // not sure
-		int* getTopLeft() { return topLeft; }; // not sure
-//		static void createHarvestTile(HarvestTile newTile);
+		int* getResources() { return resources; };
+		int* getTopLeft() { return topLeft; };
 };
 
 class DeckHarvestTile {
@@ -30,7 +29,7 @@ class DeckHarvestTile {
 		DeckHarvestTile();
 		~DeckHarvestTile();
 		void setCount(int c) { count = &c; };
-		int* getCount() { return count;  }; // not sure
+		int* getCount() { return count; };
         HarvestTile draw();
 
 };
@@ -38,22 +37,16 @@ class DeckHarvestTile {
 class Building {
 	private:
 		int* label;
-//		int* color;
 		int* number;
         int count[4][6];
 
 	public:
 		Building();
 		~Building();
-//		void setLabel(LabelType l) { label = &l; };
-//		void setColor(ColorType c) { color = &c;  };
+		void setLabel(int l) { label = &l; };
 		void setNumber(int n) { number = &n; };
-//        void setIntColot(int ic) { intColor = &ic; };
-//		LabelType* getLabel() { return label; }; // not sure
-//		ColorType* getColor() { return color; } // not sure
-		int* getNumber() { return number; } // not sure
-//        int* getIntColor() { return intColor; }; // not sure
-//		static void createBuilding(Building newBuilding);
+		int* getLabel() { return label; };
+        int* getNumber() { return number; }
 };
 
 class DeckBuilding {
@@ -66,7 +59,7 @@ class DeckBuilding {
 		~DeckBuilding();
         void setCount(int c[]) { count = c; };
         int* getCount() { return count; };
-		Building* draw(int num);
+		Building draw();
 };
 
 class Hand {

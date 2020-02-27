@@ -7,21 +7,23 @@
 
 using namespace std;
 
+// HARVEST TILE
+
 HarvestTile::HarvestTile() {
     topLeft = (int*)malloc(15*sizeof(int));
-//    resources = (int*)malloc(20*sizeof(int));
-
-    int wheatCount = 0, sheepCount = 0, timberCount = 0, stoneCount = 0, index = 0;
     resources = new int[4];
+    
+    //create counts to keep track of the resources (limited to 3 per harvest tiles)
+    int wheatCount = 0, sheepCount = 0, timberCount = 0, stoneCount = 0, index = 0;
 
     while (index < 4) {
+        
+        //generate random numbers for the resources
         mt19937 rng;
         rng.seed(random_device()());
         uniform_int_distribution<mt19937::result_type> dist;
         
         int output = dist(rng) % 4;
-
-//        cout << output << endl;
         
         if (index == 0)
             *topLeft = output;
@@ -29,10 +31,10 @@ HarvestTile::HarvestTile() {
         if ((output == 0 && wheatCount > 3) || (output == 1 && sheepCount > 3) || (output == 2 && timberCount > 3) || (output == 3 && stoneCount > 3))
             continue;
 
-//        myResources[index] = static_cast<ResourceType>(output);
         resources[index] = output;
         index++;
 
+        //add resource to the count
         switch (output) {
             case 0:
                 wheatCount++;
@@ -50,10 +52,6 @@ HarvestTile::HarvestTile() {
                 break;
         }
     }
-    
-    for(int i=0;i<4;i++) {
-        cout << *(resources+i) << endl;
-    }
 };
 
 HarvestTile::~HarvestTile() {
@@ -61,9 +59,7 @@ HarvestTile::~HarvestTile() {
     delete[] resources;
 };
 
-//void HarvestTile::createHarvestTile(HarvestTile newTile) {
-//
-//};
+//DECK FOR HARVEST TILES
 
 DeckHarvestTile::DeckHarvestTile() {
 	count = new int(60);
@@ -74,41 +70,51 @@ DeckHarvestTile::~DeckHarvestTile() {
 };
 
 HarvestTile DeckHarvestTile::draw() {
+    HarvestTile newTile;
+    
     if (*count <= 0) {
 		cout << "There is no harvest tile left." << endl;
-        HarvestTile emptyTile;
-        emptyTile.setResources(0);
-        emptyTile.setTopLeft(0);
-        return emptyTile;
+        
+        //set everything to 0 to return an empty tile
+        newTile.setResources(0);
+        newTile.setTopLeft(0);
     }
+    
     else {
-        HarvestTile newTile;
         (*count)--;
-        return newTile;
     }
+    
+    return newTile;
 };
+
+// BUILDING
 
 Building::Building() {
     int stop = 0;
+    
+    //allocate memory (??) for label and number
     label = (int*)malloc(15*sizeof(int));
-//    color = (int*)malloc(15*sizeof(int));
     number = (int*)malloc(15*sizeof(int));
     
+    //generate random numbers
     mt19937 rng;
     rng.seed(random_device()());
     uniform_int_distribution<mt19937::result_type> dist;
     
     while(!stop) {
+        //generate random numbers for the creation of the building
         int output = dist(rng) % 4;
         int numberOutput = dist(rng) % 6 + 1;
         
+        //keep track of the limit of buildings created
         for(int i=0; i<4;i++) {
             for(int j=0; j<6; j++) {
                 if((i == output) && (j == numberOutput-1) && (count[i][j] > 6))
                     continue;
             }
         }
-    
+        
+        //add the building created to the count
         for(int i=0; i<4;i++) {
             for(int j=0; j<6; j++) {
                 if((i == output) && (j == numberOutput-1))
@@ -120,18 +126,12 @@ Building::Building() {
         *number = numberOutput;
         stop = 1;
     }
-    
-    cout << *number;
 };
 
 Building::~Building() {
 	delete label;
     delete number;
 };
-
-//void Building::createBuilding(Building newBuilding) {
-//
-//};
 
 DeckBuilding::DeckBuilding() {
 	totalCount = new int(144);
@@ -143,20 +143,20 @@ DeckBuilding::~DeckBuilding() {
     delete count;
 };
 
-Building* DeckBuilding::draw(int num) {
-    Building* ptr;
-    
+Building DeckBuilding::draw() {
+    Building newBuilding;
     
     if (*totalCount <= 0) {
 		cout << "There is no building left." << endl;
-        ptr = nullptr;
+        newBuilding.setLabel(-1);
+        newBuilding.setNumber(-1);
     }
-
+    
     else {
-        Building buildingsCreated[num];
-        ptr = buildingsCreated;
+        (*totalCount)--;
     }
-    return ptr;
+    
+    return newBuilding;
 };
 
 
