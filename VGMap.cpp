@@ -157,16 +157,20 @@ VGMap :: int countPoints(vector<Node> vect)
 			else {
 				totalPoints += 3;
 			}
-			if (col == 3 || flipped = false) {
+			if (col == 3 || flipped = false) 
+			{
 				totalPoints += 4 * 2;
 			}
-			else {
+			else 
+			{
 				totalPoints += 4;
 			}
-			if (col == 4 || flipped = false) {
+			if (col == 4 || flipped = false) 
+			{
 				totalPoints += 5 * 2;
 			}
-			else {
+			else 
+			{
 				totalPoints += 5;
 			}
 		}
@@ -181,7 +185,6 @@ VGMap :: bool checkFirst()
 	std::vector<int>::const_iterator col;
 	for (std::vector<int>::iterator it = vect.begin(); it != vect.end(); ++it)
 	{
-
 		Building test = *it;
 		if (*(test.getResourceType()).compare(*(newBuilding.getResourceType())) == 0) 
 		{
@@ -190,3 +193,5 @@ VGMap :: bool checkFirst()
 	}
 	return true;
 };
+
+
