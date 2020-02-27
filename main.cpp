@@ -10,10 +10,5 @@
 #include "GBMaps.h"
 
 int main() {
-    //declare valid map information
-    int playerNum = 2;
     
-    
-    
-    return 0;
 }

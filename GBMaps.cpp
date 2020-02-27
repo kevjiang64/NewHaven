@@ -31,7 +31,7 @@ Map::Map(){
  */
 
 
-Map::Map(int playerNumber, std::vector<std::vector<std::string>> nodes) {
+Map::Map(int playerNumber, std::vector<Node> nodes) {
     playerNum = new int(playerNumber);
     mapNodes = new std::vector<Node*>;
 }
@@ -76,10 +76,10 @@ Map::Tile::Tile(){
 * Tile constructor
 */
 Map::Tile::Tile(Node topLeft, Node topRight, Node bottomRight, Node bottomLeft){
-    topLeft = new Node(std::string resource);
-    topRight = new Node(std::string resource);
-    bottomRight = new Node(std::string resource);
-    bottomLeft = new Node(std::string resource);
+    topLeft = new Node(int resource);
+    topRight = new Node(int resource);
+    bottomRight = new Node(int resource);
+    bottomLeft = new Node(int resource);
 }
 
 /**
@@ -101,13 +101,13 @@ void Map::Tile::operator=(Map::Tile& rhs) {
 }
 
 Map::Tile::Tile(const Tile& toCopy) {
-    topLeft = new Node(std::string resource);
+    topLeft = new Node(int resource);
     *topLeft = *toCopy.topLeft;
-    topRight = new Node(std::string resource);
+    topRight = new Node(int resource);
     *topRight = *toCopy.topRight;
-    bottomRight = new Node(std::string resource);
+    bottomRight = new Node(int resource);
     *bottomRight = *toCopy.bottomRight;
-    bottomLeft = new Node(std::string resource);
+    bottomLeft = new Node(int resource);
     *bottomLeft = *toCopy.bottomLeft;
 }
 
@@ -126,8 +126,10 @@ Map::Node::Node(){
  * Node constructor, subclass of Map
  *
  */
-Map::Node::Node(std::string resource) {
-    resourceType = new std::string(std::move(resource));
+Map::Node::Node(int resource, std::vector<Node> pAdjNode, bool counted) {
+    resourceType = new int();
+    pAdjNode = new std::vector<Node*>;
+    counted = new bool(false);
 }
 
 /**
@@ -135,6 +137,8 @@ Map::Node::Node(std::string resource) {
  */
 Map::Node::~Node() {
     delete resourceType;
+    delete pAdjNode;
+    delete counted;
 }
 
 /**
@@ -142,23 +146,29 @@ Map::Node::~Node() {
 */
 void Map::Node::operator=(Map::Node& rhs) {
     this->resourceType = rhs.resourceType;
+    this->pAdjNode = rhs.pAdjNode;
+    this->counted = rhs.counted;
 }
 
 /**
 * Node copy constructor
 */
 Map::Node::Node(const Node& toCopy) {
-    resourceType = new string();
+    resourceType = new int();
     *resourceType = *toCopy.resourceType;
+    pAdjNode = new std::vector<Node*>;
+    *pAdjNode = *toCopy.pAdjNode;
+    counted = new bool();
+    *counted = *toCopy.counted;
 }
 
 /**
  * Add connection between two nodes
  *
  */
-Map::Node* Map::addNode(std::string resource) {
+Map::Node* Map::addNode(int resource, std::vector<Node*> pAdjNode, bool counted) {
     //create graph node
-    auto* thisNode = new Node(std::move(resource));
+    auto* thisNode = new Node(resource, pAdjNode, counted);
     //add node to graph
     mapNodes->push_back(thisNode);
     return thisNode;
@@ -210,7 +220,7 @@ bool Map::testIndividualGraph(std::vector<Node*>* toTest, bool isVisited) {
  * @param visitedNodes a list of visited node
  * @param node the node we are analyzing
  */
-void Map::dfs(std::set<std::string>* visitedNodes, Node* node, bool nodeTest) {
+void Map::dfs(std::set<int>* visitedNodes, Node* node, bool nodeTest) {
     if (visitedNodes->find(node->getResourceType()) == visitedNodes->end()) {
         visitedNodes->insert(node->getResourceType());
         for (auto& n : *node->getAdjNodes()) {
@@ -222,5 +232,12 @@ void Map::dfs(std::set<std::string>* visitedNodes, Node* node, bool nodeTest) {
             }
         }
     }
+}
+
+void Map::placeHarvestTile(Tile tile){
+    Node topLeft = tile.getTopLeft();
+    Node topRight = tile.getTopRight();
+    Node bottomRight = tile.getBottomRight();
+    Node bottomLeft = tile.getBottomLeft();
 }
 

@@ -24,7 +24,7 @@ public:
     class Tile;
     
     Map();
-    Map(int playerNumber, std::vector<std::vector<std::string>> nodes);
+    Map(int playerNumber, std::vector<Node> nodes);
     Map(int& playerNumber, std::vector<Node*> nodes);
     ~Map();
     Map(const Map& toCopy);
@@ -40,32 +40,46 @@ public:
         Tile(const Tile& toCopy);
         void operator=(Tile& rhs);
         ~Tile();
-        inline Node getNode() {return pNode;}
-        inline void setNode(Node n) {pNode = n;}
+        inline Node getTopLeft() {return pNode;}
+        inline void setTopLeft(Node n) {topLeft = n;}
+        inline Node getTopRight() {return pNode;}
+        inline void setTopRight(Node n) {topRight = n;}
+        inline Node getBottomRight() {return pNode;}
+        inline void setBottomRight(Node n) {bottomRight = n;}
+        inline Node getBottomLeft() {return pNode;}
+        inline void setBottomLeft(Node n) {bottomLeft = n;}
     private:
-        Node pNode;
+        Node topLeft;
+        Node topRight;
+        Node bottomRight;
+        Node bottomLeft;
     }
     
     class Node {
     public:
         Node();
-        Node(std::string resource);
+        Node(int resource, std::vector<Node> pAdjNode, bool counted);
         Node(const Node& toCopy);
         void operator=(Node& rhs);
         ~Node();
         inline std::vector<Node*>* getAdjNodes() { return pAdjNodes; };
-        inline std::string getResourceType() {return *resourceType; };
+        inline int getResourceType() { return *resourceType; };
+        inline void setResourceType(int resource) {resourceType = resource;}
+        inline bool getCounted() { return isCounted; }
+        inline void setCounted(bool counted) { isCounted = counted; }
     private:
         std::vector<Node*>* pAdjNodes;
-        std::string* resourceType;
+        int* resourceType;
+        bool* isCounted;
     };
     
 
 
-    Map::Node* addNode(std::string resource);
+    Map::Node* addNode(int resource, Node pAdjNode, bool counted);
     void addEdge(int from, int to);
     inline std::vector<Node*>* getMapNodes() { return mapNodes; };
-    inline void setMapNodes(std::vector<Node*>* c) { mapNodes = c; }
+    inline void setMapNodes(std::vector<Node*>* nodes) { mapNodes = nodes; }
+    void placeHarvestTile(Tile tile);
 
 private:
     int* playerNum;
