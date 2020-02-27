@@ -7,9 +7,13 @@
 //
 
 #include <iostream>
+#include "GBMaps.h"
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+int main() {
+    //declare valid map information
+    int playerNum = 2;
+    
+    
+    
     return 0;
 }
