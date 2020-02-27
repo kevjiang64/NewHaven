@@ -21,6 +21,7 @@ using std::vector;
 class Map {
 public:
     class Node;
+    class Tile;
     
     Map();
     Map(int playerNumber, std::vector<std::vector<std::string>> nodes);
@@ -31,6 +32,19 @@ public:
     bool testConnected();
 
     inline int* getPlayerNum() const { return playerNum; };
+    
+    class Tile {
+    public:
+        Tile();
+        Tile(Node topLeft, Node topRight, Node bottomRight, Node bottomLeft);
+        Tile(const Tile& toCopy);
+        void operator=(Tile& rhs);
+        ~Tile();
+        inline Node getNode() {return pNode;}
+        inline void setNode(Node n) {pNode = n;}
+    private:
+        Node pNode;
+    }
     
     class Node {
     public:
@@ -48,12 +62,9 @@ public:
     
 
 
-  
-
     Map::Node* addNode(std::string resource);
     void addEdge(int from, int to);
     inline std::vector<Node*>* getMapNodes() { return mapNodes; };
-
     inline void setMapNodes(std::vector<Node*>* c) { mapNodes = c; }
 
 private:

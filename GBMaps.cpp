@@ -64,6 +64,54 @@ void::Map::operator=(Map& rhs) {
     this->mapNodes = rhs.mapNodes;
 }
 
+/**
+* Tile default constructor
+*/
+
+Map::Tile::Tile(){
+    
+}
+
+/**
+* Tile constructor
+*/
+Map::Tile::Tile(Node topLeft, Node topRight, Node bottomRight, Node bottomLeft){
+    topLeft = new Node(std::string resource);
+    topRight = new Node(std::string resource);
+    bottomRight = new Node(std::string resource);
+    bottomLeft = new Node(std::string resource);
+}
+
+/**
+* Tile destructor
+*/
+Map::Tile::~Tile(){
+    delete topLeft;
+    delete topRight;
+    delete bottomRight;
+    delete bottomLeft;
+}
+
+
+void Map::Tile::operator=(Map::Tile& rhs) {
+    this->topLeft = rhs.topLeft;
+    this->topRight = rhs.topRight;
+    this->bottomRight = rhs.bottomRight;
+    this->bottomLeft = rhs.bottomLeft;
+}
+
+Map::Tile::Tile(const Tile& toCopy) {
+    topLeft = new Node(std::string resource);
+    *topLeft = *toCopy.topLeft;
+    topRight = new Node(std::string resource);
+    *topRight = *toCopy.topRight;
+    bottomRight = new Node(std::string resource);
+    *bottomRight = *toCopy.bottomRight;
+    bottomLeft = new Node(std::string resource);
+    *bottomLeft = *toCopy.bottomLeft;
+}
+
+
 
 /**
  * Node default constructor
@@ -75,7 +123,7 @@ Map::Node::Node(){
 
 
 /**
- * Tile constructor, subclass of Map
+ * Node constructor, subclass of Map
  *
  */
 Map::Node::Node(std::string resource) {
@@ -83,23 +131,29 @@ Map::Node::Node(std::string resource) {
 }
 
 /**
- * Tile destructor
+ * Node destructor
  */
 Map::Node::~Node() {
     delete resourceType;
 }
 
+/**
+* Node operator
+*/
 void Map::Node::operator=(Map::Node& rhs) {
     this->resourceType = rhs.resourceType;
 }
 
+/**
+* Node copy constructor
+*/
 Map::Node::Node(const Node& toCopy) {
     resourceType = new string();
     *resourceType = *toCopy.resourceType;
 }
 
 /**
- * Add connection between two tiles
+ * Add connection between two nodes
  *
  */
 Map::Node* Map::addNode(std::string resource) {
@@ -111,7 +165,7 @@ Map::Node* Map::addNode(std::string resource) {
 }
 
 /**
- * Add connection between two tiles
+ * Add edge to neighboot node
  *
  */
 void Map::addEdge(int from, int to) {
@@ -125,8 +179,16 @@ void Map::addEdge(int from, int to) {
  * @return true if the map is a connected graph
  */
 bool Map::testConnected() {
-    //test graph
-    if (testIndividualGraph(this->mapNodes, false)) {
+    //test overall graph
+    if(testIndividualGraph(this->mapNodes,false)){
+        //test subgraphs
+        for(auto node : *this->mapNodes){
+            if(node->getResourceType()->size() == 1){
+                continue;
+            }else if(!testIndividualGraph(node->getResourceType(),true)){
+                return false;
+            }
+        }
         return true;
     }
     return false;
@@ -134,7 +196,7 @@ bool Map::testConnected() {
 
 bool Map::testIndividualGraph(std::vector<Node*>* toTest, bool isVisited) {
     auto* visitedNodes = new std::set<std::string>;
-    //recurse through graph with an arbitrary starting point, if we visit all the tiles in graph then its connected.
+    //recurse through graph with an arbitrary starting point, if we visit all the nodes in graph then its connected.
     dfs(visitedNodes, toTest[0][0], isVisited);
     bool connected = visitedNodes->size() == toTest->size();
     delete (visitedNodes);
@@ -152,7 +214,7 @@ void Map::dfs(std::set<std::string>* visitedNodes, Node* node, bool nodeTest) {
     if (visitedNodes->find(node->getResourceType()) == visitedNodes->end()) {
         visitedNodes->insert(node->getResourceType());
         for (auto& n : *node->getAdjNodes()) {
-            if (!nodeTest || n->() == node->()) {
+            if (!nodeTest || n->getResourceType() == node->getResourceType()) {
                 dfs(visitedNodes, n, nodeTest);
             }
             else {
