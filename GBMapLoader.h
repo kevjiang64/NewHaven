@@ -30,4 +30,6 @@ private:
     static Map* initMapObject(int* playerNumber, std::vector<std::vector<std::string>>* nodes, const bool* vMap);
     void splitLine(const std::string& line, std::vector<std::string>* pLineWords);
     bool checkSection(std::string* mode, std::vector<std::string>* lineWords);
+    void getPlayerNumber(int* playerNumber, std::vector<std::string>* lineWords);
+    bool validateTileLine(int* nodeCount, std::vector<std::string>* lineWords, const int* lineCount, bool* validMap, bool verbose);
 };
