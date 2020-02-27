@@ -24,7 +24,7 @@ public:
 		inline Building getResource{ return *resource; };
 		inline vector<Node> getAdjNode{ return *adjNode; };
 		//Methods
-		vector<VGMap::Node> fillAdjNodes(vector <VGMap::Node> board);
+		vector<VGMap::Node> fillAdjNodes(vector <vector<VGMap::Node>> board);
 	};
 	//Constructors
 	VGMap (int points);

@@ -16,43 +16,60 @@ VGMap::VGMap()
 
 //Fill the board
 //Clockwise => 0 : left , 1 : up, 2 : right, 3 : down
-vector<VGMap::Node> VGMap::Node::fillAdjNodes(vector <VGMap::Node> board) {
+vector<VGMap::Node> VGMap::Node::fillAdjNodes(vector <vector<VGMap::Node>> board) {
 
 	//Creating the iterators for 2D vector
-	std::vector< std::vector<int> >::const_iterator row;
-	std::vector<int>::const_iterator col;
+	int row;
+	int col;
 
 	//Connecting establishing every node's vector of adjacent nodes
-	for (row = board.begin(); row != board.end(); ++row)
+	for (row = 0; row != 6; ++row)
 	{
-		for (col = row->begin(); col != row->end(); ++col)
+		for (col = 0; col != 5; ++col)
 		{
 			//For left adjNode
 			if (col - 1 >= 0)
 				(*adjNode)[0] = board[row][col - 1];
-			else
-				adjNode[0]->NULL;
+			else {
+				VGMap::Node* ptrNode;
+				*ptrNode = (*adjNode).at(0);
+
+				ptrNode = nullptr;
+			}
+				
 			//For up adjNode
 			if (row - 1 >= 0)
-				adjNode[1]->board[row - 1][col];
-			else
-				adjBuilding[1]->NULL;
+				(*adjNode)[1] = board[row-1][col];
+			else {
+				VGMap::Node* ptrNode;
+				*ptrNode = (*adjNode).at(1);
+
+				ptrNode = nullptr;
+			}
 			//For right adjNode
 			if (col + 1 < 4)
-				adjBuilding[1]->board[row][col + 1];
-			else
-				adjBuilding[1]->NULL;
+				(*adjNode)[2] = board[row][col + 1];
+			else {
+				VGMap::Node* ptrNode;
+				*ptrNode = (*adjNode).at(2);
+
+				ptrNode = nullptr;
+			}
 			//For down adjNode
 			if (row + 1 < 5)
-				adjBuilding[2]->board[row - 1][col];
-			else
-				adjBuilding[2]->NULL;
+				(*adjNode)[3] = board[row + 1][col];
+			else {
+				VGMap::Node* ptrNode;
+				*ptrNode = (*adjNode).at(3);
+
+				ptrNode = nullptr;
+			}
 		}
 	}
-	return adjBuilding;
+	return *adjNode;
 }
 //Count the amount of points
-VGMap :: int countPoints(vector<Node> vect)
+int VGMap::countPoints(vector<Node> vect)
 {
 	//Attributes
 	int totalPoints = 0;
@@ -60,10 +77,10 @@ VGMap :: int countPoints(vector<Node> vect)
 	bool flipped = false, filled = true;
 
 	//Count points for each row (HORIZONTALLY)
-	for (row = 0; row < 6; ++row)
+	for (int row = 0; row < 6; ++row)
 	{
 		totalPoints += addedPoints;
-		for (col = 0; col < 5; ++col)
+		for (int col = 0; col < 5; ++col)
 		{
 			//Check if every node of the same row has a building
 			if (board[row][col].getBuilding != NULL)
