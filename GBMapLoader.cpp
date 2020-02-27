@@ -93,7 +93,7 @@ Map* MapLoader::readMapFile() {
 
             //read sections
             if (*pMode == "tiles") {
-                if (validateTileLine(pTileCount, pLineWords, pLineCount, pValidMap,verbose)) {
+                if (validateTileLine(pTileCount, pLineWords, pLineCount, pValidMap, verbose)) {
                     pTileData->push_back(*pLineWords);
                 }
                 else {
@@ -201,8 +201,24 @@ bool MapLoader::checkSection(std::string* mode, std::vector<std::string>* lineWo
     return false;
 }
     
-bool validateTileLine(int* nodeCount, std::vector<std::string>* lineWords, const int* lineCount, bool* validMap, bool verbose){
-    
+bool validateTileLine(int* tileCount, std::vector<std::string>* lineWords, const int* lineCount, bool* validMap, bool verbose){
+    (*tileCount)++;
+    //check validity of the line in this mode
+    if (lineWords->size() < 4) {
+        if(verbose){
+            std::cout << "Line " << *lineCount
+                      << " - [ERROR] : a line in the tiles declaration had missing nodes, map could not be created.\n";
+        }
+        *validMap = false;
+        return false;
+    } else {
+        if (lineWords->size() > 4 && verbose)
+            std::cout << "Line " << *lineCount
+                      << " - [WARNING] : a line in  the tiles declaration had extra nodes.\n";
+    }
+    else {
+        return true;
+    }
     
 }
 
