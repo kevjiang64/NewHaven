@@ -30,10 +30,4 @@ private:
     static Map* initMapObject(int* playerNumber, std::vector<std::vector<std::string>>* nodes, const bool* vMap);
     void splitLine(const std::string& line, std::vector<std::string>* pLineWords);
     bool checkSection(std::string* mode, std::vector<std::string>* lineWords);
-    bool validateContinentLine(int* continentCount, std::vector<std::string>* lineWords, const int* lineCount,
-                               bool* validMap,bool verbose);
-    bool validateCountryLine(int* countryCount, std::vector<std::string>* lineWords, const int* lineCount, bool* validMap,
-                        int* countryID, const int* continentCount,bool verbose);
-    bool validateBordersLine(std::vector<int>* lineNums, std::vector<std::string>* lineWords, const int* lineCount,
-                             bool* validMap, const int* countryCount,bool verbose);
 };
