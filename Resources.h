@@ -38,6 +38,7 @@ class Building {
 	private:
 		int* label;
 		int* number;
+		bool* flipped;
         int count[4][6];
 
 	public:
@@ -45,28 +46,32 @@ class Building {
 		~Building();
 		void setLabel(int l) { label = &l; };
 		void setNumber(int n) { number = &n; };
-		int* getLabel() { return label; };
-        int* getNumber() { return number; }
+		int getLabel() { return *label; };
+        int getNumber() { return *number; }
 };
 
 class DeckBuilding {
 	private:
 		int* totalCount;
-        int* count;
+        int** count;
 
 	public:
 		DeckBuilding();
 		~DeckBuilding();
-        void setCount(int c[]) { count = c; };
-        int* getCount() { return count; };
+		bool validBuilding(Building b);
 		Building draw();
 };
 
 class Hand {
 	private:
-		int* resourcesCount;
+		int* wheatCount;
+		int* sheepCount;
+		int* timberCount;
+		int* stoneCount;
 
 	public:
+		Hand();
+		~Hand();
 		void exchange();
 
 };

@@ -10,7 +10,8 @@ VGMap::VGMap()
 {
 	//Create 2D vector of 30 Nodes
 	//(0,0) is at the top left	
-	*board = board{ 6, vector<Node> {5} };
+	vector <Node> board_1D(5);
+	*board( 6, board_1D);
 	*points = 0;
 };
 
@@ -69,12 +70,14 @@ vector<VGMap::Node> VGMap::Node::fillAdjNodes(vector <vector<VGMap::Node>> board
 	return *adjNode;
 }
 //Count the amount of points
-int VGMap::countPoints(vector<Node> vect)
+int VGMap::countPoints(vector <vector<Node>> board)
 {
 	//Attributes
 	int totalPoints = 0;
 	int addedPoints = 0;
 	bool flipped = false, filled = true;
+	int row;
+	int col;
 
 	//Count points for each row (HORIZONTALLY)
 	for (int row = 0; row < 6; ++row)

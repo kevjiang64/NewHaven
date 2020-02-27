@@ -2,14 +2,12 @@
 #include <vector>
 #include <set>
 #include <iostream>
+#include "GBMaps.h"
 using namespace std;
 
 class VGMap
 {
 //Attributes
-private:
-	vector <Node>* board;
-	int* points;
 public:
 	//Inner class
 	class Node
@@ -24,7 +22,7 @@ public:
 		inline Building getResource{ return *resource; };
 		inline vector<Node> getAdjNode{ return *adjNode; };
 		//Methods
-		vector<VGMap::Node> fillAdjNodes(vector <vector<VGMap::Node>> board);
+		vector<Node> fillAdjNodes(vector <vector<Node>> board);
 	};
 	//Constructors
 	VGMap (int points);
@@ -41,8 +39,11 @@ public:
 		this.points = points;
 	}
 	//Methods
-	int countPoints(vector<Building> vect);
+	int countPoints(vector<> vect);
 	bool checkFirst(Building newBuilding, vector<Building> vect);
+private:
+	vector <vector<VGMap::Node*>> board = (5, vector<Node*>(6));
+	int* points;
 };
 
 #endif 
