@@ -106,40 +106,6 @@ int VGMap::countPoints()
 		{
 			if (!flipped) totalPoints += 2 * 6-row;
 			else totalPoints += 6-row;
-
-			/*if (row == 0 || flipped = false)
-				totalPoints += 6 * 2;
-			else {
-				totalPoints += 6;
-			}
-			if (row == 1 || flipped = false)
-				totalPoints += 5 * 2;
-			else {
-				totalPoints += 5;
-			}
-			if (row == 0 || flipped = false)
-				totalPoints += 4 * 2;
-			else {
-				totalPoints += 4;
-			}
-			if (row == 0 || flipped = false)
-				totalPoints += 3 * 2;
-			else {
-				totalPoints += 3;
-			}
-			if (row == 0 || flipped = false)
-			{
-				totalPoints += 2 * 2;
-			}
-			else {
-				totalPoints += 2;
-			}
-			if (row == 0 || flipped = false) {
-				totalPoints += 1 * 2;
-			}
-			else {
-				totalPoints += 1;
-			}*/
 		}
 	}
 	//Count points for each row (Vertically)
@@ -166,37 +132,6 @@ int VGMap::countPoints()
 		{
 			if (flipped) totalPoints += 2 * (3 + abs(3 - col));
 			else totalPoints += 3 + abs(3 - col);
-
-			/*if (col == 0 || flipped = false) {
-				totalPoints += 5 * 2;
-			}
-			else {
-				totalPoints += 5;
-			}
-			if (col == 1 || flipped = false) {
-			totalPoints += 4 * 2;
-			}
-			else {
-				totalPoints += 4;
-			}
-			if (col == 2 || flipped = false){
-				totalPoints += 3 * 2;
-			}
-			else {
-				totalPoints += 3;
-			}
-			if (col == 3 || flipped = false) {
-				totalPoints += 4 * 2;
-			}
-			else {
-				totalPoints += 4;
-			}
-			if (col == 4 || flipped = false) {
-				totalPoints += 5 * 2;
-			}
-			else {
-				totalPoints += 5;
-			}*/
 		}
 	}
 	return totalPoints;
