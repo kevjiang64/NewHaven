@@ -6,15 +6,35 @@
 #include <iostream>
 using namespace std;
 
-//VGMap Constructor (pass by value)
+//VGMap Constructor (Made for testing)
+VGMap::VGMap(int row, int col)
+{
+	//Create 2D vector of 30 Nodes
+	//(0,0) is at the top left	
+	if(row == 6 && col == 5)
+	{
+		cout << "The inputed values for the rows and columns will create a 5x6 VGMap";
+		for (int i = row; i < row; i++) 
+		{
+			vector<Node> column(col);
+			(*board)[i] = column;
+		}
+		*points = 0;
+	}
+	else
+	{
+		cout << "The inputed values for the rows and columns will create a 5x6 VGMap";
+	}
+};
+//VgMap Default Constructor 
 VGMap::VGMap()
 {
 	//Create 2D vector of 30 Nodes
 	//(0,0) is at the top left	
-	//*board = board{ 6, vector<Node> {5} };
-	for (int i = 0; i < 6; i++) {
-		vector<Node> row;
-		(*board)[i] = row;
+	for (int i = 0; i < 6; i++)
+	{
+		vector<Node> column(5);
+		(*board)[i] = column;
 	}
 	*points = 0;
 };
@@ -34,41 +54,16 @@ vector<VGMap::Node> VGMap::Node::fillAdjNodes(vector <vector<VGMap::Node>> board
 		{
 			//For left adjNode
 			if (col - 1 >= 0)
-				(*adjNode)[0] = board[row][col - 1];
-			else {
-				VGMap::Node* ptrNode;
-				*ptrNode = (*adjNode).at(0);
-
-				ptrNode = nullptr;
-			}
-				
+				adjNode->push_back(board[row][col - 1]);
 			//For up adjNode
 			if (row - 1 >= 0)
-				(*adjNode)[1] = board[row-1][col];
-			else {
-				VGMap::Node* ptrNode;
-				*ptrNode = (*adjNode).at(1);
-
-				ptrNode = nullptr;
-			}
+				adjNode->push_back(board[row-1][col]);
 			//For right adjNode
 			if (col + 1 < 4)
-				(*adjNode)[2] = board[row][col + 1];
-			else {
-				VGMap::Node* ptrNode;
-				*ptrNode = (*adjNode).at(2);
-
-				ptrNode = nullptr;
-			}
+				adjNode->push_back(board[row][col + 1]);
 			//For down adjNode
 			if (row + 1 < 5)
-				(*adjNode)[3] = board[row + 1][col];
-			else {
-				VGMap::Node* ptrNode;
-				*ptrNode = (*adjNode).at(3);
-
-				ptrNode = nullptr;
-			}
+				adjNode->push_back(board[row + 1][col]);
 		}
 	}
 	return *adjNode;
@@ -157,7 +152,6 @@ bool VGMap::canBuild(Building building, int row, int col) {
 	bool canBuildNum = true;
 	bool canBuildAdj = true;
 
-	
 	//find out how to look for the number...
 	VGMap::Node node = (*board)[row][col];
 	if (node.getBuilding() != nullptr) {

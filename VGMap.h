@@ -32,9 +32,12 @@ public:
 		inline void setBuilding(Building building2) { *building = building2; };
 		//Methods
 		vector<VGMap::Node> fillAdjNodes(vector <vector<VGMap::Node>> board);
+		//For Testing
+		inline int getSize(const vector<Node>& adjNode) { return sizeof(adjNode); };
 	};
 	//Constructors
-	VGMap ();
+	VGMap(int row, int col);
+	VGMap();
 	//Getters
 	inline vector<vector<Node>> getBoard(){ return *board; };
 	inline int getPoints(){ return *points; };
