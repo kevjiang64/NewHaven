@@ -90,7 +90,7 @@ int VGMap::countPoints()
 			//Check if every node of the same row has a building
 			if ((*board)[row][col].getBuilding() != NULL)
 			{
-				if ((*(*board)[row][col].getBuilding()).getFlipped() == true)
+				if ((*(*board)[row][col].getBuilding()).isFlipped() == true)
 				{
 					flipped = true;
 				}
@@ -150,7 +150,7 @@ int VGMap::countPoints()
 			//Check if every node of the same row has a building
 			if ((*board)[row][col].getBuilding() != NULL)
 			{
-				if ((*(*board)[row][col].getBuilding()).getFlipped() == true)
+				if ((*(*board)[row][col].getBuilding()).isFlipped() == true)
 				{ 
 					flipped = true;
 				}
@@ -209,7 +209,7 @@ bool VGMap:: checkFirst(int resource)
 	int col;
 	for ( row =0; row < 6; row ++) {
 		for (col = 0; col < 5; col++) {
-			if (*(*(*board)[row][col].getBuilding()).getLabel() == resource) {
+			if ((*(*board)[row][col].getBuilding()).getLabel() == resource) {
 				return false;
 			}
 		}
@@ -229,11 +229,11 @@ bool VGMap::canBuild(Building building, int row, int col) {
 		return false;
 	}
 	else {
-		if (*(building.getNumber()) != 6 - row) {
+		if ((building.getNumber()) != 6 - row) {
 			return false;
 		}
 		else {
-			if (checkFirst(*(building.getLabel()))) {
+			if (checkFirst((building.getLabel()))) {
 				return true;
 			}
 			else {
