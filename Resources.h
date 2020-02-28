@@ -44,10 +44,13 @@ class Building {
 	public:
 		Building();
 		~Building();
-		void setLabel(int l) { label = &l; };
-		void setNumber(int n) { number = &n; };
+		void setLabel(int l) { *label = l; };
+		void setNumber(int n) { *number = n; };
+		void setFlipped(bool f) { *flipped = f; };
 		int getLabel() { return *label; };
         int getNumber() { return *number; }
+		bool isFlipped() { return *flipped; };
+		
 };
 
 class DeckBuilding {
@@ -73,5 +76,4 @@ class Hand {
 		Hand();
 		~Hand();
 		void exchange();
-
 };
