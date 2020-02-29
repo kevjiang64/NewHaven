@@ -10,15 +10,17 @@ using namespace std;
 VGMap::VGMap(int row, int col)
 {
 	//Create 2D vector of 30 Nodes
-	//(0,0) is at the top left	
+	//(0,0) is at the top left
+	board = new vector<vector<Node>>;
 	if(row == 6 && col == 5)
 	{
 		cout << "The inputed values for the rows and columns will create a 5x6 VGMap";
 		for (int i = row; i < row; i++) 
 		{
 			vector<Node> column(col);
-			(*board)[i] = column;
+			(*board).push_back(column);
 		}
+		points = new int();
 		*points = 0;
 	}
 	else
@@ -29,16 +31,21 @@ VGMap::VGMap(int row, int col)
 //VgMap Default Constructor 
 VGMap::VGMap()
 {
+	board = new vector<vector<Node>>;
 	//Create 2D vector of 30 Nodes
 	//(0,0) is at the top left	
 	for (int i = 0; i < 6; i++)
 	{
-		vector<Node> column(5);
-		(*board)[i] = column;
+		vector<Node> column;
+		(*board).push_back(column);
 	}
+	points = new int();
 	*points = 0;
 };
 
+VGMap::Node::Node() {
+
+}
 //Fill the board
 //Clockwise => 0 : left , 1 : up, 2 : right, 3 : down
 vector<VGMap::Node> VGMap::Node::fillAdjNodes(vector <vector<VGMap::Node>> board) {
@@ -183,4 +190,9 @@ void VGMap::build(Building building, int row, int col) {
 	}
 }
 
-
+/*int main() {
+	cout << "hello" << endl;
+	VGMap* vg = new VGMap(6,5);
+	cout << " done" << endl;
+	return 0;
+}*/

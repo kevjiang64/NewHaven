@@ -6,6 +6,8 @@
 //  Copyright © 2020 Justin Teixeira. All rights reserved.
 //
 
+#include "Resources.h"
+
 #include <stdio.h>
 #include "GBMaps.h"
 #include <string>
@@ -75,12 +77,12 @@ Map::Tile::Tile() {
 /**
 * Tile constructor
 */
-Map::Tile::Tile(Node topLeft, Node topRight, Node bottomRight, Node bottomLeft) {
+/*Map::Tile::Tile(Node topLeft, Node topRight, Node bottomRight, Node bottomLeft) {
     Node topLeft = Node();
     Node topRight = Node();
     Node bottomRight = Node();
     Node bottomLeft = Node();
-}
+}*/
 
 /**
 * Tile destructor
@@ -235,10 +237,50 @@ void Map::dfs(std::set<int*>* visitedNodes, Node* node, bool nodeTest) {
     }
 }
 
-void Map::placeHarvestTile(Map::Tile tile) {
+/*void Map::placeHarvestTile(Map::Tile tile) {
     Node topLeft = *tile.getTopLeft();
     Node topRight = *tile.getTopRight();
     Node bottomRight = *tile.getBottomRight();
     Node bottomLeft = *tile.getBottomLeft();
+}*/
+
+/**
+*  From a Harvest Tile, creates 4 new nodes, sets their adjacency just within the tile (since no position), and places it in the map
+*/
+void Map::placeHarvestTile(HarvestTile tile) {
+    vector<Node> newNodes;
+    for (int i = *(tile.getTopLeft()); i < 4; i++) {
+        Node newNode;
+        newNode.setResourceType(&(tile.getResources()[i]));
+        newNodes.push_back(newNode);
+    }
+    for (int i = 0; i < *(tile.getTopLeft()); i++) {
+        Node newNode;
+        newNode.setResourceType(&(tile.getResources()[i]));
+        newNodes.push_back(newNode);
+    }
+    //now we have a vector of 4 nodes in the right order
+    
+    //set adjacency within the nodes of the tile itself (i.e. suppose we place the tile adjacent to nothing)
+    for (int i = 0; i < 4; i++) {
+        if (i + 1 < 4) {
+            (*(newNodes[i].getAdjNodes())).push_back(&(newNodes[i + 1]));
+        }
+        if (i + 3 < 4) {
+            (*(newNodes[i].getAdjNodes())).push_back(&(newNodes[i + 3]));
+        }
+        if (i - 1 >= 0) {
+            (*(newNodes[i].getAdjNodes())).push_back(&(newNodes[i - 1]));
+        }
+        if (i - 3 >= 0) {
+            (*(newNodes[i].getAdjNodes())).push_back(&(newNodes[i - 3]));
+        }
+    }
+
+    //place in the map
+    for (int i = 0; i < 4; i++) {
+        (*mapNodes).push_back(&newNodes[i]);
+    }
+    
 }
 

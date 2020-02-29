@@ -16,24 +16,23 @@
 using namespace std;
 
 Player::Player() {
-	VGMap* villageBoard = new VGMap();
-	vb = villageBoard;
+	vb = new VGMap();
 
-	vector<Building> builds;
-	*buildings = builds;
+	buildings = new vector<Building>;
 
 	for (int i = 0; i < 6; i++) {
 		Building building;
-		(*buildings).push_back(building);
+		(*buildings).push_back(*(new Building()));
 	}
 
+	tiles = new vector<HarvestTile>;
 	HarvestTile tile1;
 	HarvestTile tile2;
-	(*tiles)[0] = tile1;
-	(*tiles)[1] = tile2;
+	(*tiles).push_back(tile1);
+	(*tiles).push_back(tile2);
 
-	vector<int> resources;
-	*resourceMarkers = resources;
+	
+	resourceMarkers = new vector<int>;
 
 	for (int i = 0; i < 4; i++) {
 		(*resourceMarkers).push_back(0);
@@ -57,33 +56,33 @@ Player::Player() {
 }*/
 
 Player::~Player() {
-	delete[] vb;
-	delete[] tiles;
-	delete[] buildings;
-	delete[] resourceMarkers;
+	//delete[] vb;
+	//delete[] tiles;
+	//delete[] buildings;
+	//delete[] resourceMarkers;
 
-	vb = NULL;
-	tiles = NULL;
-	buildings = NULL;
-	resourceMarkers = NULL;
+	//vb = NULL;
+	//tiles = NULL;
+	//buildings = NULL;
+	//resourceMarkers = NULL;
 }
 
-/*bool Player::placeHarvestTile(int noTile, Map::Node pos, Map board) {
+bool Player::placeHarvestTile(int noTile, Map::Node pos, Map board, DeckHarvestTile deck) {
 	if (noTile == 0) {
-		board.placeHarvestTile((*tiles).at(0), pos);
-		drawHarvestTile();
+		board.placeHarvestTile((*tiles).at(0));
+		drawHarvestTile(deck, 0);
 		return true;
 	}
 	else if (noTile == 1) {
-		board.placeHarvestTile((*tiles).at(1), pos);
-		drawHarvestTile();
+		board.placeHarvestTile((*tiles).at(1));
+		drawHarvestTile(deck, 1);
 		return true;
 	}
 	else {
 		cout << "Error with the tile number";
 		return false;
 	}
-}*/
+}
 
 void Player::drawBuilding(DeckBuilding deckBuilding) {
 	Building buildingDrawn = deckBuilding.draw();
@@ -106,14 +105,14 @@ void Player::drawHarvestTile(DeckHarvestTile deck, int no) {
 	}
 }
 
-/*void Player::calculateResources(Map board, vector<Map::Node> nodesJustPlaced) {
+void Player::calculateResources(Map board, vector<Map::Node> nodesJustPlaced) {
 	
 	std::vector<int> resources = calculResourceMarkers(board, nodesJustPlaced);
 	for (int i=0; i<4; i++) {
 		(*resourceMarkers)[i] = resources.at(i);
 	}
 	cout << "Resources placed";
-}*/
+}
 
 
 //ONE OR THE OTHER
@@ -137,10 +136,10 @@ void Player::drawHarvestTile(DeckHarvestTile deck, int no) {
 
 
 //Methods build and canBuild have to be implemented.
-/* bool Player::buildVillage(int buildingIndex, VGMap::Node node) {
+ bool Player::buildVillage(int buildingIndex, int row, int col) {
 	Building building = (*buildings).at(buildingIndex);
-	if ((*vb).canBuild(building, node)) { //or canBuild(*vb, building, position) {
-		(*vb).build(building, node);
+	if ((*vb).canBuild(building, row, col)) { //or canBuild(*vb, building, position) {
+		(*vb).build(building, row, col);
 		return true;
 	}
 	else {
@@ -148,7 +147,7 @@ void Player::drawHarvestTile(DeckHarvestTile deck, int no) {
 		return false;
 	}
 	(*buildings).erase((*buildings).begin() + buildingIndex);
-}*/
+}
 
 //maybe implement canBuild here
  //can also be done in the map itself, easier.
@@ -201,7 +200,7 @@ void Player::drawHarvestTile(DeckHarvestTile deck, int no) {
 
 		 int k = 0; //k: each of the four squares from the tile
 		 while (!resourceFound && k < 4) {
-			 if (nodesJustPlaced.at(k).getResourceType() == res) {
+			 if (*(nodesJustPlaced.at(k).getResourceType()) == res) {
 				 resourceFound = true;
 				 //we found the place where the resource is on the tile, now we check adjacency
 				 //add a propriety to each square: counted that is reinitialized after each count of this method
@@ -222,7 +221,7 @@ int Player::recursiveCountResourceFromSquare(int res, Map::Node node) {
 	 vector<Map::Node*>* adjacentNodes = node.getAdjNodes(); //returns an array of 4 values, either a node or null (or an empty node, depend on how the board is done) (but even if it's the side it should be an array of 4 things) else test? just cannot be undefined
 	 for (int i = 0; i < (*adjacentNodes).size(); i++) { //for all 4 values
 		 Map::Node* ptrTestedNode = (*adjacentNodes).at(i);
-		 if (!(*ptrTestedNode).getCounted() && ptrTestedNode != NULL && (*ptrTestedNode).getResourceType() == res) {
+		 if (!(*ptrTestedNode).getCounted() && ptrTestedNode != NULL && *((*ptrTestedNode).getResourceType()) == res) {
 			 score += recursiveCountResourceFromSquare(res, (*ptrTestedNode));
 		 }
 	 }
@@ -231,7 +230,3 @@ int Player::recursiveCountResourceFromSquare(int res, Map::Node node) {
 	 //for all adjacent tiles, if same resource rappeler la methode avec cette tuile. Else return 1
 }
 
-int main() {
-	cout << "hello" << endl;
-	return 0;
-}

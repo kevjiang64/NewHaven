@@ -16,6 +16,7 @@
 #include <set>
 #include <iostream>
 #include <sstream>
+#include "Resources.h"
 using std::string;
 using std::vector;
 
@@ -66,8 +67,8 @@ public:
         inline std::vector<Node*>* getAdjNodes() { return pAdjNodes; };
         inline int* getResourceType() { return resourceType; };
         inline void setResourceType(int* resource) { resourceType = resource; }
-        inline bool* getCounted() { return isCounted; }
-        inline void setCounted(bool* counted) { isCounted = counted; }
+        inline bool getCounted() { return *isCounted; }
+        inline void setCounted(bool counted) { *isCounted = counted; }
     private:
         std::vector<Node*>* pAdjNodes;
         int* resourceType;
@@ -80,7 +81,7 @@ public:
     void addEdge(int from, int to);
     inline std::vector<Node*>* getMapNodes() { return mapNodes; };
     inline void setMapNodes(std::vector<Node*>* nodes) { mapNodes = nodes; }
-    void placeHarvestTile(Tile tile);
+    void placeHarvestTile(HarvestTile tile);
 
 private:
     int* playerNum;

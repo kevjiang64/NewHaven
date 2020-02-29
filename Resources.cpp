@@ -55,8 +55,8 @@ HarvestTile::HarvestTile() {
 };
 
 HarvestTile::~HarvestTile() {
-	delete topLeft;
-    delete[] resources;
+	//delete topLeft;
+    //delete[] resources;
 };
 
 // DECK FOR HARVEST TILES
@@ -66,7 +66,7 @@ DeckHarvestTile::DeckHarvestTile() {
 };
 
 DeckHarvestTile::~DeckHarvestTile() {
-	delete count;
+	//delete count;
 };
 
 HarvestTile DeckHarvestTile::draw() {
@@ -96,6 +96,7 @@ Building::Building() {
     label = (int*)malloc(15*sizeof(int));
     number = (int*)malloc(15*sizeof(int));
 	
+    
 	flipped = (bool*)malloc(sizeof(bool));
 	*flipped = false;
 
@@ -112,9 +113,9 @@ Building::Building() {
 };
 
 Building::~Building() {
-	delete label;
-    delete number;
-	delete flipped;
+	//delete label;
+    //delete number;
+	//delete flipped;
 };
 
 // DECK OF BUILDINGS
@@ -129,8 +130,8 @@ DeckBuilding::DeckBuilding() {
 };
 
 DeckBuilding::~DeckBuilding() {
-	delete totalCount;
-    delete count;
+	//delete totalCount;
+    //delete count;
 };
 
 //keep track of the limit of buildings created
@@ -197,8 +198,8 @@ void Hand::exchange() {
 
 }
 
-int main() {
+/*int main() {
     Building myDeck;
 	cout << "hello";
     return 0;
-}
+}*/
