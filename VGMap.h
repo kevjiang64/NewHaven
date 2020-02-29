@@ -30,10 +30,11 @@ public:
 		inline vector<Node> getAdjNode(){ return *adjNode; };
 		//Setters
 		inline void setBuilding(Building building2) { *building = building2; };
+		inline void setAdjNode(vector<Node> vect) { *adjNode = vect; };
 		//Methods
-		vector<VGMap::Node> fillAdjNodes(vector <vector<VGMap::Node>> board);
+		vector<VGMap::Node> fillAdjNodes(vector <vector<VGMap::Node>> board, int row, int col);
 		//For Testing
-		inline int getSize(const vector<Node>& adjNode) { return sizeof(adjNode); };
+		inline int getSize() { return adjNode->size();};
 	};
 	//Constructors
 	VGMap(int row, int col);

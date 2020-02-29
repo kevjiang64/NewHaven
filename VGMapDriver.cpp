@@ -11,32 +11,21 @@ int main()
 
 	while (answer == "yes")
 	{
-	cout << "hello";
-
 		int row;
 		int col;
-		cout << "What will be the value of the row?";
+		cout << "What will be the value of the row?\n";
 		cin >> row;
-		cout << "What will be the value of the col?";
+		cout << "What will be the value of the col?\n";
 		cin >> col;
 		VGMap a = VGMap(row, col);
 
-		if (row == 6 && col == 5)
+		for (int i = 0; i < row; i++)
 		{
-			for (int i = 0; i < row; i++)
+			for (int j = 0; j < col; j++)
 			{
-				for (int j = 0; j < col; i++)
-				{
-					a.getBoard()[i][j].fillAdjNodes(a.getBoard());
-				}
-			}
-			for (int i = 0; i < row; i++)
-			{
-				for (int j = 0; j < col; i++)
-				{
-					//Return number of adjNodes
-					cout << (a.getBoard())[i][j].getSize((a.getBoard())[i][j].getAdjNode());
-				}
+				VGMap::Node node = a.getBoard()[i][j];
+				
+				cout << "Number of adjacent nodes at position (" << i << "," << j << ")" << " :" << node.getSize() << "\n";
 			}
 		}
 		cout << "Do you want to test again?";
