@@ -18,8 +18,8 @@ using namespace std;
 /**
  Map default constructor
 */
-Map::Map(){
-    
+Map::Map() {
+
 }
 
 
@@ -68,24 +68,24 @@ void::Map::operator=(Map& rhs) {
 * Tile default constructor
 */
 
-Map::Tile::Tile(){
-    
+Map::Tile::Tile() {
+
 }
 
 /**
 * Tile constructor
 */
-Map::Tile::Tile(Node topLeft, Node topRight, Node bottomRight, Node bottomLeft){
-    topLeft = new Node(int resource);
-    topRight = new Node(int resource);
-    bottomRight = new Node(int resource);
-    bottomLeft = new Node(int resource);
+Map::Tile::Tile(Node topLeft, Node topRight, Node bottomRight, Node bottomLeft) {
+    Node topLeft = Node();
+    Node topRight = Node();
+    Node bottomRight = Node();
+    Node bottomLeft = Node();
 }
 
 /**
 * Tile destructor
 */
-Map::Tile::~Tile(){
+Map::Tile::~Tile() {
     delete topLeft;
     delete topRight;
     delete bottomRight;
@@ -101,13 +101,13 @@ void Map::Tile::operator=(Map::Tile& rhs) {
 }
 
 Map::Tile::Tile(const Tile& toCopy) {
-    topLeft = new Node(int resource);
+    topLeft = new Node();
     *topLeft = *toCopy.topLeft;
-    topRight = new Node(int resource);
+    topRight = new Node();
     *topRight = *toCopy.topRight;
-    bottomRight = new Node(int resource);
+    bottomRight = new Node();
     *bottomRight = *toCopy.bottomRight;
-    bottomLeft = new Node(int resource);
+    bottomLeft = new Node();
     *bottomLeft = *toCopy.bottomLeft;
 }
 
@@ -117,8 +117,8 @@ Map::Tile::Tile(const Tile& toCopy) {
  * Node default constructor
  */
 
-Map::Node::Node(){
-    
+Map::Node::Node() {
+
 }
 
 
@@ -128,17 +128,17 @@ Map::Node::Node(){
  */
 Map::Node::Node(int resource, std::vector<Node> pAdjNode, bool counted) {
     resourceType = new int();
-    pAdjNode = new std::vector<Node*>;
-    counted = new bool(false);
+    pAdjNodes = new std::vector<Node*>;
+    isCounted = new bool(false);
 }
 
 /**
  * Node destructor
  */
 Map::Node::~Node() {
-    delete resourceType;
-    delete pAdjNode;
-    delete counted;
+    delete& resourceType;
+    delete& pAdjNodes;
+    delete& isCounted;
 }
 
 /**
@@ -146,8 +146,8 @@ Map::Node::~Node() {
 */
 void Map::Node::operator=(Map::Node& rhs) {
     this->resourceType = rhs.resourceType;
-    this->pAdjNode = rhs.pAdjNode;
-    this->counted = rhs.counted;
+    this->pAdjNodes = rhs.pAdjNodes;
+    this->isCounted = rhs.isCounted;
 }
 
 /**
@@ -156,17 +156,17 @@ void Map::Node::operator=(Map::Node& rhs) {
 Map::Node::Node(const Node& toCopy) {
     resourceType = new int();
     *resourceType = *toCopy.resourceType;
-    pAdjNode = new std::vector<Node*>;
-    *pAdjNode = *toCopy.pAdjNode;
-    counted = new bool();
-    *counted = *toCopy.counted;
+    pAdjNodes = new std::vector<Node*>;
+    *pAdjNodes = *toCopy.pAdjNodes;
+    isCounted = new bool();
+    *isCounted = *toCopy.isCounted;
 }
 
 /**
  * Add connection between two nodes
  *
  */
-Map::Node* Map::addNode(int resource, std::vector<Node*> pAdjNode, bool counted) {
+Map::Node* Map::addNode(int resource, std::vector<Node> pAdjNode, bool counted) {
     //create graph node
     auto* thisNode = new Node(resource, pAdjNode, counted);
     //add node to graph
@@ -190,12 +190,13 @@ void Map::addEdge(int from, int to) {
  */
 bool Map::testConnected() {
     //test overall graph
-    if(testIndividualGraph(this->mapNodes,false)){
+    if (testIndividualGraph(this->mapNodes, false)) {
         //test subgraphs
-        for(auto node : *this->mapNodes){
-            if(node->getResourceType()->size() == 1){
+        for (auto node : *this->mapNodes) {
+            if (node->getAdjNodes()->size() == 1) {
                 continue;
-            }else if(!testIndividualGraph(node->getResourceType(),true)){
+            }
+            else if (!testIndividualGraph(node->getAdjNodes(), true)) {
                 return false;
             }
         }
@@ -205,7 +206,7 @@ bool Map::testConnected() {
 }
 
 bool Map::testIndividualGraph(std::vector<Node*>* toTest, bool isVisited) {
-    auto* visitedNodes = new std::set<std::string>;
+    auto* visitedNodes = new std::set<int*>;
     //recurse through graph with an arbitrary starting point, if we visit all the nodes in graph then its connected.
     dfs(visitedNodes, toTest[0][0], isVisited);
     bool connected = visitedNodes->size() == toTest->size();
@@ -215,12 +216,12 @@ bool Map::testIndividualGraph(std::vector<Node*>* toTest, bool isVisited) {
 
 /**
  * Test if the map is a connected graph.
- * recurse through all adjacent nodes from starting point and add node number to list. If all the tiles are in the list after the recursion, then map is fully connected
+ * recurse through all adjacent nodes from starting point and add node number to list. If all the nodes are in the list after the recursion, then map is fully connected
  *
  * @param visitedNodes a list of visited node
  * @param node the node we are analyzing
  */
-void Map::dfs(std::set<int>* visitedNodes, Node* node, bool nodeTest) {
+void Map::dfs(std::set<int*>* visitedNodes, Node* node, bool nodeTest) {
     if (visitedNodes->find(node->getResourceType()) == visitedNodes->end()) {
         visitedNodes->insert(node->getResourceType());
         for (auto& n : *node->getAdjNodes()) {
@@ -234,10 +235,10 @@ void Map::dfs(std::set<int>* visitedNodes, Node* node, bool nodeTest) {
     }
 }
 
-void Map::placeHarvestTile(Tile tile){
-    Node topLeft = tile.getTopLeft();
-    Node topRight = tile.getTopRight();
-    Node bottomRight = tile.getBottomRight();
-    Node bottomLeft = tile.getBottomLeft();
+void Map::placeHarvestTile(Map::Tile tile) {
+    Node topLeft = *tile.getTopLeft();
+    Node topRight = *tile.getTopRight();
+    Node bottomRight = *tile.getBottomRight();
+    Node bottomLeft = *tile.getBottomLeft();
 }
 
