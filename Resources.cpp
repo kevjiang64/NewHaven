@@ -193,11 +193,5 @@ Hand::~Hand() {
 }
 
 void Hand::exchange() {
-
+    
 }
-
-/*int main() {
-    Building myDeck;
-	cout << "hello";
-    return 0;
-}*/
