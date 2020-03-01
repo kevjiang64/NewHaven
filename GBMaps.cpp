@@ -367,3 +367,34 @@ bool Map::validPosition(int testedRow, int testedCol) {
     else return false;
 }
 
+void Map::setMapSize(int playerNumber) {
+    if (playerNumber == 2) {
+        std::vector<Node*>* emptyMap;
+        emptyMap->reserve(100);
+        setMapNodes(emptyMap);
+    }
+    else if (playerNumber == 3) {
+        std::vector<Node*>* emptyMap;
+        emptyMap->reserve(140);
+        setMapNodes(emptyMap);
+    }
+
+    else if (playerNumber == 4) {
+        std::vector<Node*>* emptyMap;
+        emptyMap->reserve(180);
+        setMapNodes(emptyMap);
+    }
+}
+
+std::string Map::getMapSize(int playerNumber) {
+    if (playerNumber == 2) {
+        return "the center 5x5 area.";
+    }
+    else if (playerNumber == 3) {
+        return "the light center 5x5 area and the top and bottom green squares.";
+    }
+
+    else if (playerNumber == 4) {
+        return "the entire playing area.";
+    }
+}
