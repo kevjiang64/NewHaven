@@ -23,10 +23,10 @@ using std::vector;
 class Map {
 public:
     class Node;
-    class Tile;
+    //class Tile;
 
     Map();
-    Map(int playerNumber, std::vector<Node> nodes);
+    Map(int playerNumber, std::vector<Node*> nodes);
     ~Map();
     Map(const Map& toCopy);
     void operator=(Map& rhs);
@@ -35,7 +35,7 @@ public:
 
     inline int* getPlayerNum() const { return playerNum; };
 
-    class Tile {
+    /*class Tile {
     public:
         Tile();
         Tile(Node topLeft, Node topRight, Node bottomRight, Node bottomLeft);
@@ -55,39 +55,47 @@ public:
         Node* topRight;
         Node* bottomRight;
         Node* bottomLeft;
-    };
+    };*/
 
     class Node {
     public:
         Node();
-        Node(int resource, std::vector<Node> pAdjNode, bool counted);
+        Node(int resource, std::vector<Node*> pAdjNode, bool counted);
         Node(const Node& toCopy);
         void operator=(Node& rhs);
         ~Node();
         inline std::vector<Node*>* getAdjNodes() { return pAdjNodes; };
         inline int* getResourceType() { return resourceType; };
-        inline void setResourceType(int* resource) { resourceType = resource; }
-        inline bool getCounted() { return *isCounted; }
-        inline void setCounted(bool counted) { *isCounted = counted; }
+        inline void setResourceType(int* resource) { resourceType = resource; };
+        inline bool getCounted() { return *isCounted; };
+        inline void setCounted(bool counted) { *isCounted = counted; };
+        inline int getRow() { return *row; };
+        inline void setRow(int newRow) { *row = newRow; };
+        inline int getCol() { return *col; };
+        inline void setCol(int newCol) { *col = newCol; };
     private:
         std::vector<Node*>* pAdjNodes;
         int* resourceType;
         bool* isCounted;
+        int* row;
+        int* col;
     };
 
 
 
-    Map::Node* addNode(int resource, std::vector<Node> pAdjNode, bool counted);
+    Map::Node* addNode(int resource, std::vector<Node*> pAdjNode, bool counted);
     void addEdge(int from, int to);
     inline std::vector<Node*>* getMapNodes() { return mapNodes; };
-    inline void setMapNodes(std::vector<Node*>* nodes) { mapNodes = nodes; }
-    void placeHarvestTile(HarvestTile tile);
+    inline void setMapNodes(std::vector<Node*>* nodes) { mapNodes = nodes; };
+    vector<Node> placeHarvestTile(HarvestTile tile, int row, int col);
+    bool validPosition(int row, int col);
 
 private:
     int* playerNum;
     std::vector<Node*>* mapNodes;
     static bool testIndividualGraph(std::vector<Node*>* toTest, bool isConnected);
     static void dfs(std::set<int*>* visitedNodes, Node* nodes, bool connectedTest);
+   
 };
 
 #endif /* GBMaps_h */

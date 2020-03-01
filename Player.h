@@ -20,13 +20,13 @@ private:
     VGMap* vb;
     vector<Building>* buildings;
     vector<HarvestTile>* tiles;
-    vector<int>* resourceMarkers;
+    Hand* hand;
     bool canBuild(VGMap vboard, Building building, VGMap::Node pos);
 
 public:
     Player();
     ~Player();
-    bool placeHarvestTile(int noTile, Map board, DeckHarvestTile deck);
+    bool placeHarvestTile(int noTile, int row, int col, Map board, DeckHarvestTile deck);
     void drawBuilding(DeckBuilding deckBuilding);
     void drawHarvestTile(DeckHarvestTile deck, int no);
     void resourceTracker();
@@ -35,7 +35,7 @@ public:
     //getters
     vector<Building> getBuildings() { return *buildings; };
     vector<HarvestTile> getTiles() { return *tiles; };
-    vector<int> getResourceMarkers() { return *resourceMarkers;  };
+     Hand* getHand() { return hand;  };
     
 };
 

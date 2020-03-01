@@ -179,21 +179,25 @@ Building DeckBuilding::draw() {
 // HAND
 
 Hand::Hand() {
-	wheatCount = new int;
-	sheepCount = new int;
-	timberCount = new int;
-	stoneCount = new int;
+    resourceMarkers = new vector<int>;
+
+    for (int i = 0; i < 4; i++) {
+        (*resourceMarkers).push_back(0);
+    }
 }
 
 Hand::~Hand() {
-	delete wheatCount;
-	delete sheepCount;
-	delete timberCount;
-	delete stoneCount;
+	
 }
 
-void Hand::exchange() {
+void Hand::exchange(vector<int> resources) {
+    for (int i = 0; i < 4; i++) {
+        (*resourceMarkers)[i] = resources.at(i);
+    }
+}
 
+void Hand::printResources() {
+    cout << "Resources:\nName of resource 1:" << (*resourceMarkers).at(0) << "\nName of resource 2:" << (*resourceMarkers).at(1) << "\nName of resource 3:" << (*resourceMarkers).at(2) << "\nName of resource 4:" << (*resourceMarkers).at(3);
 }
 
 /*int main() {

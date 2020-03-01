@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 using namespace std;
 
 enum ResourceType {Wheat, Sheep, Timber, Stone};
@@ -66,13 +67,13 @@ class DeckBuilding {
 
 class Hand {
 	private:
-		int* wheatCount;
-		int* sheepCount;
-		int* timberCount;
-		int* stoneCount;
+		vector<int>* resourceMarkers;
 
 	public:
 		Hand();
 		~Hand();
-		void exchange();
+		void exchange(vector<int> resources);
+		void printResources();
+		vector<int>* getResourceMarkers() { return resourceMarkers; };
+		void setResourceMarkers(vector<int> resources) { *resourceMarkers = resources; };
 };
