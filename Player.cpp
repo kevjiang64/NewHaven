@@ -64,13 +64,14 @@ Player::~Player() {
 	//resourceMarkers = NULL;
 }
 
-bool Player::placeHarvestTile(int noTile, int row, int col, Map board, DeckHarvestTile deck) {
+bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarvestTile deck) {
 	if (noTile == 0) {
-		
-		if (board.validPosition(row, col)) {
-			vector<Map::Node> nodesJustPlaced = board.placeHarvestTile((*tiles).at(0), row, col);
-			calculateResources(board, nodesJustPlaced);
+		if (board->validPosition(row, col)) {
+			vector<Map::Node> nodesJustPlaced = board->placeHarvestTile((*tiles).at(0), row, col);
+			calculateResources(*board, nodesJustPlaced);
 			drawHarvestTile(deck, 0);
+			cout << "playernum dans le player " << *(board->getPlayerNum()) << endl;
+			cout << "row dans le player " << ((*board->getMapNodes())[0]->getRow()) << endl;
 			return true;
 		}
 		else {
@@ -79,8 +80,9 @@ bool Player::placeHarvestTile(int noTile, int row, int col, Map board, DeckHarve
 		}
 	}
 	else if (noTile == 1) {
-		if (board.validPosition(row, col)) {
-			board.placeHarvestTile((*tiles).at(1), row, col);
+		if (board->validPosition(row, col)) {
+			vector<Map::Node> nodesJustPlaced = board->placeHarvestTile((*tiles).at(1), row, col);
+			calculateResources(*board, nodesJustPlaced);
 			drawHarvestTile(deck, 1);
 			return true;
 		}

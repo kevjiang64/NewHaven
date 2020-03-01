@@ -26,7 +26,7 @@ private:
 public:
     Player();
     ~Player();
-    bool placeHarvestTile(int noTile, int row, int col, Map board, DeckHarvestTile deck);
+    bool placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarvestTile deck);
     void drawBuilding(DeckBuilding deckBuilding);
     void drawHarvestTile(DeckHarvestTile deck, int no);
     void resourceTracker();

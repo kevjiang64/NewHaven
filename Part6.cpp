@@ -25,7 +25,7 @@ vector<int> CountResources::calculResourceMarkers(Map board, vector<Map::Node> n
 
 		int k = 0; //k: each of the four squares from the tile
 		while (!resourceFound && k < 4) {
-			if (*(board.getMapNodes()->at(board.getMapNodes()->size() -k -1)->getResourceType()) == res) {
+			if (*(board.getMapNodes()->at(board.getMapNodes()->size() - k - 1)->getResourceType()) == res) {
 				resourceFound = true;
 				//we found the place where the first instance of the resource is on the tile, now we check adjacency
 				cout << "the resource: " << res <<" at position " << board.getMapNodes()->size() - k - 1 << endl;
