@@ -30,6 +30,17 @@ HarvestTile::HarvestTile() {
 
         if ((output == 0 && wheatCount > 3) || (output == 1 && sheepCount > 3) || (output == 2 && timberCount > 3) || (output == 3 && stoneCount > 3))
             continue;
+        
+        if(index == 3) {
+            bool ok = false;
+            for (int i = 0; i<3; i++) {
+                if (output == resources[i])
+                    ok = true;
+            }
+            
+            if (!ok)
+                continue;
+        }
 
         resources[index] = output;
         index++;
@@ -199,9 +210,3 @@ void Hand::exchange(vector<int> resources) {
 void Hand::printResources() {
     cout << "Resources:\nName of resource 1:" << (*resourceMarkers).at(0) << "\nName of resource 2:" << (*resourceMarkers).at(1) << "\nName of resource 3:" << (*resourceMarkers).at(2) << "\nName of resource 4:" << (*resourceMarkers).at(3);
 }
-
-/*int main() {
-    Building myDeck;
-	cout << "hello";
-    return 0;
-}*/
