@@ -28,7 +28,7 @@ HarvestTile::HarvestTile() {
         if (index == 0)
             *topLeft = output;
 
-        if ((output == 0 && wheatCount > 3) || (output == 1 && sheepCount > 3) || (output == 2 && timberCount > 3) || (output == 3 && stoneCount > 3))
+        if ((output == 0 && wheatCount >= 3) || (output == 1 && sheepCount >= 3) || (output == 2 && timberCount >= 3) || (output == 3 && stoneCount >= 3))
             continue;
         
         if(index == 3) {
@@ -37,6 +37,9 @@ HarvestTile::HarvestTile() {
                 if (output == resources[i])
                     ok = true;
             }
+            
+            if (wheatCount > 1 || sheepCount > 1 || timberCount > 1 || stoneCount > 1)
+            ok = true;
             
             if (!ok)
                 continue;
