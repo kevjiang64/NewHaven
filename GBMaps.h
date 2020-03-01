@@ -17,16 +17,17 @@
 #include <iostream>
 #include <sstream>
 #include "Resources.h"
+#include "Player.h"
 using std::string;
 using std::vector;
 
 class Map {
 public:
     class Node;
-    //class Tile;
+    class Tile;
 
     Map();
-    Map(int playerNumber, std::vector<Node*> nodes);
+    Map(int playerNumber, std::vector<Node> nodes);
     ~Map();
     Map(const Map& toCopy);
     void operator=(Map& rhs);
@@ -35,10 +36,10 @@ public:
 
     inline int* getPlayerNum() const { return playerNum; };
 
-    /*class Tile {
+    class Tile {
     public:
         Tile();
-        Tile(Node topLeft, Node topRight, Node bottomRight, Node bottomLeft);
+        Tile(Node* topLeft, Node* topRight, Node* bottomRight, Node* bottomLeft);
         Tile(const Tile& toCopy);
         void operator=(Tile& rhs);
         ~Tile();
@@ -55,7 +56,7 @@ public:
         Node* topRight;
         Node* bottomRight;
         Node* bottomLeft;
-    };*/
+    };
 
     class Node {
     public:
@@ -65,10 +66,11 @@ public:
         void operator=(Node& rhs);
         ~Node();
         inline std::vector<Node*>* getAdjNodes() { return pAdjNodes; };
+        inline void setAdjNodes(std::vector<Node*>* adjNodes) { pAdjNodes = adjNodes; }
         inline int* getResourceType() { return resourceType; };
-        inline void setResourceType(int* resource) { resourceType = resource; };
-        inline bool getCounted() { return *isCounted; };
-        inline void setCounted(bool counted) { *isCounted = counted; };
+        inline void setResourceType(int* resource) { resourceType = resource; }
+        inline bool* getCounted() { return isCounted; }
+        inline void setCounted(bool* counted) { isCounted = counted; }
         inline int getRow() { return *row; };
         inline void setRow(int newRow) { *row = newRow; };
         inline int getCol() { return *col; };
@@ -86,7 +88,7 @@ public:
     Map::Node* addNode(int resource, std::vector<Node*> pAdjNode, bool counted);
     void addEdge(int from, int to);
     inline std::vector<Node*>* getMapNodes() { return mapNodes; };
-    inline void setMapNodes(std::vector<Node*>* nodes) { mapNodes = nodes; };
+    inline void setMapNodes(std::vector<Node*>* nodes) { mapNodes = nodes; }
     vector<Node> placeHarvestTile(HarvestTile tile, int row, int col);
     bool validPosition(int row, int col);
     inline void setMapSize(int playerNumber);
@@ -99,7 +101,6 @@ private:
     std::vector<Node*>* mapNodes;
     static bool testIndividualGraph(std::vector<Node*>* toTest, bool isConnected);
     static void dfs(std::set<int*>* visitedNodes, Node* nodes, bool connectedTest);
-   
 };
 
 #endif /* GBMaps_h */

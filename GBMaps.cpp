@@ -6,8 +6,6 @@
 //  Copyright © 2020 Justin Teixeira. All rights reserved.
 //
 
-#include "Resources.h"
-
 #include <stdio.h>
 #include "GBMaps.h"
 #include <string>
@@ -15,14 +13,16 @@
 #include <vector>
 #include <set>
 #include <iostream>
+#include "Resources.h"
+#include "Player.h"
+#include "Part6.h"
 using namespace std;
 
 /**
  Map default constructor
 */
 Map::Map() {
-    playerNum = new int(2);
-    mapNodes = new vector<Node*>();
+
 }
 
 
@@ -34,9 +34,9 @@ Map::Map() {
  */
 
 
-Map::Map(int playerNumber, std::vector<Node*> nodes) {
+Map::Map(int playerNumber, std::vector<Node> nodes) {
     playerNum = new int(playerNumber);
-    mapNodes = new std::vector<Node*>(nodes);
+    mapNodes = new std::vector<Node*>;
 }
 
 /**
@@ -71,24 +71,24 @@ void::Map::operator=(Map& rhs) {
 * Tile default constructor
 */
 
-/*Map::Tile::Tile() {
+Map::Tile::Tile() {
 
-}*/
+}
 
 /**
 * Tile constructor
 */
-/*Map::Tile::Tile(Node topLeft, Node topRight, Node bottomRight, Node bottomLeft) {
-    Node topLeft = Node();
-    Node topRight = Node();
-    Node bottomRight = Node();
-    Node bottomLeft = Node();
-}*/
+Map::Tile::Tile(Node* topLeft, Node* topRight, Node* bottomRight, Node* bottomLeft) {
+    this->topLeft = topLeft;
+    this->topRight = topRight;
+    this->bottomRight = bottomRight;
+    this->bottomLeft = bottomLeft;
+}
 
 /**
 * Tile destructor
 */
-/*Map::Tile::~Tile() {
+Map::Tile::~Tile() {
     delete topLeft;
     delete topRight;
     delete bottomRight;
@@ -112,7 +112,7 @@ Map::Tile::Tile(const Tile& toCopy) {
     *bottomRight = *toCopy.bottomRight;
     bottomLeft = new Node();
     *bottomLeft = *toCopy.bottomLeft;
-}*/
+}
 
 
 
@@ -121,11 +121,7 @@ Map::Tile::Tile(const Tile& toCopy) {
  */
 
 Map::Node::Node() {
-    resourceType = new int();
-    pAdjNodes = new std::vector<Node*>;
-    isCounted = new bool(false);
-    row = new int(0);
-    col = new int(0);
+
 }
 
 
@@ -136,18 +132,16 @@ Map::Node::Node() {
 Map::Node::Node(int resource, std::vector<Node*> pAdjNode, bool counted) {
     resourceType = new int(resource);
     pAdjNodes = new std::vector<Node*>(pAdjNode);
-    isCounted = new bool(false);
-    row = new int(0);
-    col = new int(0);
+    isCounted = new bool(counted);
 }
 
 /**
  * Node destructor
  */
 Map::Node::~Node() {
-    //delete& resourceType;
-    //delete& pAdjNodes;
-    //delete& isCounted;
+    delete& resourceType;
+    delete& pAdjNodes;
+    delete& isCounted;
 }
 
 /**
@@ -164,15 +158,11 @@ void Map::Node::operator=(Map::Node& rhs) {
 */
 Map::Node::Node(const Node& toCopy) {
     resourceType = new int();
-    if (toCopy.resourceType != nullptr) *resourceType = *toCopy.resourceType;
+    *resourceType = *toCopy.resourceType;
     pAdjNodes = new std::vector<Node*>;
-    if (toCopy.pAdjNodes != nullptr) *pAdjNodes = *toCopy.pAdjNodes;
+    *pAdjNodes = *toCopy.pAdjNodes;
     isCounted = new bool();
-    if (toCopy.isCounted != nullptr) *isCounted = *toCopy.isCounted;
-    row = new int();
-    if (toCopy.row != nullptr) *row = *toCopy.row;
-    col = new int();
-    if (toCopy.col != nullptr) *col = *toCopy.col;
+    *isCounted = *toCopy.isCounted;
 }
 
 /**
@@ -248,17 +238,6 @@ void Map::dfs(std::set<int*>* visitedNodes, Node* node, bool nodeTest) {
     }
 }
 
-/*void Map::placeHarvestTile(Map::Tile tile) {
-    Node topLeft = *tile.getTopLeft();
-    Node topRight = *tile.getTopRight();
-    Node bottomRight = *tile.getBottomRight();
-    Node bottomLeft = *tile.getBottomLeft();
-}*/
-
-/**
-*  From a Harvest Tile, creates 4 new nodes, sets their adjacency just within the tile (since no position), and places it in the map
-* row and col are the position of the top left resource
-*/
 vector<Map::Node> Map::placeHarvestTile(HarvestTile tile, int row, int col) {
     //create nodes from the tile
     vector<Node> newNodes = *(new vector<Node>);
@@ -280,10 +259,10 @@ vector<Map::Node> Map::placeHarvestTile(HarvestTile tile, int row, int col) {
     newNodes[0].setRow(row);
     newNodes[0].setCol(col);
     newNodes[1].setRow(row);
-    newNodes[0].setCol(col+1);
-    newNodes[0].setRow(row+1);
-    newNodes[0].setCol(col+1);
-    newNodes[0].setRow(row+1);
+    newNodes[0].setCol(col + 1);
+    newNodes[0].setRow(row + 1);
+    newNodes[0].setCol(col + 1);
+    newNodes[0].setRow(row + 1);
     newNodes[0].setCol(col);
 
     //set adjacency within the nodes of the tile itself (i.e. suppose we place the tile adjacent to nothing)
@@ -330,9 +309,9 @@ vector<Map::Node> Map::placeHarvestTile(HarvestTile tile, int row, int col) {
     for (int i = 0; i < 4; i++) {
         (*mapNodes).push_back(&newNodes[i]);
     }
-   
+
     return newNodes;
-    
+
 }
 
 //checks for out of bounds depending on how many players and checks if there is a tile already there.
@@ -343,7 +322,7 @@ bool Map::validPosition(int testedRow, int testedCol) {
     if (testedRow % 2 == 0 && testedCol % 2 == 0) {
         //check for out of bounds
         if (testedRow < 0 || testedRow>13 || testedCol < 0 || testedCol>13) {
-           return false;;
+            return false;;
         }
         else if (testedCol == 0 || testedCol == 1 || testedCol == 12 || testedCol == 13) {
             if (*playerNum == 2 || *playerNum == 3) {
@@ -351,11 +330,11 @@ bool Map::validPosition(int testedRow, int testedCol) {
             }
             else {
                 if (testedRow == 0 || testedRow == 1 || testedRow == 12 || testedRow == 13) return false;
-            } 
+            }
         }
         else if (testedRow == 0 || testedRow == 1 || testedRow == 12 || testedRow == 13) {
             if (*playerNum == 2) {
-               return false;
+                return false;
             }
         }
         for (int i = 0; i < mapNodes->size(); i++) {
@@ -398,3 +377,4 @@ std::string Map::getMapSize(int playerNumber) {
         return "the entire playing area.";
     }
 }
+
