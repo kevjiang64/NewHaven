@@ -44,7 +44,7 @@ Map::Map(int playerNumber, std::vector<Node*> nodes) {
  * @param toCopy copy constructor
  */
 Map::Map(const Map& toCopy) {
-    playerNum = new int();
+    playerNum = new int(2);
     mapNodes = new vector<Node*>;
     *playerNum = *toCopy.playerNum;
     *mapNodes = *toCopy.mapNodes;
@@ -54,8 +54,8 @@ Map::Map(const Map& toCopy) {
  * Map destructor
  */
 Map::~Map() {
-    delete playerNum;
-    delete mapNodes;
+    //delete playerNum;
+    //delete mapNodes;
 }
 
 /**
@@ -121,7 +121,8 @@ Map::Tile::Tile(const Tile& toCopy) {
  */
 
 Map::Node::Node() {
-    resourceType = new int();
+    
+    resourceType = new int(0);
     pAdjNodes = new std::vector<Node*>;
     isCounted = new bool(false);
     row = new int(0);
@@ -134,6 +135,7 @@ Map::Node::Node() {
  *
  */
 Map::Node::Node(int resource, std::vector<Node*> pAdjNode, bool counted) {
+   
     resourceType = new int(resource);
     pAdjNodes = new std::vector<Node*>(pAdjNode);
     isCounted = new bool(false);
@@ -157,6 +159,8 @@ void Map::Node::operator=(Map::Node& rhs) {
     this->resourceType = rhs.resourceType;
     this->pAdjNodes = rhs.pAdjNodes;
     this->isCounted = rhs.isCounted;
+    this->row = rhs.row;
+    this->col = rhs.col;
 }
 
 /**
@@ -280,11 +284,13 @@ vector<Map::Node> Map::placeHarvestTile(HarvestTile tile, int row, int col) {
     newNodes[0].setRow(row);
     newNodes[0].setCol(col);
     newNodes[1].setRow(row);
-    newNodes[0].setCol(col+1);
-    newNodes[0].setRow(row+1);
-    newNodes[0].setCol(col+1);
-    newNodes[0].setRow(row+1);
-    newNodes[0].setCol(col);
+    newNodes[1].setCol(col+1);
+    newNodes[2].setRow(row+1);
+    newNodes[2].setCol(col+1);
+    newNodes[3].setRow(row+1);
+    newNodes[3].setCol(col);
+
+    
 
     //set adjacency within the nodes of the tile itself (i.e. suppose we place the tile adjacent to nothing)
     for (int i = 0; i < 4; i++) {
@@ -304,25 +310,30 @@ vector<Map::Node> Map::placeHarvestTile(HarvestTile tile, int row, int col) {
 
     //set adjacency to other related positions: 
     //iterate through thenodes already there and if they are at an adjacent position, add adjacency (both ways)
+    
     for (int i = 0; i < mapNodes->size(); i++) {
         //if the node has same row and col as tested, return false 
-        int testedRow = mapNodes->at(i)->getRow();
-        int testedCol = mapNodes->at(i)->getCol();
+        int testedRow = (mapNodes->at(i)->getRow());
+        int testedCol = (mapNodes->at(i)->getCol());
         if ((testedRow == row - 1 && testedCol == col) || (testedRow == row && testedCol == col - 1)) {
             newNodes[0].getAdjNodes()->push_back(mapNodes->at(i));
             mapNodes->at(i)->getAdjNodes()->push_back(&(newNodes[0]));
+            cout<<" nodes adjacent of the 1st one "<<endl;
         }
         else if ((testedRow == row - 1 && testedCol == col + 1) || (testedRow == row && testedCol == col + 2)) {
             newNodes[1].getAdjNodes()->push_back(mapNodes->at(i));
             mapNodes->at(i)->getAdjNodes()->push_back(&(newNodes[1]));
+            cout << " nodes adjacent of the 2nd one " << endl;
         }
         else if ((testedRow == row + 1 && testedCol == col + 2) || (testedRow == row + 2 && testedCol == col + 1)) {
             newNodes[2].getAdjNodes()->push_back(mapNodes->at(i));
             mapNodes->at(i)->getAdjNodes()->push_back(&(newNodes[2]));
+            cout << " nodes adjacent of the 3rd one " << endl;
         }
         else if ((testedRow == row + 2 && testedCol == col) || (testedRow == row + 1 && testedCol == col - 1)) {
             newNodes[3].getAdjNodes()->push_back(mapNodes->at(i));
             mapNodes->at(i)->getAdjNodes()->push_back(&(newNodes[3]));
+            cout << " nodes adjacent of the 4th one " << endl;
         }
     }
 
@@ -330,6 +341,8 @@ vector<Map::Node> Map::placeHarvestTile(HarvestTile tile, int row, int col) {
     for (int i = 0; i < 4; i++) {
         (*mapNodes).push_back(&newNodes[i]);
     }
+    cout << "row first element " << (mapNodes->at(0)->getRow()) << endl;
+    cout << "row dans le map " << (this->getMapNodes()->at(0)->getRow()) << endl;
    
     return newNodes;
     
@@ -358,8 +371,10 @@ bool Map::validPosition(int testedRow, int testedCol) {
                return false;
             }
         }
+        
         for (int i = 0; i < mapNodes->size(); i++) {
             //if the node has same row and col as tested, return false 
+            cout << "and here it stops " << *(mapNodes->at(i)->getResourceType()) << endl;
             if (mapNodes->at(i)->getRow() == testedRow && mapNodes->at(i)->getCol() == testedCol) return false;
         }
         return true;
