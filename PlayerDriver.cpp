@@ -8,19 +8,38 @@
 using namespace std;
 
 int main() {
-	cout << "hello" << endl;
-	Player player = *(new Player());
-	for (int i = 0; i < player.getBuildings().size(); i++) {
-		cout << "player's buildings" << player.getBuildings().at(i).getNumber() << endl;
-	}
-
-	DeckBuilding deck = *(new DeckBuilding());
-	player.drawBuilding(deck);
+	cout << "player start" << endl;
 	cout << "" << endl;
+	Player player = *(new Player());
+	
+	//output buildings
+	for (int i = 0; i < player.getBuildings().size(); i++) {
+		cout << "player's buildings " << player.getBuildings().at(i).getNumber() << endl;
+	}
+	cout << "" << endl;
+
+	//output tiles
+	for (int i = 0; i < player.getTiles().size(); i++) {
+		cout << "player's tiles " << *(player.getTiles().at(i).getTopLeft()) << endl;
+	}
+	cout << "" << endl;
+
+	//draw Building
+	DeckBuilding deckBuilding = *(new DeckBuilding());
+	player.drawBuilding(deckBuilding);
 	for (int i = 0; i < player.getBuildings().size(); i++) {
 		cout << "player's buildings" << player.getBuildings().at(i).getNumber() << endl;
 	}
+	cout << "" << endl;
 
+	//place harvest tile
+	DeckHarvestTile deckTiles = *(new DeckHarvestTile());
+
+	Map board = *(new Map(0, *(new vector<Map::Node>)));
+
+	bool tilePlaced = player.placeHarvestTile(0, board, deckTiles);
+	
+	cout << "" << endl;
 	cout << "player done" << endl;
 	return 0;
 }

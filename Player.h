@@ -10,6 +10,7 @@
 #include "VGMap.h"
 #include "Resources.h"
 #include "GBMaps.h"
+#include "Part6.h"
 #ifndef Player_h
 #define Player_h
 
@@ -21,13 +22,11 @@ private:
     vector<HarvestTile>* tiles;
     vector<int>* resourceMarkers;
     bool canBuild(VGMap vboard, Building building, VGMap::Node pos);
-    vector<int> calculResourceMarkers(Map board, vector<Map::Node> nodesJustPlaced);
-    int recursiveCountResourceFromSquare(int res, Map::Node node);
 
 public:
     Player();
     ~Player();
-    bool placeHarvestTile(int noTile, Map::Node pos, Map board, DeckHarvestTile deck);
+    bool placeHarvestTile(int noTile, Map board, DeckHarvestTile deck);
     void drawBuilding(DeckBuilding deckBuilding);
     void drawHarvestTile(DeckHarvestTile deck, int no);
     void resourceTracker();

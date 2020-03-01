@@ -138,9 +138,9 @@ Map::Node::Node(int resource, std::vector<Node> pAdjNode, bool counted) {
  * Node destructor
  */
 Map::Node::~Node() {
-    delete& resourceType;
-    delete& pAdjNodes;
-    delete& isCounted;
+    //delete& resourceType;
+    //delete& pAdjNodes;
+    //delete& isCounted;
 }
 
 /**
@@ -157,11 +157,11 @@ void Map::Node::operator=(Map::Node& rhs) {
 */
 Map::Node::Node(const Node& toCopy) {
     resourceType = new int();
-    *resourceType = *toCopy.resourceType;
+    if (toCopy.resourceType != nullptr) *resourceType = *toCopy.resourceType;
     pAdjNodes = new std::vector<Node*>;
-    *pAdjNodes = *toCopy.pAdjNodes;
+    if (toCopy.pAdjNodes != nullptr) *pAdjNodes = *toCopy.pAdjNodes;
     isCounted = new bool();
-    *isCounted = *toCopy.isCounted;
+    if (toCopy.isCounted != nullptr) *isCounted = *toCopy.isCounted;
 }
 
 /**
@@ -248,16 +248,18 @@ void Map::dfs(std::set<int*>* visitedNodes, Node* node, bool nodeTest) {
 *  From a Harvest Tile, creates 4 new nodes, sets their adjacency just within the tile (since no position), and places it in the map
 */
 void Map::placeHarvestTile(HarvestTile tile) {
-    vector<Node> newNodes;
+    vector<Node> newNodes = *(new vector<Node>);
     for (int i = *(tile.getTopLeft()); i < 4; i++) {
         Node newNode;
         newNode.setResourceType(&(tile.getResources()[i]));
         newNodes.push_back(newNode);
+        cout << "PlaceHarvestTile: resource added " << i <<"-->" << tile.getResources()[i] << endl;
     }
     for (int i = 0; i < *(tile.getTopLeft()); i++) {
         Node newNode;
         newNode.setResourceType(&(tile.getResources()[i]));
         newNodes.push_back(newNode);
+        cout << "PlaceHarvestTile: resource added " << i << "-->" << tile.getResources()[i] << endl;
     }
     //now we have a vector of 4 nodes in the right order
     
