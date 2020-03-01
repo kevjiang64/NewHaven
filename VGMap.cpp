@@ -14,13 +14,14 @@ VGMap::VGMap(int row, int col)
 	board = new vector<vector<Node>>;
 	if(row == 6 && col == 5)
 	{
-		cout << "The inputed values for the rows and columns will create a 6x5 VGMap";
+		cout << "The inputed values for the rows and columns will create a 6x5 VGMap\n";
 		for (int i = 0; i < row; i++) 
 		{
-			cout << "Pushing Back Row" << i <<"\n";
+			cout << "Pushing Back Row " << i <<"\n";
 			vector<Node> column(col);
 			(*board).push_back(column);
 		}
+		cout << "\n";
 		//Put adj nodes for every node
 		for (int i = 0; i < row; i++)
 		{
@@ -89,7 +90,7 @@ vector<VGMap::Node> VGMap::Node::fillAdjNodes(vector <vector<VGMap::Node>> board
 		cout << "Linking to Down Node:(" << row+1 << "," << col << ")\n";
 		adjNode->push_back(board[row + 1][col]);
 	}
-	cout << "Finish connecting the adjacents nodes for (" <<row<<","<<col<<")\n";
+	cout << "Finish connecting the adjacents nodes for (" <<row<<","<<col<<")\n\n";
 	return *adjNode;
 }
 //Count the amount of points
@@ -207,9 +208,3 @@ void VGMap::build(Building building, int row, int col) {
 	}
 }
 
-/*int main() {
-	cout << "hello" << endl;
-	VGMap* vg = new VGMap(6,5);
-	cout << " done" << endl;
-	return 0;
-}*/

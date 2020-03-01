@@ -7,7 +7,6 @@
 //
 
 #include <stdio.h>
-#include "GBMaps.h"
 #include "VGMapLoader.h"
 #include <sstream>
 #include <algorithm>
@@ -16,45 +15,49 @@
 #include <utility>
 #include <vector>
 #include <iostream>
+#include <fstream>
+#include <regex>
 
+using namespace std;
 
-/**
- * MapLoader constructor
- * @param mapFile
- */
-MapLoader::MapLoader(std::string mapFile) {
-    pMapFile = new std::string(std::move(mapFile));
+VGMapLoader::VGMapLoader(int row, int col)
+{
+	testMap = new VGMap(row, col);
 }
 
-/**
- * Map loader copy constructor
- * @param toCopy
- */
-MapLoader::MapLoader(const MapLoader &toCopy) {
-    pMapFile = new std::string();
-    *pMapFile = *toCopy.pMapFile;
+bool fexists(string fileName)
+{
+	ifstream ifile(fileName);
+	return ifile.good();
 }
 
-/**
- * MapLoader destructor
- */
-MapLoader::~MapLoader() {
-    delete pMapFile;
+int checkValidRow(string file)
+{
+	ifstream ifile(file);
+	string str;
+	while (getline(ifile,str)) {
+		if (str.find("Row:6") != std::string::npos)
+		{
+			cout << "The inputed value for the row is valid!\n";
+			return 6;
+		}
+	}
+	cout << "The inputed value for the row is invalid!\n";
+	return 0;
 }
 
-/**
- * assignment operator
- */
-void MapLoader::operator=(MapLoader& rhs) {
-    this->pMapFile = rhs.pMapFile;
+int checkValidColumn(string file)
+{
+	ifstream ifile(file);
+	string str;
+	while (getline(ifile, str)) {
+		if (str.find("Column:5") != std::string::npos)
+		{
+			cout << "The inputed value for the column is valid!\n";
+			return 5;
+		}
+	}
+	cout << "The inputed value for the column is invalid!\n";
+	return 0;
 }
-
-/**
- * Sets the map file to load
- * @param newMapFile, string of the map name
- */
-void MapLoader::setMapFile(std::string newMapFile) {
-    pMapFile = new std::string(std::move(newMapFile));
-}
-
 
