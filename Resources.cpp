@@ -90,8 +90,6 @@ HarvestTile DeckHarvestTile::draw() {
 // BUILDING
 
 Building::Building() {
-    int stop = 0;
-    
 	//allocate memory (??) for label and number
     label = (int*)malloc(15*sizeof(int));
     number = (int*)malloc(15*sizeof(int));
