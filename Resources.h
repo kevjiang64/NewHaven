@@ -39,7 +39,6 @@ class Building {
 		int* label;
 		int* number;
 		bool* flipped;
-        int count[4][6];
 
 	public:
 		Building();
