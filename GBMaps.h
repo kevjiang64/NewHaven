@@ -89,6 +89,10 @@ public:
     inline void setMapNodes(std::vector<Node*>* nodes) { mapNodes = nodes; };
     vector<Node> placeHarvestTile(HarvestTile tile, int row, int col);
     bool validPosition(int row, int col);
+    inline void setMapSize(int playerNumber);
+    inline std::string getMapSize(int playerNumber);
+    inline int* getPlayerNumber() { return playerNum; }
+    inline void setPlayerNumber(int* playerNumber) { playerNum = playerNumber; }
 
 private:
     int* playerNum;
