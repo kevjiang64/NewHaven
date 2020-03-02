@@ -1,9 +1,10 @@
+#pragma once
 //
 //  GBMapLoader.h
 //  COMP345_A1
 //
 //  Created by Justin Teixeira on 2020-02-10.
-//  Copyright Â© 2020 Justin Teixeira. All rights reserved.
+//  Copyright © 2020 Justin Teixeira. All rights reserved.
 //
 
 #include <stdio.h>
@@ -18,10 +19,10 @@
 
 class GBMapLoader {
 public:
-    GBMapLoader(int numOfPlayers, std::vector<Node*> initTile);
-    GBMaps getTestMap() { return *testMap; };
+    GBMapLoader(int numOfPlayers, std::vector<Map::Node*> initTile);
+    //GBMaps getTestMap() { return *testMap; };
 private:
-    GBMaps* testMap;
+    //GBMaps* testMap;
 };
 
 bool checkFile(string fileName);

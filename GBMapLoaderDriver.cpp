@@ -6,12 +6,12 @@
 #include <set>
 #include <iostream>
 #include "GBMaps.h"
-#inlcude "GBMapLoader.h"
 #include <sstream>
 #include <algorithm>
 #include <fstream>
 #include <fstream>
 #include <regex>
+#include "GBMapLoader.h"
 
 using namespace std;
 
@@ -26,7 +26,7 @@ int main()
     {
         numOfPlayers = checkValidPlayerNum("validMap.txt");
         initTile = checkValidTile("validMap.txt");
-        cout << "The Number of Players is : " << numOfPlayers <<"\n";
+        cout << "The Number of Players is : " << numOfPlayers << "\n";
         if (numOfPlayers == 2 || numOfPlayers == 3 || numOfPlayers == 4)
         {
             cout << "A GBMapLoader Object with a GBMaps Object will be created\n\n";
@@ -47,6 +47,3 @@ int main()
     }
     return 0;
 }
-
-
-

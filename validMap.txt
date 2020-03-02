@@ -1,4 +1,4 @@
 Valid Map
 
-Players:3
+Players:2
 Tile:Stone,Sheep,Timber,Timber
