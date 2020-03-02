@@ -19,7 +19,7 @@ int main() {
         if (playerNumber != 2 && playerNumber != 3 && playerNumber != 4)
             std::cout << "This is an invalid number of players. Please choose either 2,3 or 4 players." << "\n";
         else
-            count == false;
+            count = false;
     }
 
     //create an empty map with number of nodes corresponding with the appropriate number of players
@@ -32,7 +32,7 @@ int main() {
     Map::Node* topRight = new Map::Node(0, {}, false);
     Map::Node* bottomRight = new Map::Node(1, {}, false);
     Map::Node* bottomLeft = new Map::Node(2, {}, false);
-    Map::Tile* playerTile1 = new Map::Tile(topLeft, topRight, bottomRight, bottomLeft);
+    //Map::Tile* playerTile1 = new Map::Tile(topLeft, topRight, bottomRight, bottomLeft);
 
     std::vector<Map::Node*>* topLeftAdj = new std::vector<Map::Node*>();
     topLeftAdj->push_back(topRight);
