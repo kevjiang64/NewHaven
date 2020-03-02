@@ -1,10 +1,11 @@
-
 #include <cstdlib>
 #include <vector>
 
 #include "Part6.h"
 #include "GBMaps.h"
 #include "VGMap.h"
+#include "Player.h"
+#include "Resources.h"
 
 using namespace std;
 
@@ -28,9 +29,23 @@ vector<int> CountResources::calculResourceMarkers(Map board, vector<Map::Node> n
 			if (*(board.getMapNodes()->at(board.getMapNodes()->size() - k - 1)->getResourceType()) == res) {
 				resourceFound = true;
 				//we found the place where the first instance of the resource is on the tile, now we check adjacency
-				cout << "the resource: " << res <<" at position " << board.getMapNodes()->size() - k - 1 << endl;
+
 				markersArray[res] = recursiveCountResourceFromSquare(res, board.getMapNodes()->at(board.getMapNodes()->size() - k - 1));
-				cout << "after method" << k << endl;
+				
+				if (k == 0) {
+					if ((board.getMapNodes()->at(board.getMapNodes()->size() - k - 3)) != nullptr && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 3)->getResourceType()) == res && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 2)->getResourceType()) != res && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 4)->getResourceType()) != res) {
+						cout << "I have found another resource in diagonal" << endl;
+						markersArray[res] += recursiveCountResourceFromSquare(res, board.getMapNodes()->at(board.getMapNodes()->size() - k - 3));
+					}
+				}
+				else if (k == 1 ) {
+					if ((board.getMapNodes()->at(board.getMapNodes()->size() - k - 3)) != nullptr && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 3)->getResourceType()) == res && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 2)->getResourceType()) != res && *(board.getMapNodes()->at(board.getMapNodes()->size() - k )->getResourceType()) != res) {
+						cout << "I have found another resource in diagonal" << endl;
+						markersArray[res] += recursiveCountResourceFromSquare(res, board.getMapNodes()->at(board.getMapNodes()->size() - k - 3));
+					}
+				}
+				
+				
 			}
 			k++;
 		}
@@ -41,23 +56,20 @@ vector<int> CountResources::calculResourceMarkers(Map board, vector<Map::Node> n
 int CountResources::recursiveCountResourceFromSquare(int res, Map::Node* node) {
 	int score = 1;
 	(*node).setCounted(true);
-	cout << "beginning of method " << endl;
+	cout << "Entering the recursive method for ressource type #" << res << endl;
 	vector<Map::Node*>* adjacentNodes = new vector<Map::Node*>();
 	adjacentNodes = (*node).getAdjNodes(); //returns an array of 4 values, either a node or null (or an empty node, depend on how the board is done) (but even if it's the side it should be an array of 4 things) else test? just cannot be undefined
-	cout << "size " << (*adjacentNodes).size() << endl;
 	for (int i = 0; i < (*adjacentNodes).size(); i++) { //for all 4 values
-		cout << "inside the for : i = " << i << endl;
+		
 		Map::Node* ptrTestedNode = (*adjacentNodes).at(i);
-		cout << "after ptr node " << i << endl;
-		cout << " *((*ptrTestedNode).getResourceType()) == res" << (*((*ptrTestedNode).getResourceType()) == res) << endl;
-		cout << " !(*ptrTestedNode).getCounted()" << (!(*ptrTestedNode).getCounted()) << endl;
+		cout << "Is the adjacent resource the same type ? (1 for yes, 0 for no) " << (*((*ptrTestedNode).getResourceType()) == res) << endl;
+		
 		if (ptrTestedNode != nullptr && !(*ptrTestedNode).getCounted() && *((*ptrTestedNode).getResourceType()) == res) {
 			score += recursiveCountResourceFromSquare(res, ptrTestedNode);
 		}
 	}
 	
 	(*node).setCounted(false);
-	cout << "after for " << endl;
 	return score;
 	//for all adjacent tiles, if same resource rappeler la methode avec cette tuile. Else return 1
 }

@@ -70,8 +70,6 @@ bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarv
 			vector<Map::Node> nodesJustPlaced = board->placeHarvestTile((*tiles).at(0), row, col);
 			calculateResources(*board, nodesJustPlaced);
 			drawHarvestTile(deck, 0);
-			cout << "playernum dans le player " << *(board->getPlayerNum()) << endl;
-			cout << "row dans le player " << ((*board->getMapNodes())[0]->getRow()) << endl;
 			return true;
 		}
 		else {
@@ -123,7 +121,7 @@ void Player::calculateResources(Map board, vector<Map::Node> nodesJustPlaced) {
 	std::vector<int> resources = score.calculResourceMarkers(board, nodesJustPlaced);
 	hand->exchange(resources);
 	
-	cout << "Resources placed" << endl;
+	
 }
 
 
@@ -137,16 +135,17 @@ void Player::calculateResources(Map board, vector<Map::Node> nodesJustPlaced) {
 
 //Methods build and canBuild have to be implemented.
  bool Player::buildVillage(int buildingIndex, int row, int col) {
-	Building building = (*buildings).at(buildingIndex);
-	if ((*vb).canBuild(building, row, col)) { //or canBuild(*vb, building, position) {
+	 
+	 Building building = (*buildings).at(buildingIndex);
+	//if ((*vb).canBuild(building, row, col)) { 
 		(*vb).build(building, row, col);
 		return true;
-	}
-	else {
-		cout << "Cannot build at this position, chose another one";
-		return false;
-	}
-	(*buildings).erase((*buildings).begin() + buildingIndex);
+	//}
+	//else {
+		//cout << "Cannot build at this position, chose another one";
+		//return false;
+	//}
+	buildings->erase(buildings->begin() + buildingIndex);
 }
 
 

@@ -8,7 +8,7 @@
 
 using namespace std;
 
-int main() {
+/*int main() {
 	cout << "player start" << endl;
 	cout << "" << endl;
 	Player player = *(new Player());
@@ -21,7 +21,11 @@ int main() {
 
 	//output tiles
 	for (int i = 0; i < player.getTiles().size(); i++) {
-		cout << "player's tiles " << *(player.getTiles().at(i).getTopLeft()) << endl;
+		cout << "player's tiles ";
+		for (int j = 0; j < 4; j++) {
+			cout << (player.getTiles().at(i).getResources()[j]) << " ";
+		}
+		cout << " - top left at index: " << *(player.getTiles().at(i).getTopLeft()) << endl;
 	}
 	cout << "" << endl;
 
@@ -38,25 +42,24 @@ int main() {
 
 	Map* board = (new Map(2, *(new vector<Map::Node*>)));
 
-	/*bool tilePlaced = player.placeHarvestTile(0, 2, 2, board, deckTiles);
-	//ca plante ici
-	cout << "playernum dans le main " << *(board->getPlayerNum()) << endl;
-	cout << "row dans le main " << ((*board->getMapNodes())[0]->getRow()) << endl;
-	vector<int> resourceMarkers = *(player.getHand()->getResourceMarkers());
-	for (int i = 0; i < 4;  i++) {
-		cout << "number of resource #" << i << " is " << resourceMarkers.at(i) << endl;
+	bool tilePlaced = player.placeHarvestTile(0, 2, 2, board, deckTiles);
+	cout << "" << endl;
+	player.resourceTracker();
+
+	cout << "\n" << endl;
+
+	for (int i = 0; i < player.getTiles().size(); i++) {
+		cout << "player's tiles ";
+		for (int j = 0; j < 4; j++) {
+			cout << (player.getTiles().at(i).getResources()[j]) << " ";
+		}
+		cout << " - top left at index: " << *(player.getTiles().at(i).getTopLeft()) << endl;
 	}
-	
-	
-	tilePlaced = player.placeHarvestTile(0, 4, 2, board, deckTiles);
-	resourceMarkers = *(player.getHand()->getResourceMarkers());
-	for (int i = 0; i < 4; i++) {
-		cout << "number of resource #" << i << " is " << resourceMarkers.at(i) << endl;
-	}*/
+	cout << "" << endl;
 
-
+	
 	
 	cout << "" << endl;
 	cout << "player done" << endl;
 	return 0;
-}
+}*/

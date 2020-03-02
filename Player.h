@@ -36,6 +36,7 @@ public:
     vector<Building> getBuildings() { return *buildings; };
     vector<HarvestTile> getTiles() { return *tiles; };
      Hand* getHand() { return hand;  };
+     VGMap* getVillageBoard() { return vb; };
     
 };
 
