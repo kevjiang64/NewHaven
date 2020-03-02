@@ -12,24 +12,19 @@
 #include <vector>
 #include <set>
 #include <iostream>
-#include "Map.h"
+#include "GBMaps.h"
 #ifndef GBMapLoader_h
 #define GBMapLoader_h
 
-class MapLoader {
+class GBMapLoader {
 public:
-    explicit MapLoader(std::string mapFile = "");
-    virtual ~MapLoader();
-    MapLoader(const MapLoader& toCopy);
-    void operator=(MapLoader& rhs);
-    std::string* pMapFile;
-    void setMapFile(std::string newMapFile);
-    virtual Map* readMapFile();
-
+    GBMapLoader(int numOfPlayers, std::vector<Node*> initTile);
+    GBMaps getTestMap() { return *testMap; };
 private:
-    static Map* initMapObject(int* playerNumber, std::vector<std::vector<std::string>>* nodes, const bool* vMap);
-    void splitLine(const std::string& line, std::vector<std::string>* pLineWords);
-    bool checkSection(std::string* mode, std::vector<std::string>* lineWords);
-    void getPlayerNumber(int* playerNumber, std::vector<std::string>* lineWords);
-    bool validateTileLine(int* tileCount, std::vector<std::string>* lineWords, const int* lineCount, bool* validMap, bool verbose);
+    GBMaps* testMap;
 };
+
+bool checkFile(string fileName);
+int checkValidPlayerNum(string fileName);
+std::vector<Map::Node*> checkValidTile(string fileName);
+#endif /* GBMapLoader_h */

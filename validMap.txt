@@ -1,0 +1,4 @@
+Valid Map
+
+Players:3
+Tile:Stone,Sheep,Timber,Timber

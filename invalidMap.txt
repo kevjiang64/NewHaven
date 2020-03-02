@@ -1,0 +1,4 @@
+Invalid Map
+
+Players:5
+Tile:Stone,Stone,Sheep,Timber
