@@ -10,7 +10,7 @@
 
 using namespace std;
 
-/*int main() {
+int main() {
 	Player player = *(new Player());
 	DeckHarvestTile deckTiles = *(new DeckHarvestTile());
 	Map* board = (new Map(2, *(new vector<Map::Node*>)));
@@ -43,4 +43,4 @@ using namespace std;
 
 
 	return 0;
-}*/
+}
