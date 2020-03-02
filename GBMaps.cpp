@@ -348,18 +348,18 @@ bool Map::validPosition(int testedRow, int testedCol) {
 
 void Map::setMapSize(int playerNumber) {
     if (playerNumber == 2) {
-        std::vector<Node*>* emptyMap;
+        std::vector<Node*>* emptyMap = new std::vector<Node*>();
         emptyMap->reserve(100);
         setMapNodes(emptyMap);
     }
     else if (playerNumber == 3) {
-        std::vector<Node*>* emptyMap;
+        std::vector<Node*>* emptyMap = new std::vector<Node*>();
         emptyMap->reserve(140);
         setMapNodes(emptyMap);
     }
 
     else if (playerNumber == 4) {
-        std::vector<Node*>* emptyMap;
+        std::vector<Node*>* emptyMap = new std::vector<Node*>();
         emptyMap->reserve(180);
         setMapNodes(emptyMap);
     }

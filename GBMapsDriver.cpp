@@ -16,7 +16,7 @@ int main() {
     while (count == true) {
         std::cout << "How many players would you like to play with?" << "\n";
         std::cin >> playerNumber;
-        if (playerNumber != 2 || playerNumber != 3 || playerNumber != 4)
+        if (playerNumber != 2 && playerNumber != 3 && playerNumber != 4)
             std::cout << "This is an invalid number of players. Please choose either 2,3 or 4 players." << "\n";
         else
             count == false;
@@ -66,8 +66,8 @@ int main() {
 
 
 
-    std::cout << "The number of players in this game is " << playerNumber << ". The game board will use " << gameBoard.getMapSize << "\n";
-    std::cout << "The adjacent nodes to the TopRight Node of the tile are: " << topRight->getAdjNodes << "\n";
-    std::cout << "The valid game board is a connected graph: " << gameBoard.testConnected << endl;
+    std::cout << "The number of players in this game is " << playerNumber << ". The game board will use " << gameBoard.getMapSize(playerNumber) << "\n";
+    std::cout << "The adjacent nodes to the TopRight Node of the tile are: " << topRight->getAdjNodes() << "\n";
+    std::cout << "The valid game board is a connected graph: " << gameBoard.testConnected() << endl;
 
 }
