@@ -73,6 +73,7 @@ public:
         inline void setRow(int newRow) { *row = newRow; };
         inline int getCol() { return *col; };
         inline void setCol(int newCol) { *col = newCol; };
+        inline void setAdjNodes(std::vector<Node*>* adjNodes) { pAdjNodes = adjNodes; };
     private:
         std::vector<Node*>* pAdjNodes;
         int* resourceType;
@@ -91,6 +92,8 @@ public:
     bool validPosition(int row, int col);
     void setMapSize(int playerNumber);
     std::string getMapSize(int playerNumber);
+    inline int* getPlayerNumber() { return playerNum; };
+    inline void setPlayerNumber(int* playerNumber) { playerNum = playerNumber; };
 
 private:
     int* playerNum;
