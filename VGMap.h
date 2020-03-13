@@ -15,6 +15,7 @@ class VGMap
 private:
 	vector<vector<Node>>* board;
 	int* points;
+	string* nameOfBoard;
 public:
 	//Inner class
 	class Node
@@ -37,7 +38,7 @@ public:
 		inline int getSize() { return adjNode->size();};
 	};
 	//Constructors
-	VGMap(int row, int col);
+	VGMap(int row, int col, string nameOfBoard);
 	VGMap();
 	//Getters
 	inline vector<vector<Node>> getBoard(){ return *board; };

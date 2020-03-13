@@ -7,13 +7,14 @@
 using namespace std;
 
 //VGMap Constructor (Made for testing)
-VGMap::VGMap(int row, int col)
+VGMap::VGMap(int row, int col, string name)
 {
 	//Create 2D vector of 30 Nodes
 	//(0,0) is at the top left
 	board = new vector<vector<Node>>;
-	if(row == 6 && col == 5)
+	if(row == 6 && col == 5 && ( (name.compare("Milford")) == 0 || (name.compare("Stratford")) == 0 || (name.compare("Guilford")) == 0 || (name.compare("Fairfield")) == 0) )
 	{
+		nameOfBoard = &name;
 		cout << "The inputed values for the rows and columns will create a 6x5 VGMap\n";
 		for (int i = 0; i < row; i++) 
 		{
@@ -38,14 +39,23 @@ VGMap::VGMap(int row, int col)
 	}
 	else
 	{
-		cout << "The inputed values for the rows and columns will not create a 6x5 VGMap since the coordiantes are not valid.";
+		if (row != 6)
+			cout << "The inputed value for the row is not valid" << "\n";
+		if (col != 5)
+			cout << "The inputed value for the column is not valid" << "\n";
+		if((name.compare("Milford")) != 0 || (name.compare("Stratford")) != 0 || (name.compare("Guilford")) != 0 || (name.compare("Fairfield")) != 0)
+			cout << "The inputed value for the board is not valid" << "\n";
 		exit(0);
 	}
 };
 //VgMap Default Constructor 
 VGMap::VGMap()
 {
+	//Assign a random name to each board
+	string boardName[4] = { "Milford","Fairfield","Stratford","Guilford" };
+	nameOfBoard = &boardName[rand() % 4];
 	board = new vector<vector<Node>>;
+
 	//Create 2D vector of 30 Nodes
 	//(0,0) is at the top left	
 	for (int i = 0; i < 6; i++)

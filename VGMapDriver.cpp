@@ -3,11 +3,12 @@
 
 using namespace std;
 
-/*int main()
+int main()
 {
 	//Creating valid/invalid cases of VGMaps
 	//First
 	string answer = "yes";
+	string board;
 
 	while (answer == "yes")
 	{
@@ -17,7 +18,10 @@ using namespace std;
 		cin >> row;
 		cout << "What will be the value of the col?\n";
 		cin >> col;
-		VGMap a = VGMap(row, col);
+		cout << "What will be the name of the board?\n";
+		cin >> board;
+		VGMap a = VGMap(row, col, board);
+		cout << "hello";
 
 		for (int i = 0; i < row; i++)
 		{
@@ -32,4 +36,4 @@ using namespace std;
 		cin >> answer;
 	}
 	return 0;
-};*/
+};
