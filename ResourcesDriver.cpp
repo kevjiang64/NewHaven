@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "Resources.h"
 
-int main() {
+/*int main() {
     
     DeckHarvestTile newDeck1;
     
@@ -98,4 +98,4 @@ int main() {
     flipped ? cout << "yes" << endl : cout << "no" << endl;
     
     return 0;
-}
+}*/

@@ -8,7 +8,7 @@
 
 using namespace std;
 
-int main() {
+/*int main() {
 	cout << "player start" << endl;
 	cout << "" << endl;
 	Player player = *(new Player());
@@ -62,4 +62,4 @@ int main() {
 	cout << "" << endl;
 	cout << "player done" << endl;
 	return 0;
-}
+}*/

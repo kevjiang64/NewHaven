@@ -9,7 +9,7 @@
 #include <iostream>
 #include "GBMaps.h"
 
-int main() {
+/*int main() {
     bool count = true;
     int playerNumber;
 
@@ -70,4 +70,4 @@ int main() {
     std::cout << "The adjacent nodes to the TopRight Node of the tile are: " << topRight->getAdjNodes() << "\n";
     std::cout << "The valid game board is a connected graph: " << gameBoard.testConnected() << endl;
 
-}
+}*/

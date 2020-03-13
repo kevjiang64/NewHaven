@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int main()
+/*int main()
 {
 	//Creating valid/invalid cases of VGMaps
 	//First
@@ -32,4 +32,4 @@ int main()
 		cin >> answer;
 	}
 	return 0;
-};
+};*/

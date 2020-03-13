@@ -15,7 +15,7 @@
 
 using namespace std;
 
-int main()
+/*int main()
 {
     int numOfPlayers;
     std::vector<Map::Node*> initTile;
@@ -46,4 +46,4 @@ int main()
         }
     }
     return 0;
-}
+}*/

@@ -48,17 +48,22 @@ VGMap::VGMap()
 	board = new vector<vector<Node>>;
 	//Create 2D vector of 30 Nodes
 	//(0,0) is at the top left	
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 6; i++)
 	{
-		vector<Node> column;
+		vector<Node> column(5);
 		(*board).push_back(column);
 	}
+	
 	points = new int();
 	*points = 0;
+	//VGMap(6, 5);
+	
 };
 
 VGMap::Node::Node() {
 	building = new Building();
+	building->setLabel(-1);
+	building->setNumber(-1);
 	adjNode = new vector<Node>;
 }
 //Fill the board
@@ -71,7 +76,7 @@ vector<VGMap::Node> VGMap::Node::fillAdjNodes(vector <vector<VGMap::Node>> board
 	{
 		cout << "Linking to Left Node:("<< row <<","<< col-1 << ")\n";
 		adjNode->push_back(board[row][col - 1]);
-	}
+	} 
 	//For up adjNode
 	if (row - 1 >= 0)
 	{
@@ -97,6 +102,7 @@ vector<VGMap::Node> VGMap::Node::fillAdjNodes(vector <vector<VGMap::Node>> board
 int VGMap::countPoints()
 {
 	//Attributes
+	//cout << "" << endl;
 	int totalPoints = 0;
 	int addedPoints = 0;
 	bool flipped = false, filled = true;
@@ -104,12 +110,16 @@ int VGMap::countPoints()
 	//Count points for each row (HORIZONTALLY)
 	for (int row = 0; row < 6; ++row)
 	{
+		
 		totalPoints += addedPoints;
 		for (int col = 0; col < 5; ++col)
 		{
+			
 			//Check if every node of the same row has a building
-			if ((*board)[row][col].getBuilding() != NULL)
+			if ((*board)[row][col].getBuilding()->getLabel() != -1 )
 			{
+				
+				filled = true;
 				if ((*(*board)[row][col].getBuilding()).isFlipped() == true)
 				{
 					flipped = true;
@@ -124,8 +134,10 @@ int VGMap::countPoints()
 		//Adding only if the rows are filled + counting doubles if flipped
 		if (filled)
 		{
-			if (!flipped) totalPoints += 2 * 6-row;
+			
+			if (!flipped) totalPoints += 2 * (6-row);
 			else totalPoints += 6-row;
+			
 		}
 	}
 	//Count points for each row (Vertically)
@@ -133,16 +145,21 @@ int VGMap::countPoints()
 	{
 		for (int row = 0; row < 6; ++row)
 		{
+			
 			//Check if every node of the same row has a building
-			if ((*board)[row][col].getBuilding() != NULL)
+			if ((*board)[row][col].getBuilding()->getLabel() != -1)
 			{
+				
+				filled = true;
 				if ((*(*board)[row][col].getBuilding()).isFlipped() == true)
 				{ 
 					flipped = true;
+					
 				}
 			}
 			else
 			{
+				
 				filled = false;
 				break;
 			}
@@ -150,8 +167,8 @@ int VGMap::countPoints()
 		//Adding only if the rows are filled + counting doubles if flipped
 		if (filled)
 		{
-			if (flipped) totalPoints += 2 * (3 + abs(3 - col));
-			else totalPoints += 3 + abs(3 - col);
+			if (!flipped) totalPoints += 2 * (3 + abs(3 - (col+1)));
+			else totalPoints += 3 + abs(3 - (col+1));
 		}
 	}
 	return totalPoints;
@@ -174,11 +191,14 @@ bool VGMap:: checkFirst(int resource)
 };
 
 bool VGMap::canBuild(Building building, int row, int col) {
+	
 	bool canBuildNum = true;
 	bool canBuildAdj = true;
 
+	cout << "here is the problem" << board->at(row).size() << endl;
 	//find out how to look for the number...
 	VGMap::Node node = (*board)[row][col];
+	
 	if (node.getBuilding() != nullptr) {
 		return false;
 	}
@@ -203,8 +223,10 @@ bool VGMap::canBuild(Building building, int row, int col) {
 }
 
 void VGMap::build(Building building, int row, int col) {
-	if (canBuild(building, row, col)) {
+	//if (canBuild(building, row, col)) {
+		
 		(*board)[row][col].setBuilding(building);
-	}
+		
+	//}
 }
 

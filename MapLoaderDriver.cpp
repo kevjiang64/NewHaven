@@ -2,7 +2,7 @@
 #include <iostream>
 #include<conio.h>
 
-int main()
+/*int main()
 {
 	int row;
 	int column;
@@ -34,4 +34,4 @@ int main()
 		}
 	}
 	return 0;
-}
+}*/

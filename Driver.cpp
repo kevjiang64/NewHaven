@@ -23,7 +23,7 @@
 int main() {
     
     //PART 1
-    
+    /*
     bool count = true;
     int playerNumber;
 
@@ -80,9 +80,9 @@ int main() {
     std::cout << "The number of players in this game is " << playerNumber << ". The game board will use " << gameBoard.getMapSize(playerNumber) << "\n";
     std::cout << "The adjacent nodes to the TopRight Node of the tile are: " << topRight->getAdjNodes() << "\n";
     std::cout << "The valid game board is a connected graph: " << gameBoard.testConnected() << endl;
-    
+    */
     //PART 2
-
+    /*
     //Creating valid/invalid cases of VGMaps
     //First
     string answer = "yes";
@@ -109,9 +109,9 @@ int main() {
         cout << "Do you want to test again?";
         cin >> answer;
     }
-    
+    */
     //PART 3
-    
+    /*
     //GB Map Loader Driver
     
     int numOfPlayers;
@@ -142,9 +142,9 @@ int main() {
             cout << "A GBMapLoader Object will not be created\n";
         }
     }
-    
+    */
     //VG Map Loader Driver
-    
+    /*
     int row;
     int column;
 
@@ -174,9 +174,9 @@ int main() {
             cout << "A VGMapLoader Object will not be created\n";
         }
     }
-    
+    */
     //PART 4
-    
+    /*
     cout << "player start" << endl;
     cout << "" << endl;
     Player player = *(new Player());
@@ -221,9 +221,9 @@ int main() {
     
     cout << "" << endl;
     cout << "player done" << endl;
-    
+    */
     //PART 5
-    
+    /*
     DeckHarvestTile newDeck1;
     
     cout << "A new deck of Harvest Tiles has been created" << endl;
@@ -317,9 +317,9 @@ int main() {
     bool flipped = newBuilding.isFlipped();
     cout << "\tHas the building been flipped: ";
     flipped ? cout << "yes" << endl : cout << "no" << endl;
-    
+    */
     //PART 6
-    
+    //*
     Player player = *(new Player());
     DeckHarvestTile deckTiles = *(new DeckHarvestTile());
     Map* board = (new Map(2, *(new vector<Map::Node*>)));
@@ -351,4 +351,5 @@ int main() {
     cout << "final count : " << finalCount << endl;
     
     return 0;
+    //*/
 }
