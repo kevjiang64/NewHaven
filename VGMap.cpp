@@ -205,11 +205,9 @@ bool VGMap::canBuild(Building building, int row, int col) {
 	bool canBuildNum = true;
 	bool canBuildAdj = true;
 
-	cout << "here is the problem" << board->at(row).size() << endl;
-	//find out how to look for the number...
 	VGMap::Node node = (*board)[row][col];
 	
-	if (node.getBuilding() != nullptr) {
+	if (node.getBuilding() == nullptr) {
 		return false;
 	}
 	else {
@@ -233,10 +231,8 @@ bool VGMap::canBuild(Building building, int row, int col) {
 }
 
 void VGMap::build(Building building, int row, int col) {
-	//if (canBuild(building, row, col)) {
-		
+	if (canBuild(building, row, col)) {
 		(*board)[row][col].setBuilding(building);
-		
-	//}
+	}
 }
 

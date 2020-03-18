@@ -20,7 +20,7 @@
 #include "Resources.h"
 #include "Part6.h"
 
-int main() {
+//int main() {
     
     //PART 1
     /*
@@ -320,7 +320,7 @@ int main() {
     */
     //PART 6
     //*
-    Player player = *(new Player());
+    /*Player player = *(new Player());
     DeckHarvestTile deckTiles = *(new DeckHarvestTile());
     Map* board = (new Map(2, *(new vector<Map::Node*>)));
     bool tilePlaced = player.placeHarvestTile(0, 2, 2, board, deckTiles);
@@ -352,4 +352,4 @@ int main() {
     
     return 0;
     //*/
-}
+//}

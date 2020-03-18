@@ -10,7 +10,7 @@
 
 using namespace std;
 
-/*int main() {
+int main() {
 	Player player = *(new Player());
 	DeckHarvestTile deckTiles = *(new DeckHarvestTile());
 	Map* board = (new Map(2, *(new vector<Map::Node*>)));
@@ -21,20 +21,27 @@ using namespace std;
 		cout << "number of resource #" << i << " is " << resourceMarkers.at(i) << endl;
 	}
 
+	for (int i = 0; i < player.getBuildings().size(); i++) {
+		cout << "player's buildings" << player.getBuildings().at(i).getNumber() << "   " << player.getBuildings().at(i).getLabel() << endl;
+	}
 	//place a column of 6 buildings and row of 4
 	cout << "\nWe fill with buildings the row #2 and the column #2: \nexpected score: 12" << endl;
 	player.buildVillage(0, 0, 1);
-	player.buildVillage(1, 1, 1);
-	player.buildVillage(2, 2, 1);
-	player.buildVillage(3, 3, 1);
-	player.buildVillage(4, 4, 1);
-	player.buildVillage(5, 5, 1);
+	player.buildVillage(0, 1, 1);
+	player.buildVillage(0, 2, 1);
+	player.buildVillage(0, 3, 1);
+	player.buildVillage(0, 4, 1);
+	player.buildVillage(0, 5, 1);
 
-	player.buildVillage(1, 4, 0);
-	player.buildVillage(2, 4, 1);
-	player.buildVillage(3, 4, 2);
-	player.buildVillage(4, 4, 3);
-	player.buildVillage(5, 4, 4);
+	for (int i = 0; i < player.getBuildings().size(); i++) {
+		cout << "player's buildings" << player.getBuildings().at(i).getNumber() << "   " << player.getBuildings().at(i).getLabel() << endl;
+	}
+
+	//player.buildVillage(1, 4, 0);
+	//player.buildVillage(2, 4, 1);
+	//player.buildVillage(3, 4, 2);
+	//player.buildVillage(4, 4, 3);
+	//player.buildVillage(5, 4, 4);
 
 
 	Score score = *(new Score());
@@ -43,4 +50,4 @@ using namespace std;
 
 
 	return 0;
-}*/
+}

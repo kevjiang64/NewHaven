@@ -22,7 +22,7 @@ using namespace std;
 
 VGMapLoader::VGMapLoader(int row, int col)
 {
-	testMap = new VGMap(row, col);
+	testMap = new VGMap(row, col, "Milford");
 }
 
 bool fexists(string fileName)

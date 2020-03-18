@@ -138,15 +138,18 @@ void Player::calculateResources(Map board, vector<Map::Node> nodesJustPlaced) {
  bool Player::buildVillage(int buildingIndex, int row, int col) {
 	 
 	 Building building = (*buildings).at(buildingIndex);
-	//if ((*vb).canBuild(building, row, col)) { 
+	if ((*vb).canBuild(building, row, col)) { 
 		(*vb).build(building, row, col);
+		cout << "Building built" << endl;
+		buildings->erase(buildings->begin() + buildingIndex);
 		return true;
-	//}
-	//else {
-		//cout << "Cannot build at this position, chose another one";
-		//return false;
-	//}
-	buildings->erase(buildings->begin() + buildingIndex);
+	}
+	else {
+		cout << "Cannot build at this position, chose another one" << endl;
+		return false;
+	}
+	
+	
 }
 
 
