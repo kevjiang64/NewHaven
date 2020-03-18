@@ -37,11 +37,11 @@ int main() {
 		cout << "player's buildings" << player.getBuildings().at(i).getNumber() << "   " << player.getBuildings().at(i).getLabel() << endl;
 	}
 
-	//player.buildVillage(1, 4, 0);
-	//player.buildVillage(2, 4, 1);
-	//player.buildVillage(3, 4, 2);
-	//player.buildVillage(4, 4, 3);
-	//player.buildVillage(5, 4, 4);
+	/*player.buildVillage(1, 3, 0);
+	player.buildVillage(0, 3, 1);
+	player.buildVillage(0, 3, 2);
+	player.buildVillage(0, 3, 3);
+	player.buildVillage(0, 3, 4);*/
 
 
 	Score score = *(new Score());

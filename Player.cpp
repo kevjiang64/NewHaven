@@ -23,7 +23,7 @@ Player::Player() {
 
 	for (int i = 0; i < 6; i++) {
 		Building building = *(new Building());
-		//if (i == 2) building.setFlipped(true);
+		if (i == 2) building.setFlipped(true);
 		(*buildings).push_back(building);
 	}
 

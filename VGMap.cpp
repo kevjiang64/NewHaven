@@ -231,8 +231,8 @@ bool VGMap::canBuild(Building building, int row, int col) {
 }
 
 void VGMap::build(Building building, int row, int col) {
-	if (canBuild(building, row, col)) {
+	//if (canBuild(building, row, col)) {
 		(*board)[row][col].setBuilding(building);
-	}
+	//}
 }
 
