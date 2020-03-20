@@ -15,6 +15,10 @@ int main() {
 	DeckHarvestTile deckTiles = *(new DeckHarvestTile());
 	Map* board = (new Map(2, *(new vector<Map::Node*>)));
 	bool tilePlaced = player.placeHarvestTile(0, 2, 2, board, deckTiles);
+	tilePlaced = player.placeHarvestTile(1, 2, 4, board, deckTiles);
+	tilePlaced = player.placeHarvestTile(0, 4, 2, board, deckTiles);
+	tilePlaced = player.placeHarvestTile(1, 4, 4, board, deckTiles);
+	
 
 	vector<int> resourceMarkers = *(player.getHand()->getResourceMarkers());
 	for (int i = 0; i < 4; i++) {

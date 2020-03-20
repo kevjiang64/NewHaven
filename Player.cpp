@@ -68,9 +68,10 @@ Player::~Player() {
 bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarvestTile deck) {
 	if (noTile == 0) {
 		if (board->validPosition(row, col)) {
-			vector<Map::Node> nodesJustPlaced = board->placeHarvestTile((*tiles).at(0), row, col);
-			calculateResources(*board, nodesJustPlaced);
+			vector<Map::Node*> nodesJustPlaced = board->placeHarvestTile((*tiles).at(0), row, col);
+			calculateResources(*board);
 			drawHarvestTile(deck, 0);
+			cout << "board: " << board->getMapNodes()->at(0)->getCol() << endl;
 			return true;
 		}
 		else {
@@ -80,8 +81,8 @@ bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarv
 	}
 	else if (noTile == 1) {
 		if (board->validPosition(row, col)) {
-			vector<Map::Node> nodesJustPlaced = board->placeHarvestTile((*tiles).at(1), row, col);
-			calculateResources(*board, nodesJustPlaced);
+			vector<Map::Node*> nodesJustPlaced = board->placeHarvestTile((*tiles).at(1), row, col);
+			calculateResources(*board);
 			drawHarvestTile(deck, 1);
 			return true;
 		}
@@ -117,9 +118,9 @@ void Player::drawHarvestTile(DeckHarvestTile deck, int no) {
 	}
 }
 
-void Player::calculateResources(Map board, vector<Map::Node> nodesJustPlaced) {
+void Player::calculateResources(Map board) {
 	CountResources score = *(new CountResources());
-	std::vector<int> resources = score.calculResourceMarkers(board, nodesJustPlaced);
+	std::vector<int> resources = score.calculResourceMarkers(board);
 	hand->exchange(resources);
 	
 	

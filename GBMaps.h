@@ -88,7 +88,7 @@ public:
     void addEdge(int from, int to);
     inline std::vector<Node*>* getMapNodes() { return mapNodes; };
     inline void setMapNodes(std::vector<Node*>* nodes) { mapNodes = nodes; };
-    vector<Node> placeHarvestTile(HarvestTile tile, int row, int col);
+    vector<Node*> placeHarvestTile(HarvestTile tile, int row, int col);
     bool validPosition(int row, int col);
     void setMapSize(int playerNumber);
     std::string getMapSize(int playerNumber);

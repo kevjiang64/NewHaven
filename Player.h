@@ -30,7 +30,7 @@ public:
     void drawBuilding(DeckBuilding deckBuilding);
     void drawHarvestTile(DeckHarvestTile deck, int no);
     void resourceTracker();
-    void calculateResources(Map board, vector<Map::Node> nodesJustPlaced);
+    void calculateResources(Map board);
     bool buildVillage(int buildingIndex, int row, int col);
     //getters
     vector<Building> getBuildings() { return *buildings; };

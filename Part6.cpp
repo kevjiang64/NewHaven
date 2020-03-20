@@ -15,7 +15,7 @@ CountResources::CountResources() {
 
 }
 
-vector<int> CountResources::calculResourceMarkers(Map board, vector<Map::Node> nodesJustPlaced) {
+vector<int> CountResources::calculResourceMarkers(Map board) {
 	//nodesJustPlaced is an array in the right order of the 4 resources just placed on the board (they are the nodes on the actual board that corresponds to the current tile)
 	vector<int> markersArray = *(new vector<int>);
 	for (int i = 0; i < 4; i++) {
