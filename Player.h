@@ -17,10 +17,13 @@
 
 class Player {
 private:
+    int* id;
+    static int* currentId;
     VGMap* vb;
     vector<Building>* buildings;
     vector<HarvestTile>* tiles;
     Hand* hand;
+    bool* shipmentTileUsed;
     bool canBuild(VGMap vboard, Building building, VGMap::Node pos);
     bool placeShipmentTile(int row, int col, Map* board, DeckHarvestTile deck);
 
@@ -34,6 +37,7 @@ public:
     void resourceTracker();
     void calculateResources(Map board);
     bool buildVillage(int buildingIndex, int row, int col);
+    void displayState();
     //getters
     vector<Building> getBuildings() { return *buildings; };
     vector<HarvestTile> getTiles() { return *tiles; };
@@ -43,5 +47,6 @@ public:
      void setVillageBoard(VGMap* board) { vb = board; };
     
 };
+
 
 #endif /* Player_h */

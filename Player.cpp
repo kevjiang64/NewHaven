@@ -16,7 +16,12 @@
 
 using namespace std;
 
+int* Player::currentId = new int(1);
+
 Player::Player() {
+	id = new int(*currentId);
+	(*currentId)++;
+
 	vb = new VGMap();
 
 	buildings = new vector<Building>;
@@ -34,6 +39,8 @@ Player::Player() {
 	(*tiles).push_back(tile1);
 	(*tiles).push_back(tile2);
 	tiles->push_back(shipmentTile);
+
+	shipmentTileUsed = new bool(false);
 
 	hand = new Hand();
 	
@@ -104,6 +111,7 @@ bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarv
 }
 
 bool Player::placeShipmentTile(int row, int col, Map* board, DeckHarvestTile deck) {
+	//don't forget to turn shipmentTileUsed to true if it works
 	return true;
 }
 
@@ -162,5 +170,22 @@ void Player::calculateResources(Map board) {
 	
 	
 }
+
+ void Player::displayState() {
+	 cout << "Player #" << *id << endl;
+	//vb->displayState();
+	cout << "List of buildings: " << endl;
+	for (int i = 0; i < buildings->size(); i++) {
+		//buildings->at(i).display();
+	}
+	cout << "" << endl;
+	cout << "Harvest tiles: " << endl;
+	for (int i = 0; i < 2; i++) {
+		//tiles->at(i).display();
+	}
+	if (shipmentTileUsed) cout << "The shipment tile has been used" << endl;
+	else cout << "The shipment tile has not been used" << endl;
+	hand->printResources();//re-do
+ }
 
 

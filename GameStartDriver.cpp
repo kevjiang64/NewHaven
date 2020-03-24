@@ -23,6 +23,7 @@ int main() {
 	DeckHarvestTile* deckTiles = new DeckHarvestTile();
 	DeckBuilding* deckBuildings = new DeckBuilding();
 	vector<Building>* buildingsOnBoard = drawBuildingsOnBoard(deckBuildings);
+	players->at(1)->displayState();
 	return 0;
 }
 
