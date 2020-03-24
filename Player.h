@@ -22,6 +22,8 @@ private:
     vector<HarvestTile>* tiles;
     Hand* hand;
     bool canBuild(VGMap vboard, Building building, VGMap::Node pos);
+    bool placeShipmentTile(int row, int col, Map* board, DeckHarvestTile deck);
+
 
 public:
     Player();
@@ -37,6 +39,8 @@ public:
     vector<HarvestTile> getTiles() { return *tiles; };
      Hand* getHand() { return hand;  };
      VGMap* getVillageBoard() { return vb; };
+     //setters
+     void setVillageBoard(VGMap* board) { vb = board; };
     
 };
 

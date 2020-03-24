@@ -30,8 +30,10 @@ Player::Player() {
 	tiles = new vector<HarvestTile>;
 	HarvestTile tile1;
 	HarvestTile tile2;
+	HarvestTile shipmentTile;
 	(*tiles).push_back(tile1);
 	(*tiles).push_back(tile2);
+	tiles->push_back(shipmentTile);
 
 	hand = new Hand();
 	
@@ -91,10 +93,18 @@ bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarv
 			return false;
 		}
 	}
+	else if (noTile == 2) {
+		bool tilePlaced = placeShipmentTile(row, col, board, deck);
+		return tilePlaced;
+	}
 	else {
 		cout << "Error with the tile number" << endl;
 		return false;
 	}
+}
+
+bool Player::placeShipmentTile(int row, int col, Map* board, DeckHarvestTile deck) {
+	return true;
 }
 
 void Player::drawBuilding(DeckBuilding deckBuilding) {

@@ -10,7 +10,7 @@
 
 using namespace std;
 
-int main() {
+/*int main() {
 	Player player = *(new Player());
 	DeckHarvestTile deckTiles = *(new DeckHarvestTile());
 	Map* board = (new Map(2, *(new vector<Map::Node*>)));
@@ -45,7 +45,7 @@ int main() {
 	player.buildVillage(0, 3, 1);
 	player.buildVillage(0, 3, 2);
 	player.buildVillage(0, 3, 3);
-	player.buildVillage(0, 3, 4);*/
+	player.buildVillage(0, 3, 4);
 
 
 	Score score = *(new Score());
@@ -54,4 +54,4 @@ int main() {
 
 
 	return 0;
-}
+}*/
