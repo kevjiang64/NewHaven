@@ -76,4 +76,5 @@ class Hand {
 		void printResources();
 		vector<int>* getResourceMarkers() { return resourceMarkers; };
 		void setResourceMarkers(vector<int> resources) { *resourceMarkers = resources; };
+		void resetResourceMarkers();
 };

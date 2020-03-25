@@ -219,4 +219,6 @@ void Player::calculateResources(Map board) {
 	hand->printResources();//re-do
  }
 
-
+ void Player::resetResourceMarkers() {
+	 hand->resetResourceMarkers();
+ }

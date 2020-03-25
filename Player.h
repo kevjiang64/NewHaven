@@ -37,6 +37,7 @@ public:
     void calculateResources(Map board);
     bool buildVillage(int buildingIndex, int row, int col);
     void displayState();
+    void resetResourceMarkers();
     //getters
     vector<Building> getBuildings() { return *buildings; };
     vector<HarvestTile> getTiles() { return *tiles; };

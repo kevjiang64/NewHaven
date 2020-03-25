@@ -213,3 +213,9 @@ void Hand::exchange(vector<int> resources) {
 void Hand::printResources() {
     cout << "Resources:\nName of resource 1:" << (*resourceMarkers).at(0) << "\nName of resource 2:" << (*resourceMarkers).at(1) << "\nName of resource 3:" << (*resourceMarkers).at(2) << "\nName of resource 4:" << (*resourceMarkers).at(3);
 }
+
+void Hand::resetResourceMarkers() {
+    for (int i = 0; i < 4; i++) {
+        resourceMarkers->at(i) = 0;
+    }
+}
