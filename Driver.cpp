@@ -82,10 +82,10 @@
     std::cout << "The valid game board is a connected graph: " << gameBoard.testConnected() << endl;
     */
     //PART 2
-    /*
+    
     //Creating valid/invalid cases of VGMaps
     //First
-    string answer = "yes";
+    /*string answer = "yes";
 
     while (answer == "yes")
     {
@@ -109,7 +109,7 @@
         cout << "Do you want to test again?";
         cin >> answer;
     }
-    */
+   
     //PART 3
     /*
     //GB Map Loader Driver

@@ -60,14 +60,23 @@ VGMap::VGMap()
 	//(0,0) is at the top left	
 	for (int i = 0; i < 6; i++)
 	{
+		cout << "Pushing Back Row " << i << "\n";
 		vector<Node> column(5);
 		(*board).push_back(column);
 	}
-	
+	//Put adj nodes for every node
+	for (int i = 0; i < 6; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			cout << "(" << i << "," << j << ") Filled\n";
+			Node node = (*board)[i][j];
+			vector<Node> vect = node.fillAdjNodes(*board, i, j);
+			node.setAdjNode(vect);
+		}
+	}
 	points = new int();
 	*points = 0;
-	//VGMap(6, 5);
-	
 };
 
 VGMap::Node::Node() {

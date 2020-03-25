@@ -8,12 +8,12 @@
 #include "Resources.h"
 #include "Part6.h"
 
+//Methods signature
 static int askNbPlayers();
 static Map* selectBoard(int nbPlayers);
 static vector<Player*>* createPlayers(int nbPlayers);
 static void assignVillageBoards(vector<Player*>* players, int nbPlayers);
 static vector<Building>* drawBuildingsOnBoard(DeckBuilding* deckBuildings);
-
 
 int main() {
 	int nbPlayers = askNbPlayers();
@@ -57,9 +57,62 @@ static vector<Player*>* createPlayers(int nbPlayers) {
 
 //Assign a village board from a file from the loader to each of the players
 static void assignVillageBoards(vector<Player*>* players, int nbPlayers) {
-
+	
+	int row, col;
+	string board;
+	ifstream input("valid.txt");
+	VGMap tempBoard1, tempBoard2, tempBoard3, tempBoard4;
+	VGMap* playerBoard1, *playerBoard2, *playerBoard3, *playerBoard4;
+	
+	for (int i = 0; i < nbPlayers; i++)
+	{
+		//Check if the ifstream is still open
+		if (fexists(input,"valid.txt"))
+		{
+			//Different name for each player
+			if (i == 0)
+			{
+				board = checkValidName(input, "Milford");
+				row = checkValidRow(input);
+				col = checkValidRow(input);
+				//Assigning and creating vg for each player
+				tempBoard1 = VGMap(row, col, board);
+				playerBoard1 = &tempBoard1;
+				players->at(i)->setVillageBoard(playerBoard1);
+			}
+			if (i == 1)
+			{
+				board = checkValidName(input, "Guilford");
+				row = checkValidRow(input);
+				col = checkValidRow(input);
+				//Assigning and creating vg for each player
+				tempBoard2 = VGMap(row, col, board);
+				playerBoard2 = &tempBoard2;
+				players->at(i)->setVillageBoard(playerBoard2);
+			}
+			if (i == 2)
+			{
+				board = checkValidName(input, "Stratford");
+				row = checkValidRow(input);
+				col = checkValidRow(input);
+				//Assigning and creating vg for each player
+				tempBoard3 = VGMap(row, col, board);
+				playerBoard3 = &tempBoard3;
+				players->at(i)->setVillageBoard(playerBoard3);
+			}
+			if (i == 3)
+			{
+				board = checkValidName(input, "Fairfield");
+				row = checkValidRow(input);
+				col = checkValidRow(input);
+				//Assigning and creating vg for each player
+				tempBoard4 = VGMap(row, col, board);
+				playerBoard4 = &tempBoard4;
+				players->at(i)->setVillageBoard(playerBoard4);
+			}
+		}
+	}
 }
-
 static vector<Building>* drawBuildingsOnBoard(DeckBuilding* deckBuildings) {
 	vector<Building>* buildingsOnBoard = new vector<Building>(5);
 	for (int i = 0; i < 5; i++) {

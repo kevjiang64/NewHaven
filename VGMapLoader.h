@@ -21,7 +21,8 @@ private:
     VGMap* testMap;
 };
 
-bool fexists(string fileName);
-int checkValidRow(string fileName);
-int checkValidColumn(string fileName);
+bool fexists(ifstream& input, string fileName);
+int checkValidRow(ifstream& input);
+int checkValidColumn(ifstream& input);
+string checkValidName(ifstream& input, string fileName);
 #endif /* VGMapLoader_h */

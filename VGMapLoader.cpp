@@ -25,18 +25,16 @@ VGMapLoader::VGMapLoader(int row, int col)
 	testMap = new VGMap(row, col, "Milford");
 }
 
-bool fexists(string fileName)
+bool fexists(ifstream& input, string fileName)
 {
-	ifstream ifile(fileName);
-	return ifile.good();
+	return input.is_open();
 }
 
-int checkValidRow(string file)
+int checkValidRow(ifstream& input)
 {
-	ifstream ifile(file);
 	string str;
-	while (getline(ifile,str)) {
-		if (str.find("Row:6") != std::string::npos)
+	while (input >> str) {
+		if (str.compare("6") == 0)
 		{
 			cout << "The inputed value for the row is valid!\n";
 			return 6;
@@ -45,13 +43,11 @@ int checkValidRow(string file)
 	cout << "The inputed value for the row is invalid!\n";
 	return 0;
 }
-
-int checkValidColumn(string file)
+int checkValidColumn(ifstream& input)
 {
-	ifstream ifile(file);
 	string str;
-	while (getline(ifile, str)) {
-		if (str.find("Column:5") != std::string::npos)
+	while (input >> str) {
+		if (str.compare("5") == 0)
 		{
 			cout << "The inputed value for the column is valid!\n";
 			return 5;
@@ -60,4 +56,19 @@ int checkValidColumn(string file)
 	cout << "The inputed value for the column is invalid!\n";
 	return 0;
 }
+string checkValidName(ifstream& input, string name)
+{
+	string str;
+	while (input >> str) {
+		if (str.compare(name) == 0)
+		{
+			cout << "The inputed value for the board name is valid!\n";
+			return str;
+		}
+	}
+	cout << "The inputed value for the board name is invalid!\n";
+	return "wrong";
+}
+
+
 

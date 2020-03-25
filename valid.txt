@@ -1,4 +1,4 @@
-Dimensions For t
-
-Row:6
-Column:5
+Board#1: Milford 6 5
+Board#2: Guilford 6 5
+Board#3: Stratford 6 5
+Board#4: Fairfield 6 5

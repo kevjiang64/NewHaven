@@ -3,7 +3,7 @@
 
 using namespace std;
 
-/*int main()
+int main()
 {
 	//Creating valid/invalid cases of VGMaps
 	//First
@@ -20,8 +20,7 @@ using namespace std;
 		cin >> col;
 		cout << "What will be the name of the board?\n";
 		cin >> board;
-		VGMap a = VGMap(row, col, board);
-		cout << "hello";
+		VGMap a = VGMap();
 
 		for (int i = 0; i < row; i++)
 		{
@@ -36,4 +35,4 @@ using namespace std;
 		cin >> answer;
 	}
 	return 0;
-};*/
+};
