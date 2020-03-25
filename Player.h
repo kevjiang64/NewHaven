@@ -24,14 +24,13 @@ private:
     vector<HarvestTile>* tiles;
     Hand* hand;
     bool* shipmentTileUsed;
-    bool canBuild(VGMap vboard, Building building, VGMap::Node pos);
     bool placeShipmentTile(int row, int col, Map* board, DeckHarvestTile deck);
 
 
 public:
     Player();
     ~Player();
-    bool placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarvestTile deck);
+    bool placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarvestTile deck, int topLeftCorner);
     void drawBuilding(DeckBuilding deckBuilding);
     void drawHarvestTile(DeckHarvestTile deck, int no);
     void resourceTracker();

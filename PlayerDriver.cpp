@@ -42,7 +42,7 @@ using namespace std;
 
 	Map* board = (new Map(2, *(new vector<Map::Node*>)));
 
-	bool tilePlaced = player.placeHarvestTile(0, 2, 2, board, deckTiles);
+	bool tilePlaced = player.placeHarvestTile(0, 2, 2, board, deckTiles, 2);
 	cout << "" << endl;
 	player.resourceTracker();
 
