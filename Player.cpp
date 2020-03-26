@@ -198,8 +198,6 @@ void Player::calculateResources(Map board) {
 		cout << "Cannot build at this position, chose another one" << endl;
 		return false;
 	}
-	
-	
 }
 
  void Player::displayState() {
