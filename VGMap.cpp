@@ -137,7 +137,7 @@ int VGMap::countPoints()
 			//Check if every node of the same row has a building
 			if ((*board)[row][col].getBuilding()->getLabel() != -1 )
 			{
-				
+					
 				filled = true;
 				if ((*(*board)[row][col].getBuilding()).isFlipped() == true)
 				{
@@ -168,7 +168,6 @@ int VGMap::countPoints()
 			//Check if every node of the same row has a building
 			if ((*board)[row][col].getBuilding()->getLabel() != -1)
 			{
-				
 				filled = true;
 				if ((*(*board)[row][col].getBuilding()).isFlipped() == true)
 				{ 
@@ -243,5 +242,49 @@ void VGMap::build(Building building, int row, int col) {
 	//if (canBuild(building, row, col)) {
 		(*board)[row][col].setBuilding(building);
 	//}
+}
+
+//Display the VGMap 
+void VGMap::displayVGmap() {
+	for (int row = 0; row < 6; row++)
+	{
+		for (int col = 0; col < 5; col++)
+		{
+			//If the position possess a building
+			if ((*board)[row][col].getBuilding() != NULL)
+			{
+				string flipped, resources;
+				int label = (*(*board)[row][col].getBuilding()).getLabel();
+				//Attributing a resource based on the label (0: meadow, 1: quarry, 2: forest, 3: wheatfield)
+				switch (label)
+				{
+				case 0: resources = "M";
+				case 1: resources = "Q";
+				case 2: resources = "F";
+				case 3: resources = "W";
+				}
+				//Value of the building
+				int number = (*(*board)[row][col].getBuilding()).getNumber();
+				//Giving flipped string F or NF
+				if ((*(*board)[row][col].getBuilding()).isFlipped())
+				{
+					flipped = "F";
+				}
+				else
+				{
+					flipped = "NF";
+				}
+				//Printing each building
+				cout << "|" << number << resources << flipped << "|";
+			}
+			else
+			{
+				//Printing empty building
+				cout << "|   |";
+			}
+		}
+		//Going to next row
+		cout << "\n";
+	}
 }
 
