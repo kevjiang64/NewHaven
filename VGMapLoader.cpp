@@ -25,7 +25,7 @@ VGMapLoader::VGMapLoader(int row, int col)
 	testMap = new VGMap(row, col, "Milford");
 }
 
-bool fexists(ifstream& input)
+bool fexists(ifstream& input, string fileName)
 {
 	return input.is_open();
 }

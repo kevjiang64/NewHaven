@@ -67,7 +67,7 @@ static void assignVillageBoards(vector<Player*>* players, int nbPlayers) {
 	for (int i = 0; i < nbPlayers; i++)
 	{
 		//Check if the ifstream is still open
-		if (fexists(input))
+		if (fexists(input,"valid.txt"))
 		{
 			//Different name for each player
 			if (i == 0)
