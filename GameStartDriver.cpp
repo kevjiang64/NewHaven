@@ -19,7 +19,7 @@ int main() {
 	int nbPlayers = askNbPlayers();
 	//Map* board = selectBoard(nbPlayers);
 	vector<Player*>* players = createPlayers(nbPlayers); 
-	//assignVillageBoards(players, nbPlayers);
+	assignVillageBoards(players, nbPlayers);
 	DeckHarvestTile* deckTiles = new DeckHarvestTile();
 	DeckBuilding* deckBuildings = new DeckBuilding();
 	vector<Building>* buildingsOnBoard = drawBuildingsOnBoard(deckBuildings);

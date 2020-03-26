@@ -202,7 +202,7 @@ void Player::calculateResources(Map board) {
 
  void Player::displayState() {
 	 cout << "Player #" << *id << endl;
-	//vb->displayState();
+	vb->displayVGmap();
 	cout << "List of buildings: " << endl;
 	for (int i = 0; i < buildings->size(); i++) {
 		//buildings->at(i).display();
@@ -212,7 +212,7 @@ void Player::calculateResources(Map board) {
 	for (int i = 0; i < 2; i++) {
 		//tiles->at(i).display();
 	}
-	if (shipmentTileUsed) cout << "The shipment tile has been used." << endl;
+	if (*shipmentTileUsed) cout << "The shipment tile has been used." << endl;
 	else cout << "The shipment tile has not been used." << endl;
 	hand->printResources();//re-do
  }

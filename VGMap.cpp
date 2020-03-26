@@ -259,9 +259,13 @@ void VGMap::displayVGmap() {
 				switch (label)
 				{
 				case 0: resources = "M";
+					break;
 				case 1: resources = "Q";
+					break;
 				case 2: resources = "F";
+					break;
 				case 3: resources = "W";
+					break;
 				}
 				//Value of the building
 				int number = (*(*board)[row][col].getBuilding()).getNumber();

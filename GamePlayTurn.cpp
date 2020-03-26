@@ -34,7 +34,7 @@ void buildPlayerVillage(Player& player)
 	cin >> col;
 
 	//Showing player's resources
-	player.getHand()->printResources;
+	player.getHand()->printResources();
 
 	//Checking if player has enough resources
 	if (enoughResources(player,index))
@@ -52,7 +52,7 @@ void buildPlayerVillage(Player& player)
 		removeUsedResources(player, index);
 	}
 	//Showing player's new resources
-	player.getHand()->printResources;
+	player.getHand()->printResources();
 
 }
 //Check if player has enough resources
