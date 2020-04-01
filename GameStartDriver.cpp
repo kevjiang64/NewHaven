@@ -42,7 +42,24 @@ static int askNbPlayers() {
 
 //Selects the right file from the GBMapsLoader depending on the nb of players
 static Map* selectBoard(int nbPlayers) {
-	return new Map();
+	//create an empty Map object
+    Map* gameMap;
+
+    //Depending on the number of players, run the setMapSize method from GBMaps to assign the correct ammount of nodes to the map
+    //Prints out the correct game size
+    if (nbPlayers == 2) {
+        gameMap->setMapSize(2);
+        gameMap->getMapSize(2);
+    }
+    else if (nbPlayers == 3) {
+        gameMap->setMapSize(3);
+        gameMap->getMapSize(3);
+    }
+    else if (nbPlayers == 4) {
+        gameMap->setMapSize(4);
+        gameMap->getMapSize(4);
+    }
+    return gameMap;
 }
 
 static vector<Player*>* createPlayers(int nbPlayers) {
