@@ -8,176 +8,132 @@
 #include "Resources.h"
 #include "Part6.h"
 
-//Method Signature
-void buildPlayerVillage(Player& player);
-bool enoughResources(Player& player, int index);
-void removeUsedResources(Player& player,int index);
+//Methods signature
+static int askNbPlayers();
+static Map* selectBoard(int nbPlayers);
+static vector<Player*>* createPlayers(int nbPlayers);
+static void assignVillageBoards(vector<Player*>* players, int nbPlayers);
+static vector<Building>* drawBuildingsOnBoard(DeckBuilding* deckBuildings);
 
-static void endTurnDrawBuildings(Player* activePlayer, vector<Building>* buildingsOnBoard, DeckBuilding* deck);
-static void endTurnDrawBuildingFromBoard(Player* activePlayer, vector<Building>* buildingsOnBoard);
-static void endTurnResetResourceMarkers(vector<Player*>* players);
-static void endTurnDrawNewBuildingsToBoard(vector<Building>* buildingsOnBoard, DeckBuilding* deck);
-
-static void turnSequence(vector<Player*>* players);
-static void transferResourceMarkers(vector<Player*>* players);
-
-//Place a building in the VGMap board
-void buildPlayerVillage(Player& player)
-{
-	int row, col, index;
-	bool result = false;
-
-	//Checking what building and where to put it
-	cout << "Which building do you want to place in board? (0-?)" << "\n";
-	cin >> index;
-	cout << "On which row do you want to place the building? (0-5)" << "\n";
-	cin >> row;
-	cout << "On which column do you want to place the building? (0-5)" << "\n";
-	cin >> col;
-
-	//Showing player's resources
-	player.getHand()->printResources();
-
-	//Checking if player has enough resources
-	if (enoughResources(player,index))
-	{
-		//Method return true if the village is successfully put
-		result = player.buildVillage(index, row, col);
-	}
-	else
-	{
-		cout << "Player can't doesn't have enough resources" << "\n";
-	}
-	//Reducing the number of resources of player's hand
-	if (result)
-	{
-		removeUsedResources(player, index);
-	}
-	//Showing player's new resources
-	player.getHand()->printResources();
-
-}
-//Check if player has enough resources
-bool enoughResources(Player& player,int index)
-{
-	//Type of resources
-	int buildingResource = player.getBuildings().at(index).getLabel();
-	//Number of resources
-	int resourceAmount = player.getBuildings().at(index).getNumber();
-
-	return (player.getHand()->getResourceMarkers()->at(buildingResource) > resourceAmount);
-}
-//Remove used resources
-void removeUsedResources(Player& player, int index)
-{
-	int buildingResource = player.getBuildings().at(index).getLabel();
-	int resourceAmount = player.getBuildings().at(index).getNumber();
-
-	player.getHand()->getResourceMarkers()->at(buildingResource) -= resourceAmount;
+int main() {
+    int nbPlayers = askNbPlayers();
+    //Map* board = selectBoard(nbPlayers);
+    vector<Player*>* players = createPlayers(nbPlayers);
+    //assignVillageBoards(players, nbPlayers);
+    DeckHarvestTile* deckTiles = new DeckHarvestTile();
+    DeckBuilding* deckBuildings = new DeckBuilding();
+    vector<Building>* buildingsOnBoard = drawBuildingsOnBoard(deckBuildings);
+    players->at(1)->displayState();
+    return 0;
 }
 
-static void endOfTurn(Player* activePlayer, vector<Building>* buildingsOnBoard, DeckBuilding* deck, vector<Player*>* players) {
-	endTurnDrawBuildings(activePlayer, buildingsOnBoard, deck);
-	endTurnResetResourceMarkers(players);
-	endTurnDrawNewBuildingsToBoard(buildingsOnBoard, deck);
+//Asks to the user and returns the nb of players wanted
+static int askNbPlayers() {
+    int nbPlayers;
+    cout << "How many players do you want to play with? ";
+    cin >> nbPlayers;
+    while (!(nbPlayers == 2 || nbPlayers == 3 || nbPlayers == 4)) {
+        cout << "Incorrect number of player. Please enter a number between 2 and 4" << endl;
+        cout << "\nHow many players do you want to play with? ";
+        cin >> nbPlayers;
+    }
+    return nbPlayers;
 }
 
-static void endTurnDrawBuildings(Player* activePlayer, vector<Building>* buildingsOnBoard, DeckBuilding* deck) {
-	cout << "You can now draw new buildings for each empty resource." << endl;
-	int countBuildingsToDraw = 0;
-	for (int i = 0; i < 4; i++) {
-		if (activePlayer->getHand()->getResourceMarkers()->at(i) == 0) {
-			countBuildingsToDraw++;
-		}
-	}
-	if (countBuildingsToDraw > 0) {
-		endTurnDrawBuildingFromBoard(activePlayer, buildingsOnBoard);
-		countBuildingsToDraw--;
-		while (countBuildingsToDraw > 0) {
-			cout << "For the next building to draw, do you want to draw it from the board or the deck? (1 for board, 2 for deck) ";
-			int boardOrDeck = 0;
-			cin >> boardOrDeck;
-			while (!(boardOrDeck == 1 || boardOrDeck == 2)) {
-				cout << "Error, invalid answer. Please try again:" << endl;
-				cout << "For the next building to draw, do you want to draw it from the board or the deck? (1 for board, 2 for deck) ";
-				cin >> boardOrDeck;
-			}
-			if (boardOrDeck == 1) {
-				endTurnDrawBuildingFromBoard(activePlayer, buildingsOnBoard);
-				countBuildingsToDraw--;
-			}
-			else if (boardOrDeck == 2) {
-				activePlayer->getBuildings().push_back(deck->draw());
-				countBuildingsToDraw--;
-			}
-			else {
-				cout << "Error! Invalid behavior of method endTurnDrawBuildings() " << endl;
-			}
-		}
-	}
-	else {
-		cout << "Error! Invalid behavior of method endTurnDrawBuildings() " << endl;
-	}
+//Selects the right file from the GBMapsLoader depending on the nb of players
+static Map* selectBoard(int nbPlayers) {
+    //create an empty Map object
+    Map* gameMap;
+
+    //Depending on the number of players, run the setMapSize method from GBMaps to assign the correct ammount of nodes to the map
+    //Prints out the correct game size
+    if (nbPlayers == 2) {
+        gameMap->setMapSize(2);
+        gameMap->getMapSize(2);
+    }
+    else if (nbPlayers == 3) {
+        gameMap->setMapSize(3);
+        gameMap->getMapSize(3);
+    }
+    else if (nbPlayers == 4) {
+        gameMap->setMapSize(4);
+        gameMap->getMapSize(4);
+    }
+    return gameMap;
 }
 
-static void endTurnDrawBuildingFromBoard(Player* activePlayer, vector<Building>* buildingsOnBoard) {
-	cout << "Here are the buildings on the board: " << endl;
-	for (int i = 0; i < buildingsOnBoard->size(); i++) {
-		cout << i + 1 << " - ";
-		//buildingsOnBoard->at(i).display();
-	}
-	cout << "Which one do you want to take? Please enter the corresponding number. ";
-	int numEntered = 0;
-	cin >> numEntered;
-	while (!(numEntered == 1 || numEntered == 2 || numEntered == 3 || numEntered == 4 || numEntered == 5)) {
-		cout << "Error in entering your choice." << endl;
-		cout << "Which one do you want to take? Please enter the corresponding number. ";
-		cin >> numEntered;
-	}
-	Building buildingChosen = buildingsOnBoard->at(numEntered - 1);
-	activePlayer->getBuildings().push_back(buildingChosen);
-	buildingsOnBoard->erase(buildingsOnBoard->begin() + numEntered - 1); // will it erase the one in the player's hand too? test it
+static vector<Player*>* createPlayers(int nbPlayers) {
+    vector<Player*>* players = new vector<Player*>(nbPlayers);
+    for (int i = 0; i < nbPlayers; i++) {
+        Player* player = new Player();
+        (*players)[i] = player;
+    }
+
+    return players;
 }
 
-static void endTurnResetResourceMarkers(vector<Player*>* players) {
-	for (int i = 0; i < players->size(); i++) {
-		players->at(i)->resetResourceMarkers();
-	}
-}
-
-static void endTurnDrawNewBuildingsToBoard(vector<Building>* buildingsOnBoard, DeckBuilding* deck) {
-	for (int i = buildingsOnBoard->size(); i < 5; i++) {
-		buildingsOnBoard->push_back(deck->draw());
-	}
-}
-
-static void turnSequence(vector<Player*>* players, int nbPlayers) {
-    int done = 0;
-    int i = 0;
+//Assign a village board from a file from the loader to each of the players
+static void assignVillageBoards(vector<Player*>* players, int nbPlayers) {
     
-    while (i < nbPlayers) {
-        cout << "player " << /*players->at(i).id <<*/ " is now playing" << endl;
-        
-        while(!done) {
-            string ans;
-            
-            //player place building
-            buildPlayerVillage(*(players->at(i)));
-            
-            cout << "Do you want to build another building? (y/n): ";
-            cin >> ans;
-            
-            if (ans == "n")
-                done = 1;
+    int row, col;
+    string board;
+    ifstream input("valid.txt");
+    VGMap tempBoard1, tempBoard2, tempBoard3, tempBoard4;
+    VGMap* playerBoard1, *playerBoard2, *playerBoard3, *playerBoard4;
+    
+    for (int i = 0; i < nbPlayers; i++)
+    {
+        //Check if the ifstream is still open
+        if (fexists(input))
+        {
+            //Different name for each player
+            if (i == 0)
+            {
+                board = checkValidName(input, "Milford");
+                row = checkValidRow(input);
+                col = checkValidRow(input);
+                //Assigning and creating vg for each player
+                tempBoard1 = VGMap(row, col, board);
+                playerBoard1 = &tempBoard1;
+                players->at(i)->setVillageBoard(playerBoard1);
+            }
+            if (i == 1)
+            {
+                board = checkValidName(input, "Guilford");
+                row = checkValidRow(input);
+                col = checkValidRow(input);
+                //Assigning and creating vg for each player
+                tempBoard2 = VGMap(row, col, board);
+                playerBoard2 = &tempBoard2;
+                players->at(i)->setVillageBoard(playerBoard2);
+            }
+            if (i == 2)
+            {
+                board = checkValidName(input, "Stratford");
+                row = checkValidRow(input);
+                col = checkValidRow(input);
+                //Assigning and creating vg for each player
+                tempBoard3 = VGMap(row, col, board);
+                playerBoard3 = &tempBoard3;
+                players->at(i)->setVillageBoard(playerBoard3);
+            }
+            if (i == 3)
+            {
+                board = checkValidName(input, "Fairfield");
+                row = checkValidRow(input);
+                col = checkValidRow(input);
+                //Assigning and creating vg for each player
+                tempBoard4 = VGMap(row, col, board);
+                playerBoard4 = &tempBoard4;
+                players->at(i)->setVillageBoard(playerBoard4);
+            }
         }
-        
-        cout << "transfering hand to the next player" << endl;
-        transferResourceMarkers(players);
-        i++;
     }
 }
-
-static void transferResourceMarkers(vector<Player*>* players, int i) {
-    Hand prevHand = *players->at(i)->getHand();
-    *(players->at(i+1)->getHand()) = prevHand;
+static vector<Building>* drawBuildingsOnBoard(DeckBuilding* deckBuildings) {
+    vector<Building>* buildingsOnBoard = new vector<Building>(5);
+    for (int i = 0; i < 5; i++) {
+        (*buildingsOnBoard)[i] = deckBuildings->draw();
+    }
+    return buildingsOnBoard;
 }
