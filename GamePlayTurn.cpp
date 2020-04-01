@@ -19,8 +19,6 @@ static void endTurnDrawBuildingFromBoard(Player* activePlayer, vector<Building>*
 static void endTurnResetResourceMarkers(vector<Player*>* players);
 static void endTurnDrawNewBuildingsToBoard(vector<Building>* buildingsOnBoard, DeckBuilding* deck);
 
-static void turnSequence(vector<Player*>* players);
-static void transferResourceMarkers(vector<Player*>* players);
 
 //Place a building in the VGMap board
 void buildPlayerVillage(Player& player)
@@ -169,35 +167,4 @@ static void endTurnDrawNewBuildingsToBoard(vector<Building>* buildingsOnBoard, D
 	for (int i = buildingsOnBoard->size(); i < 5; i++) {
 		buildingsOnBoard->push_back(deck->draw());
 	}
-}
-
-static void turnSequence(vector<Player*>* players, int nbPlayers) {
-    int done = 0;
-    int i = 0;
-    
-    while (i < nbPlayers) {
-        cout << "player " << /*players->at(i).id <<*/ " is now playing" << endl;
-        
-        while(!done) {
-            string ans;
-            
-            //player place building
-            buildPlayerVillage(*(players->at(i)));
-            
-            cout << "Do you want to build another building? (y/n): ";
-            cin >> ans;
-            
-            if (ans == "n")
-                done = 1;
-        }
-        
-        cout << "transfering hand to the next player" << endl;
-        transferResourceMarkers(players);
-        i++;
-    }
-}
-
-static void transferResourceMarkers(vector<Player*>* players, int i) {
-    Hand prevHand = *players->at(i)->getHand();
-    *(players->at(i+1)->getHand()) = prevHand;
 }
