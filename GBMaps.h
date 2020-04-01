@@ -94,6 +94,7 @@ public:
     std::string getMapSize(int playerNumber);
     inline int* getPlayerNumber() { return playerNum; };
     inline void setPlayerNumber(int* playerNumber) { playerNum = playerNumber; };
+    void display();
 
 private:
     int* playerNum;
