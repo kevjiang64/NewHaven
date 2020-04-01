@@ -420,3 +420,79 @@ std::string Map::getMapSize(int playerNumber) {
         return "error";
     }
 }
+
+void Map::display() {
+    cout << " ";
+    for (int i = 0; i < 7; i++) {
+        cout << "  " << i + 1 << " ";
+    }
+    cout << "" << endl;
+    for (int row = 0; row < 14; row++) {
+        for (int col = 0; col < 14; col= col+2) {
+            if (col == 0) {
+                if (row % 2 == 0) {
+                    cout << (row / 2) +1;
+                }
+                else {
+                    cout << " ";
+                }
+            }
+            if ((*playerNum == 2 && (row == 0 || row == 1 || row == 12 || row == 13 || col == 0 || col == 12)) 
+                || (*playerNum == 3 && (col == 0 || col == 12)) 
+                || (*playerNum == 4 && (row == 0 || row == 1 || row == 12 || row == 13) && ( col == 0 || col == 12))) {
+                cout << "|\\\\\\";
+            }
+            else {
+                int firstResource = -1;
+                for (int i = 0; i < mapNodes->size(); i++) {
+                    if (mapNodes->at(i)->getRow() == row && mapNodes->at(i)->getCol() == col) {
+                        firstResource = *(mapNodes->at(i)->getResourceType());
+                    }
+                }
+                if (firstResource == -1) {
+                    cout << "|   ";
+                }
+                else {
+                    int secondResource = -1;
+                    for (int i = 0; i < mapNodes->size(); i++) {
+                        if (mapNodes->at(i)->getRow() == row && mapNodes->at(i)->getCol() == col + 1) {
+                            secondResource = *(mapNodes->at(i)->getResourceType());
+                        }
+                    }
+                    if (secondResource == -1) {
+                        cout << "error with the display of GBMaps method" << endl;
+                    }
+                    else {
+                        string firstResourceChar;
+                        switch (firstResource)
+                        {
+                        case 0: firstResourceChar = "M";
+                            break;
+                        case 1: firstResourceChar = "Q";
+                            break;
+                        case 2: firstResourceChar = "F";
+                            break;
+                        case 3: firstResourceChar = "W";
+                            break;
+                        }
+                        string secondResourceChar;
+                        switch (secondResource)
+                        {
+                        case 0: secondResourceChar = "M";
+                            break;
+                        case 1: secondResourceChar = "Q";
+                            break;
+                        case 2: secondResourceChar = "F";
+                            break;
+                        case 3: secondResourceChar = "W";
+                            break;
+                        }
+                        cout << "|" << firstResourceChar << " " << secondResourceChar;
+                    }
+                }
+            }
+            
+        }
+        cout << "|" << endl;
+    }
+}

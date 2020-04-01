@@ -17,7 +17,7 @@ static vector<Building>* drawBuildingsOnBoard(DeckBuilding* deckBuildings);
 
 int main() {
 	int nbPlayers = askNbPlayers();
-	//Map* board = selectBoard(nbPlayers);
+	Map* board = selectBoard(nbPlayers);
 	vector<Player*>* players = createPlayers(nbPlayers); 
 	assignVillageBoards(players, nbPlayers);
 	DeckHarvestTile* deckTiles = new DeckHarvestTile();
@@ -43,6 +43,7 @@ static int askNbPlayers() {
 //Selects the right file from the GBMapsLoader depending on the nb of players
 static Map* selectBoard(int nbPlayers) {
 	//create an empty Map object
+<<<<<<< HEAD
     Map* gameMap;
 
     //Depending on the number of players, run the setMapSize method from GBMaps to assign the correct ammount of nodes to the map
@@ -60,6 +61,25 @@ static Map* selectBoard(int nbPlayers) {
         gameMap->getMapSize(4);
     }
     return gameMap;
+=======
+	Map* gameMap;
+
+	//Depending on the number of players, run the setMapSize method from GBMaps to assign the correct ammount of nodes to the map
+	//Prints out the correct game size
+	if (nbPlayers == 2) {
+		gameMap->setMapSize(2);
+		gameMap->getMapSize(2);
+	}
+	else if (nbPlayers == 3) {
+		gameMap->setMapSize(3);
+		gameMap->getMapSize(3);
+	}
+	else if (nbPlayers == 4) {
+		gameMap->setMapSize(4);
+		gameMap->getMapSize(4);
+	}
+	return gameMap;
+>>>>>>> 0815ea6493fd5bb22bf79fd611e942393b3fd85c
 }
 
 static vector<Player*>* createPlayers(int nbPlayers) {
