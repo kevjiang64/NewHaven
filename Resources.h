@@ -20,6 +20,7 @@ class HarvestTile {
 		void setTopLeft(int tl) { topLeft = &tl;  };
 		int* getResources() { return resources; };
 		int* getTopLeft() { return topLeft; };
+        void display();
 };
 
 class DeckHarvestTile {
@@ -50,6 +51,7 @@ class Building {
 		int getLabel() { return *label; };
         int getNumber() { return *number; }
 		bool isFlipped() { return *flipped; };
+        void display();
 		
 };
 
@@ -72,7 +74,7 @@ class Hand {
 	public:
 		Hand();
 		~Hand();
-		void exchange(vector<int> resources);
+        void exchange(vector<int> resources);
 		void printResources();
 		vector<int>* getResourceMarkers() { return resourceMarkers; };
 		void setResourceMarkers(vector<int> resources) { *resourceMarkers = resources; };

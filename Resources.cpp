@@ -73,6 +73,31 @@ HarvestTile::~HarvestTile() {
     //delete[] resources;
 };
 
+void HarvestTile::display() {
+    cout << "Resources of the harvest tile: ";
+    
+    for(int i = 0; i<4; i++) {
+        int value = this->getResources()[i];
+        
+        switch(value) {
+            case 0:
+                cout << "Wheat ";
+                continue;
+            case 1:
+                cout << "Sheep ";
+                continue;
+            case 2:
+                cout << "Timber ";
+                continue;
+            case 3:
+                cout << "Stone ";
+                continue;
+            default:
+                break;
+        };
+    }
+}
+
 // DECK FOR HARVEST TILES
 
 DeckHarvestTile::DeckHarvestTile() {
@@ -129,6 +154,65 @@ Building::~Building() {
     //delete number;
 	//delete flipped;
 };
+
+void Building::display() {
+    cout << "Color of the building: ";
+    
+    int color = this->getLabel();
+    
+    switch (color) {
+        case 0:
+            cout << "Green" << endl;
+            break;
+            
+        case 1:
+            cout << "Gray" << endl;
+            break;
+            
+        case 2:
+            cout << "Red" << endl;
+            break;
+            
+        case 3:
+            cout << "Yellow" << endl;
+            break;
+            
+        default:
+            break;
+    }
+    
+    cout << "Label of the building: ";
+    
+    int label = this->getLabel();
+    
+    switch (label) {
+        case 0:
+            cout << "Meadow" << endl;
+            break;
+            
+        case 1:
+            cout << "Quarry" << endl;
+            break;
+            
+        case 2:
+            cout << "Forest" << endl;
+            break;
+            
+        case 3:
+            cout << "Wheatfield" << endl;
+            break;
+            
+        default:
+            break;
+    }
+    
+    cout << "Number of the building: ";
+    cout << this->getNumber() << endl;
+    
+    bool flipped = this->isFlipped();
+    cout << "Flipped?: ";
+    flipped ? cout << "yes" << endl : cout << "no" << endl;
+}
 
 // DECK OF BUILDINGS
 
@@ -211,7 +295,7 @@ void Hand::exchange(vector<int> resources) {
 }
 
 void Hand::printResources() {
-    cout << "Resources:\nName of resource 1:" << (*resourceMarkers).at(0) << "\nName of resource 2:" << (*resourceMarkers).at(1) << "\nName of resource 3:" << (*resourceMarkers).at(2) << "\nName of resource 4:" << (*resourceMarkers).at(3);
+    cout << "Resources:\nWheat: " << (*resourceMarkers).at(0) << "\nSheep: " << (*resourceMarkers).at(1) << "\nTimber: " << (*resourceMarkers).at(2) << "\nStone:" << (*resourceMarkers).at(3);
 }
 
 void Hand::resetResourceMarkers() {
