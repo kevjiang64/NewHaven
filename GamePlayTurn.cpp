@@ -8,7 +8,6 @@
 #include "Resources.h"
 #include "Part6.h"
 
-<<<<<<< HEAD
 //Method Signature
 void buildPlayerVillage(Player& player);
 bool enoughResources(Player& player, int index);
@@ -56,8 +55,8 @@ void buildPlayerVillage(Player& player)
 	}
 	//Showing player's new resources
 	player.getHand()->printResources();
+}
 
-=======
 //Methods signature
 static int askNbPlayers();
 static Map* selectBoard(int nbPlayers);
@@ -75,7 +74,6 @@ int main() {
     vector<Building>* buildingsOnBoard = drawBuildingsOnBoard(deckBuildings);
     players->at(1)->displayState();
     return 0;
->>>>>>> 0815ea6493fd5bb22bf79fd611e942393b3fd85c
 }
 //Check if player has enough resources
 bool enoughResources(Player& player,int index)
