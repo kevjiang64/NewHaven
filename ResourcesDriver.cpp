@@ -97,5 +97,23 @@
     cout << "\tHas the building been flipped: ";
     flipped ? cout << "yes" << endl : cout << "no" << endl;
     
+     Building newBuilding;
+    HarvestTile newHarvestTile;
+    cout << "Building: " << endl;
+    newBuilding.printBuilding();
+    cout << "\n";
+    cout << "Harvest Tile: " << endl;
+    newHarvestTile.printHarvestTile();
+
+    cout << "\n" << endl;
+    vector<int>* resources = new vector<int>(4);
+    for (int i = 0; i < 4; i++) {
+        resources->at(i) = i;
+    }
+
+    Hand hand;
+    hand.exchange(*resources);
+    hand.printResources();
+
     return 0;
 }*/

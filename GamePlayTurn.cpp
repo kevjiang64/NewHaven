@@ -13,10 +13,14 @@ void buildPlayerVillage(Player& player);
 bool enoughResources(Player& player, int index);
 void removeUsedResources(Player& player,int index);
 
+static void endOfTurn(Player* activePlayer, vector<Building>* buildingsOnBoard, DeckBuilding* deck, vector<Player*>* players);
 static void endTurnDrawBuildings(Player* activePlayer, vector<Building>* buildingsOnBoard, DeckBuilding* deck);
 static void endTurnDrawBuildingFromBoard(Player* activePlayer, vector<Building>* buildingsOnBoard);
 static void endTurnResetResourceMarkers(vector<Player*>* players);
 static void endTurnDrawNewBuildingsToBoard(vector<Building>* buildingsOnBoard, DeckBuilding* deck);
+
+static void turnSequence(vector<Player*>* players, int nbPlayers);
+static void transferResourceMarkers(vector<Player*>* players, int i);
 
 
 //Place a building in the VGMap board
@@ -55,24 +59,6 @@ void buildPlayerVillage(Player& player)
 	player.getHand()->printResources();
 }
 
-//Methods signature
-static int askNbPlayers();
-static Map* selectBoard(int nbPlayers);
-static vector<Player*>* createPlayers(int nbPlayers);
-static void assignVillageBoards(vector<Player*>* players, int nbPlayers);
-static vector<Building>* drawBuildingsOnBoard(DeckBuilding* deckBuildings);
-
-int main() {
-    int nbPlayers = askNbPlayers();
-    Map* board = selectBoard(nbPlayers);
-    vector<Player*>* players = createPlayers(nbPlayers);
-    assignVillageBoards(players, nbPlayers);
-    DeckHarvestTile* deckTiles = new DeckHarvestTile();
-    DeckBuilding* deckBuildings = new DeckBuilding();
-    vector<Building>* buildingsOnBoard = drawBuildingsOnBoard(deckBuildings);
-    players->at(1)->displayState();
-    return 0;
-}
 //Check if player has enough resources
 bool enoughResources(Player& player,int index)
 {
@@ -165,4 +151,35 @@ static void endTurnDrawNewBuildingsToBoard(vector<Building>* buildingsOnBoard, D
 	for (int i = buildingsOnBoard->size(); i < 5; i++) {
 		buildingsOnBoard->push_back(deck->draw());
 	}
+}
+
+static void turnSequence(vector<Player*>* players, int nbPlayers) {
+	int done = 0;
+	int i = 0;
+
+	while (i < nbPlayers) {
+		cout << "player " << /*players->at(i).id <<*/ " is now playing" << endl;
+
+		while (!done) {
+			string ans;
+
+			//player place building
+			buildPlayerVillage(*(players->at(i)));
+
+			cout << "Do you want to build another building? (y/n): ";
+			cin >> ans;
+
+			if (ans == "n")
+				done = 1;
+		}
+
+		cout << "transfering hand to the next player" << endl;
+		transferResourceMarkers(players);
+		i++;
+	}
+}
+
+static void transferResourceMarkers(vector<Player*>* players, int i) {
+	Hand prevHand = *players->at(i)->getHand();
+	*(players->at(i + 1)->getHand()) = prevHand;
 }

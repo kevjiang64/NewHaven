@@ -16,6 +16,7 @@ class HarvestTile {
 	public:
 		HarvestTile();
 		~HarvestTile();
+		void display();
 		void setResources(int r) { *resources = r;  };
 		void setTopLeft(int tl) { topLeft = &tl;  };
 		int* getResources() { return resources; };
@@ -44,6 +45,7 @@ class Building {
 	public:
 		Building();
 		~Building();
+		void display();
 		void setLabel(int l) { *label = l; };
 		void setNumber(int n) { *number = n; };
 		void setFlipped(bool f) { *flipped = f; };
