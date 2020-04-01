@@ -408,13 +408,13 @@ void Map::setMapSize(int playerNumber) {
 }
 std::string Map::getMapSize(int playerNumber) {
     if (playerNumber == 2) {
-        return "the center 5x5 area.";
+        return "The game board will be the center 5x5 area.";
     }
     else if (playerNumber == 3) {
-        return "the light center 5x5 area and the top and bottom green squares.";
+        return "The game board will be the light center 5x5 area and the top and bottom green squares.";
     }
     else if (playerNumber == 4) {
-        return "the entire playing area.";
+        return "The game board will the entire playing area.";
     }
     else {
         return "error";
