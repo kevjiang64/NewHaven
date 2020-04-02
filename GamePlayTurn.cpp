@@ -205,32 +205,120 @@ static void endTurnDrawNewBuildingsToBoard(vector<Building>* buildingsOnBoard, D
 }
 
 static void turnSequence(vector<Player*>* players, int nbPlayers) {
-	int done = 0;
-	int i = 0;
+	
+	int done_building = 0, i = 0,game_finished = 0, share_index;
 
-	while (i < nbPlayers) {
-		cout << "player " << /*players->at(i).id <<*/ " is now playing" << endl;
+	//Continues to loop until one space left on the board
+	while (!game_finished) 
+	{
+		for (int i = 0; i < nbPlayers; i++)
+		{
+			//Showing which player is playing
+			cout << "Player with " << players->at(i)->getID() << " is now playing" << endl;
 
-		while (!done) {
-			string ans;
+			//As long as they want to build
+			while (!done_building)
+			{
+				string answer;
 
-			//player place building
-			buildPlayerVillage(*(players->at(i)));
+				//Player place building
+				//players->at(i)->placeHarvestTile()
+				buildPlayerVillage(*(players->at(i)));
 
-			cout << "Do you want to build another building? (y/n): ";
-			cin >> ans;
+				cout << "Do you want to build another building? (y/n): ";
+				cin >> answer;
 
-			if (ans == "n")
-				done = 1;
+				//Not building anymore
+				if (answer.compare("n") == 0)
+					done_building = 1;
+			}
+			//Sharing the resources
+			shareWealth(players, nbPlayers, i);
 		}
+	}
+}
 
-		cout << "transfering hand to the next player" << endl;
-		transferResourceMarkers(players, i);
-		i++;
+//Check if last player of the sequence 
+static bool checkLastSequence(int index, int nbPlayer)
+{
+	return index == nbPlayer - 1;
+}
+
+//Letting other players use the rest of your resources
+static void shareWealth(vector<Player*>* players,int nbPlayers,int index)
+{
+	int shared_index;
+	string answer;
+
+	//Check if last player of the sequence
+	if (checkLastSequence(index, nbPlayers))
+	{
+		shared_index = 0;
+	}
+	else
+	{
+		shared_index = index + 1;
+	}
+
+	//Looping through every other player until reaching the same player
+	while (players->at(shared_index)->getID() != players->at(index)->getID())
+	{
+		cout << "Transfering resources of the hand to the next player ==> ID : " << players->at(shared_index)->getID() << endl;
+		transferResourceMarkers(players, index);
+
+		//Next player
+		if (checkLastSequence(index, nbPlayers))
+		{
+			index = 0;
+		}
+		else
+		{
+			index++;
+		}
+		//Asking if they want to build
+		cout << "Do you want to build a building? (y/n): ";
+		cin >> answer;
+		
+		//If yes to building
+		while (answer.compare("y") == 0)
+		{
+			buildPlayerVillage(*(players->at(shared_index)));
+			cout << "Do you want to build another building? (y/n): ";
+			cin >> answer;
+		}
+		//Next player
+		if (checkLastSequence(index, nbPlayers))
+		{
+			shared_index = 0;
+		}
+		else
+		{
+			shared_index++;
+		}
 	}
 }
 
 static void transferResourceMarkers(vector<Player*>* players, int i) {
 	Hand prevHand = *players->at(i)->getHand();
 	*(players->at(i + 1)->getHand()) = prevHand;
+}
+
+//Reordering the players in the actual vector based on their ID (lowest : at index 0 , highest : at n-1)
+static void turnOrder(vector<Player*>* players, int nbPlayers)
+{
+	Player* tempPlayer;
+
+	for (int i = 0; i < nbPlayers-1; i++)
+	{
+		for (int j = 0; j < nbPlayers - 1; j++)
+		{
+			//Next index ID smaller than current index ID
+			if (players->at(j + 1)->getID() < players->at(j)->getID())
+			{
+				tempPlayer = players->at(j);
+				players->at(j) = players->at(j + 1);
+				players->at(j + 1) = tempPlayer;
+			}
+		}
+	}
 }

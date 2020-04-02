@@ -16,11 +16,9 @@
 
 using namespace std;
 
-int* Player::currentId = new int(1);
-
 Player::Player() {
-	id = new int(*currentId);
-	(*currentId)++;
+	//Each player is assigned a random ID ranging from 1 to 100
+	id = new int(rand() % 100 + 1);
 
 	vb = new VGMap();
 

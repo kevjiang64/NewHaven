@@ -44,10 +44,11 @@ public:
      Hand* getHand() { return hand;  };
      VGMap* getVillageBoard() { return vb; };
      bool getShipmentTileUsed() { return *shipmentTileUsed; };
+     int getID() { return *id; };
      //setters
      void setVillageBoard(VGMap* board) { vb = board; };
     
 };
 
 
-#endif /* Player_h */
+#endif  Player_h 
