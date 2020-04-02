@@ -93,14 +93,22 @@ void HarvestTile::display() {
             cout << "Stone ";
             continue;
         default:
-            break;
+            cout << "empty ";
+            continue;
         };
     }
 }
 // DECK FOR HARVEST TILES
 
 DeckHarvestTile::DeckHarvestTile() {
-	count = new int(60);
+	count = new int(0);
+    allTiles = new HarvestTile[60];
+    
+    //create 60 tiles at the beginning
+    for (int i=0; i<60; i++) {
+        HarvestTile tile;
+        allTiles[i] = tile;
+    }
 };
 
 DeckHarvestTile::~DeckHarvestTile() {
@@ -108,21 +116,24 @@ DeckHarvestTile::~DeckHarvestTile() {
 };
 
 HarvestTile DeckHarvestTile::draw() {
-    HarvestTile newTile;
     
-    if (*count <= 0) {
+    if (*count >= 60) {
 		cout << "There is no harvest tile left." << endl;
+        HarvestTile emptyTile;
         
         //set everything to -1 and return an empty tile
-        newTile.setResources(-1);
-        newTile.setTopLeft(-1);
+        for (int i=0; i<4; i++) {
+             emptyTile.setResources(-1, i);
+        }
+        emptyTile.setTopLeft(-1);
+        return emptyTile;
     }
     
     else {
-        (*count)--;
+        (*count)++;
     }
     
-    return newTile;
+    return allTiles[(*count)-1];
 };
 
 // BUILDING
@@ -134,24 +145,16 @@ Building::Building() {
 	
     
 	flipped = (bool*)malloc(sizeof(bool));
+    used = (bool*)malloc(sizeof(bool));
 	*flipped = false;
-
-    //generate random numbers
-    mt19937 rng;
-    rng.seed(random_device()());
-    uniform_int_distribution<mt19937::result_type> dist;
-
-    int output = dist(rng) % 4;
-    int numberOutput = dist(rng) % 6 + 1;
-        
-    *label = output;
-    *number = numberOutput;
+    *used = false;
 };
 
 Building::~Building() {
 	//delete label;
     //delete number;
 	//delete flipped;
+    //delete used;
 };
 
 void Building::display() {
@@ -177,6 +180,7 @@ void Building::display() {
         break;
 
     default:
+        cout << "Empty" << endl;
         break;
     }
 
@@ -202,6 +206,7 @@ void Building::display() {
         break;
 
     default:
+        cout << "Empty" << endl;
         break;
     }
 
@@ -216,12 +221,140 @@ void Building::display() {
 // DECK OF BUILDINGS
 
 DeckBuilding::DeckBuilding() {
-	totalCount = new int(144);
+	totalCount = new int(0);
     count = new int*[4];
 	
 	for (int i = 0; i < 6; i++) {
 		count[i] = new int[6];
 	}
+    
+    allBuildings = new Building[144];
+    
+    //create 144 buildings at the beginning
+    for (int i=0; i<144; i++) {
+        Building building;
+        
+        if(i < 6) {
+            building.setLabel(0);
+            building.setNumber(1);
+        }
+        
+        if((i>=6) && (i<12)) {
+            building.setLabel(0);
+            building.setNumber(2);
+        }
+        
+        if((i>=12) && (i<18)) {
+            building.setLabel(0);
+            building.setNumber(3);
+        }
+        
+        if((i>=18) && (i<24)) {
+            building.setLabel(0);
+            building.setNumber(4);
+        }
+        
+        if((i>=24) && (i<30)) {
+            building.setLabel(0);
+            building.setNumber(5);
+        }
+        
+        if((i>=30) && (i<36)) {
+            building.setLabel(0);
+            building.setNumber(6);
+        }
+        
+        if((i>=36) && (i<42)) {
+            building.setLabel(1);
+            building.setNumber(1);
+        }
+        
+        if((i>=42) && (i<48)) {
+            building.setLabel(1);
+            building.setNumber(2);
+        }
+        
+        if((i>=48) && (i<54)) {
+            building.setLabel(1);
+            building.setNumber(3);
+        }
+        
+        if((i>=54) && (i<60)) {
+            building.setLabel(1);
+            building.setNumber(4);
+        }
+        
+        if((i>=60) && (i<66)) {
+            building.setLabel(1);
+            building.setNumber(5);
+        }
+        
+        if((i>=66) && (i<72)) {
+            building.setLabel(1);
+            building.setNumber(6);
+        }
+        
+        if((i>=72) && (i<78)) {
+            building.setLabel(2);
+            building.setNumber(1);
+        }
+        
+        if((i>=78) && (i<84)) {
+            building.setLabel(2);
+            building.setNumber(2);
+        }
+        
+        if((i>=84) && (i<90)) {
+            building.setLabel(2);
+            building.setNumber(3);
+        }
+        
+        if((i>=90) && (i<96)) {
+            building.setLabel(2);
+            building.setNumber(4);
+        }
+        
+        if((i>=96) && (i<102)) {
+            building.setLabel(2);
+            building.setNumber(5);
+        }
+        
+        if((i>=102) && (i<108)) {
+            building.setLabel(2);
+            building.setNumber(6);
+        }
+        
+        if((i>=108) && (i<114)) {
+            building.setLabel(3);
+            building.setNumber(1);
+        }
+        
+        if((i>=114) && (i<120)) {
+            building.setLabel(3);
+            building.setNumber(2);
+        }
+        
+        if((i>=120) && (i<126)) {
+            building.setLabel(3);
+            building.setNumber(3);
+        }
+        
+        if((i>=126) && (i<132)) {
+            building.setLabel(3);
+            building.setNumber(4);
+        }
+        
+        if((i>=132) && (i<138)) {
+            building.setLabel(3);
+            building.setNumber(5);
+        }
+        
+        if((i>=138) && (i<144)) {
+            building.setLabel(3);
+            building.setNumber(6);
+        }
+        allBuildings[i] = building;
+    }
 };
 
 DeckBuilding::~DeckBuilding() {
@@ -243,7 +376,7 @@ bool DeckBuilding::validBuilding(Building b) {
 };
 
 Building DeckBuilding::draw() {
-    if (*totalCount <= 0) {
+    if (*totalCount >= 144) {
 		cout << "There is no building left." << endl;
 		
 		Building emptyBuilding;
@@ -253,23 +386,21 @@ Building DeckBuilding::draw() {
     }
     
     else {
-		while (1) {
-			Building newBuilding;
+        (*totalCount)++;
+        
+        mt19937 rng;
+        rng.seed(random_device()());
+        uniform_int_distribution<mt19937::result_type> dist;
 
-			if (validBuilding(newBuilding)) {
-				for (int i = 0; i<4; i++) {
-					for (int j = 0; j<6; j++) {
-						if ((i == newBuilding.getLabel()) && (j == newBuilding.getNumber() - 1)) {
-							count[i][j]++;
-							break;
-						}
-					}
-				}
-
-				(*totalCount)--;
-				return newBuilding;
-			}
-		}
+        int index = dist(rng) % 144;
+        
+        while(allBuildings[index].getUsed() == true) {
+            index = dist(rng) % 144;
+        }
+        
+        allBuildings[index].setUsed(true);
+        
+        return allBuildings[index];
     }
 };
 
