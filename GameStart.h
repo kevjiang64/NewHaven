@@ -10,10 +10,11 @@
 #include "Resources.h"
 #include "Part6.h"
 
+using namespace std;
 
-static int askNbPlayers();
-static Map* selectBoard(int nbPlayers);
-static vector<Player*>* createPlayers(int nbPlayers);
-static void assignVillageBoards(vector<Player*>* players, int nbPlayers);
-static vector<Building>* drawBuildingsOnBoard(DeckBuilding* deckBuildings);
-static void displayAtGameStart(int nbPlayers, vector<Player*>* players, Map* board);
+int askNbPlayers();
+Map* selectBoard(int nbPlayers);
+vector<Player*>* createPlayers(int nbPlayers);
+void assignVillageBoards(vector<Player*>* players, int nbPlayers);
+vector<Building>* drawBuildingsOnBoard(DeckBuilding* deckBuildings);
+void displayAtGameStart(int nbPlayers, vector<Player*>* players, Map* board);

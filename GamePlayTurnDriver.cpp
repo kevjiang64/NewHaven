@@ -10,6 +10,7 @@
 #include "GameStart.h"
 #include "GamePlayTurn.h"
 
+
 int main() {
 	//gameStart
 	int nbPlayers = askNbPlayers();
@@ -23,7 +24,7 @@ int main() {
 
 	//turn sequence for the first player in the vector, for testing purposes
 	Player* activePlayer = players->at(0);
-
+	placeTile(activePlayer, board, deckTiles);
 
 	return 0;
 }

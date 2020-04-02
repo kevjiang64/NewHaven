@@ -12,7 +12,7 @@
 using namespace std;
 
 //places a harvest tile on the board
-static void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck) {
+void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck) {
 	cout << "Here is the board: " << endl;
 	board->display();
 	cout << "Where do you want to place the tile? Please indicate the corresponding number." << endl;
@@ -30,7 +30,7 @@ static void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck) {
 		cout << "The column number is incorrect, please enter a number between 1 and 7: ";
 		cin >> enteredCol;
 	}
-	
+
 	cout << "Here are the tile you possess: " << endl;
 	activePlayer->getTiles().at(0).display();
 	activePlayer->getTiles().at(1).display();
@@ -56,7 +56,11 @@ static void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck) {
 		cin >> enteredTopLeft;
 	}
 
-	activePlayer->placeHarvestTile(enteredNumTile - 1, (enteredRow - 1) * 2, (enteredCol - 1) * 2, board, *deck, enteredTopLeft - 1);
+	bool tilePlaced = activePlayer->placeHarvestTile(enteredNumTile - 1, (enteredRow - 1) * 2, (enteredCol - 1) * 2, board, *deck, enteredTopLeft - 1);
+	if (!tilePlaced) {
+		cout << "Error! The tile cannot be placed, please try again!" << endl;
+		placeTile(activePlayer, board, deck);
+	}
 }
 
 //Place a building in the VGMap board
@@ -114,13 +118,13 @@ void removeUsedResources(Player& player, int index)
 	player.getHand()->getResourceMarkers()->at(buildingResource) -= resourceAmount;
 }
 
-static void endOfTurn(Player* activePlayer, vector<Building>* buildingsOnBoard, DeckBuilding* deck, vector<Player*>* players) {
+void endOfTurn(Player* activePlayer, vector<Building>* buildingsOnBoard, DeckBuilding* deck, vector<Player*>* players) {
 	endTurnDrawBuildings(activePlayer, buildingsOnBoard, deck);
 	endTurnResetResourceMarkers(players);
 	endTurnDrawNewBuildingsToBoard(buildingsOnBoard, deck);
 }
 
-static void endTurnDrawBuildings(Player* activePlayer, vector<Building>* buildingsOnBoard, DeckBuilding* deck) {
+void endTurnDrawBuildings(Player* activePlayer, vector<Building>* buildingsOnBoard, DeckBuilding* deck) {
 	cout << "You can now draw new buildings for each empty resource." << endl;
 	int countBuildingsToDraw = 0;
 	for (int i = 0; i < 4; i++) {
@@ -158,7 +162,7 @@ static void endTurnDrawBuildings(Player* activePlayer, vector<Building>* buildin
 	}
 }
 
-static void endTurnDrawBuildingFromBoard(Player* activePlayer, vector<Building>* buildingsOnBoard) {
+void endTurnDrawBuildingFromBoard(Player* activePlayer, vector<Building>* buildingsOnBoard) {
 	cout << "Here are the buildings on the board: " << endl;
 	for (int i = 0; i < buildingsOnBoard->size(); i++) {
 		cout << i + 1 << " - ";
@@ -177,19 +181,19 @@ static void endTurnDrawBuildingFromBoard(Player* activePlayer, vector<Building>*
 	buildingsOnBoard->erase(buildingsOnBoard->begin() + numEntered - 1); // will it erase the one in the player's hand too? test it
 }
 
-static void endTurnResetResourceMarkers(vector<Player*>* players) {
+ void endTurnResetResourceMarkers(vector<Player*>* players) {
 	for (int i = 0; i < players->size(); i++) {
 		players->at(i)->resetResourceMarkers();
 	}
 }
 
-static void endTurnDrawNewBuildingsToBoard(vector<Building>* buildingsOnBoard, DeckBuilding* deck) {
+void endTurnDrawNewBuildingsToBoard(vector<Building>* buildingsOnBoard, DeckBuilding* deck) {
 	for (int i = buildingsOnBoard->size(); i < 5; i++) {
 		buildingsOnBoard->push_back(deck->draw());
 	}
 }
 
-static void turnSequence(vector<Player*>* players, int nbPlayers) {
+void turnSequence(vector<Player*>* players, int nbPlayers) {
 	
 	int done_building = 0, i = 0,game_finished = 0, share_index;
 
@@ -225,13 +229,13 @@ static void turnSequence(vector<Player*>* players, int nbPlayers) {
 }
 
 //Check if last player of the sequence 
-static bool checkLastSequence(int index, int nbPlayer)
+bool checkLastSequence(int index, int nbPlayer)
 {
 	return index == nbPlayer - 1;
 }
 
 //Letting other players use the rest of your resources
-static void shareWealth(vector<Player*>* players,int nbPlayers,int index)
+void shareWealth(vector<Player*>* players,int nbPlayers,int index)
 {
 	int shared_index;
 	string answer;

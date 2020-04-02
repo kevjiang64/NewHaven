@@ -10,7 +10,7 @@
 #include "GameStart.h"
 
 
-int main() {
+/*int main() {
 	int nbPlayers = askNbPlayers();
 	Map* board = selectBoard(nbPlayers);
 	vector<Player*>* players = createPlayers(nbPlayers);
@@ -21,10 +21,19 @@ int main() {
 	displayAtGameStart(nbPlayers, players, board);
 
 	return 0;
+}*/
+
+void displayAtGameStart(int nbPlayers, vector<Player*>* players, Map* board) {
+	//Showing Display for every player 
+	for (int i = 0; i < nbPlayers; i++)
+		players->at(i)->displayState();
+
+	cout << "" << endl;
+	board->display();
 }
 
 //Asks to the user and returns the nb of players wanted
-static int askNbPlayers() {
+int askNbPlayers() {
 	int nbPlayers;
 	cout << "How many players do you want to play with? ";
 	cin >> nbPlayers;
@@ -37,7 +46,7 @@ static int askNbPlayers() {
 }
 
 //Selects the right file from the GBMapsLoader depending on the nb of players
-static Map* selectBoard(int nbPlayers) {
+Map* selectBoard(int nbPlayers) {
 	//create an empty Map object
 	vector<Map::Node*>* vectorNodes = new vector<Map::Node*>();
     Map* gameMap = new Map(nbPlayers, *vectorNodes);
@@ -59,7 +68,7 @@ static Map* selectBoard(int nbPlayers) {
     return gameMap;
 }
 
-static vector<Player*>* createPlayers(int nbPlayers) {
+ vector<Player*>* createPlayers(int nbPlayers) {
 	vector<Player*>* players = new vector<Player*>(nbPlayers);
 	for (int i = 0; i < nbPlayers; i++) {
 		Player* player = new Player();
@@ -75,7 +84,7 @@ static vector<Player*>* createPlayers(int nbPlayers) {
 }
 
 //Assign a village board from a file from the loader to each of the players
-static void assignVillageBoards(vector<Player*>* players, int nbPlayers) {
+void assignVillageBoards(vector<Player*>* players, int nbPlayers) {
 	
 	int row, col;
 	string board;
@@ -132,7 +141,7 @@ static void assignVillageBoards(vector<Player*>* players, int nbPlayers) {
 		}
 	}
 }
-static vector<Building>* drawBuildingsOnBoard(DeckBuilding* deckBuildings) {
+vector<Building>* drawBuildingsOnBoard(DeckBuilding* deckBuildings) {
 	vector<Building>* buildingsOnBoard = new vector<Building>(5);
 	for (int i = 0; i < 5; i++) {
 		(*buildingsOnBoard)[i] = deckBuildings->draw();
@@ -140,11 +149,3 @@ static vector<Building>* drawBuildingsOnBoard(DeckBuilding* deckBuildings) {
 	return buildingsOnBoard;
 }
 
-static void displayAtGameStart(int nbPlayers, vector<Player*>* players, Map* board) {
-	//Showing Display for every player 
-	for (int i = 0; i < nbPlayers; i++)
-		players->at(i)->displayState();
-
-	cout << "" << endl;
-	board->display();
-}
