@@ -103,8 +103,14 @@ bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarv
 		}
 	}
 	else if (noTile == 2) {
-		bool tilePlaced = placeShipmentTile(row, col, board, deck);
-		return tilePlaced;
+		if (shipmentTileUsed) {
+			cout << "Your shipment tile is no longer available" << endl;
+			return false;
+		}
+		else {
+			bool tilePlaced = placeShipmentTile(row, col, board, deck);
+			return tilePlaced;
+		}
 	}
 	else {
 		cout << "Error with the tile number" << endl;

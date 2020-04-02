@@ -8,7 +8,11 @@
 #include "Resources.h"
 #include "Part6.h"
 
+using namespace std;
+
 //Method Signature
+static void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck);
+
 void buildPlayerVillage(Player& player);
 bool enoughResources(Player& player, int index);
 void removeUsedResources(Player& player,int index);
@@ -22,6 +26,53 @@ static void endTurnDrawNewBuildingsToBoard(vector<Building>* buildingsOnBoard, D
 static void turnSequence(vector<Player*>* players, int nbPlayers);
 static void transferResourceMarkers(vector<Player*>* players, int i);
 
+//places a harvest tile on the board
+static void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck) {
+	cout << "Here is the board: " << endl;
+	board->display();
+	cout << "Where do you want to place the tile? Please indicate the corresponding number." << endl;
+	cout << "Row: ";
+	int enteredRow;
+	cin >> enteredRow;
+	while (enteredRow < 1 || enteredRow > 7) {
+		cout << "The row number is incorrect, please enter a number between 1 and 7: ";
+		cin >> enteredRow;
+	}
+	cout << "Column: ";
+	int enteredCol;
+	cin >> enteredCol;
+	while (enteredCol < 1 || enteredCol > 7) {
+		cout << "The column number is incorrect, please enter a number between 1 and 7: ";
+		cin >> enteredCol;
+	}
+	
+	cout << "Here are the tile you possess: " << endl;
+	activePlayer->getTiles().at(0).display();
+	activePlayer->getTiles().at(1).display();
+	if (!activePlayer->getShipmentTileUsed()) {
+		cout << "You can also play your shipment tile" << endl;
+	}
+
+	cout << "Which tile do you want to place? (1 for your first tile, 2 for your second one, or 3 for your shipment tile) ";
+	int enteredNumTile;
+	cin >> enteredNumTile;
+	while (!(enteredNumTile == 1 || enteredNumTile == 2 || enteredNumTile == 3)) {
+		cout << "Invalid number!" << endl;
+		cout << "Which tile do you want to place? (1 for your first tile, 2 for your second one, or 3 for your shipment tile) ";
+		cin >> enteredNumTile;
+	}
+
+	cout << "Which corner do you want to place as the top left corner? (Please enter 1 for top left, 2 for top right, 3 for bottom right and 4 for bottom left) ";
+	int enteredTopLeft;
+	cin >> enteredTopLeft;
+	while (!(enteredTopLeft == 1 || enteredTopLeft == 2 || enteredTopLeft == 3 || enteredTopLeft == 4)) {
+		cout << "Invalid number!" << endl;
+		cout << "Which corner do you want to place as the top left corner? (Please enter 1 for top left, 2 for top right, 3 for bottom right and 4 for bottom left) ";
+		cin >> enteredTopLeft;
+	}
+
+	activePlayer->placeHarvestTile(enteredNumTile - 1, (enteredRow - 1) * 2, (enteredCol - 1) * 2, board, *deck, enteredTopLeft - 1);
+}
 
 //Place a building in the VGMap board
 void buildPlayerVillage(Player& player)
