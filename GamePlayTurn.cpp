@@ -174,7 +174,7 @@ static void turnSequence(vector<Player*>* players, int nbPlayers) {
 		}
 
 		cout << "transfering hand to the next player" << endl;
-		transferResourceMarkers(players);
+		transferResourceMarkers(players, i);
 		i++;
 	}
 }

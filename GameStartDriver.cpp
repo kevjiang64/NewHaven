@@ -20,10 +20,14 @@ int main() {
 	Map* board = selectBoard(nbPlayers);
 	vector<Player*>* players = createPlayers(nbPlayers); 
 	assignVillageBoards(players, nbPlayers);
-	DeckHarvestTile* deckTiles = new DeckHarvestTile();
-	DeckBuilding* deckBuildings = new DeckBuilding();
-	vector<Building>* buildingsOnBoard = drawBuildingsOnBoard(deckBuildings);
-	players->at(1)->displayState();
+	DeckHarvestTile* deckTiles = new DeckHarvestTile(); //Deck of Tiles not created ==> only count = 60
+	DeckBuilding* deckBuildings = new DeckBuilding(); //Same ?
+	vector<Building>* buildingsOnBoard = drawBuildingsOnBoard(deckBuildings); //Don't Understand ? + where does each player draw 6 building tiles and 2 harvest tiles
+	
+	//Showing Display for every player 
+	for(int i = 0; i < nbPlayers; i++)
+		players->at(i)->displayState();
+
 	return 0;
 }
 
@@ -68,6 +72,11 @@ static vector<Player*>* createPlayers(int nbPlayers) {
 		Player* player = new Player();
 		(*players)[i] = player;
 	}
+	//Display each player's game resource Markers
+	for (int i = 0; i < nbPlayers; i++) {
+		(*players)[i]->resourceTracker();
+	}
+
 
 	return players;
 }
