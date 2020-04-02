@@ -234,6 +234,7 @@ static void turnSequence(vector<Player*>* players, int nbPlayers) {
 			}
 			//Sharing the resources
 			shareWealth(players, nbPlayers, i);
+			//endOfTurn(players->at(i),);
 		}
 	}
 }
