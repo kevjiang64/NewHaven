@@ -7,26 +7,18 @@
 #include "Player.h"
 #include "Resources.h"
 #include "Part6.h"
+#include "GameStart.h"
 
-//Methods signature
-static int askNbPlayers();
-static Map* selectBoard(int nbPlayers);
-static vector<Player*>* createPlayers(int nbPlayers);
-static void assignVillageBoards(vector<Player*>* players, int nbPlayers);
-static vector<Building>* drawBuildingsOnBoard(DeckBuilding* deckBuildings);
 
 int main() {
 	int nbPlayers = askNbPlayers();
 	Map* board = selectBoard(nbPlayers);
-	vector<Player*>* players = createPlayers(nbPlayers); 
+	vector<Player*>* players = createPlayers(nbPlayers);
 	assignVillageBoards(players, nbPlayers);
 	DeckHarvestTile* deckTiles = new DeckHarvestTile(); //Deck of Tiles not created ==> only count = 60
 	DeckBuilding* deckBuildings = new DeckBuilding(); //Same ?
 	vector<Building>* buildingsOnBoard = drawBuildingsOnBoard(deckBuildings); //Don't Understand ? + where does each player draw 6 building tiles and 2 harvest tiles
-	
-	//Showing Display for every player 
-	for(int i = 0; i < nbPlayers; i++)
-		players->at(i)->displayState();
+	displayAtGameStart(nbPlayers, players, board);
 
 	return 0;
 }
@@ -47,7 +39,8 @@ static int askNbPlayers() {
 //Selects the right file from the GBMapsLoader depending on the nb of players
 static Map* selectBoard(int nbPlayers) {
 	//create an empty Map object
-    Map* gameMap;
+	vector<Map::Node*>* vectorNodes = new vector<Map::Node*>();
+    Map* gameMap = new Map(nbPlayers, *vectorNodes);
 
     //Depending on the number of players, run the setMapSize method from GBMaps to assign the correct ammount of nodes to the map
     //Prints out the correct game size
@@ -145,4 +138,13 @@ static vector<Building>* drawBuildingsOnBoard(DeckBuilding* deckBuildings) {
 		(*buildingsOnBoard)[i] = deckBuildings->draw();
 	}
 	return buildingsOnBoard;
+}
+
+static void displayAtGameStart(int nbPlayers, vector<Player*>* players, Map* board) {
+	//Showing Display for every player 
+	for (int i = 0; i < nbPlayers; i++)
+		players->at(i)->displayState();
+
+	cout << "" << endl;
+	board->display();
 }
