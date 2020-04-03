@@ -29,6 +29,7 @@ int main() {
 	activePlayer->getHand()->printResources();
 	buildingSequence(players, nbPlayers, 0);
 	endOfTurn(activePlayer, buildingsOnBoard, deckBuildings, players);
+	activePlayer->displayState();
 
 	return 0;
 }

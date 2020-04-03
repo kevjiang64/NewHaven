@@ -14,9 +14,9 @@ using namespace std;
 
 void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck);
 
-void buildPlayerVillage(Player& player);
-bool enoughResources(Player& player, int index);
-void removeUsedResources(Player& player, int index);
+void buildPlayerVillage(Player* player);
+bool enoughResources(Player* player, int index);
+void removeUsedResources(Player* player, int index);
 
 void endOfTurn(Player* activePlayer, vector<Building>* buildingsOnBoard, DeckBuilding* deck, vector<Player*>* players);
 void endTurnDrawBuildings(Player* activePlayer, vector<Building>* buildingsOnBoard, DeckBuilding* deck);

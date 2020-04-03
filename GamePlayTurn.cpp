@@ -16,8 +16,8 @@ void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck) {
 	cout << "Here is the board: " << endl;
 	board->display();
 	cout << "Here are the tile you possess: " << endl;
-	activePlayer->getTiles().at(0).display();
-	activePlayer->getTiles().at(1).display();
+	activePlayer->getTiles()->at(0).display();
+	activePlayer->getTiles()->at(1).display();
 	if (!activePlayer->getShipmentTileUsed()) {
 		cout << "You can also play your shipment tile" << endl;
 	}
@@ -70,7 +70,7 @@ void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck) {
 }
 
 //Place a building in the VGMap board
-void buildPlayerVillage(Player& player)
+void buildPlayerVillage(Player* player)
 {
 	int row, col, index;
 	bool result = false;
@@ -84,13 +84,13 @@ void buildPlayerVillage(Player& player)
 	cin >> col;
 
 	//Showing player's resources
-	player.getHand()->printResources();
+	player->getHand()->printResources();
 
 	//Checking if player has enough resources
 	if (enoughResources(player,index))
 	{
 		//Method return true if the village is successfully put
-		result = player.buildVillage(index, row, col);
+		result = player->buildVillage(index, row, col);
 	}
 	else
 	{
@@ -100,32 +100,32 @@ void buildPlayerVillage(Player& player)
 	if (result)
 	{
 		removeUsedResources(player, index);
-		vector<Building> buildings = player.getBuildings();
-		buildings.erase(buildings.begin() + index);
+		vector<Building>* buildings = player->getBuildings();
+		buildings->erase(buildings->begin() + index);
 	}
 	//Showing player's new resources
-	player.getHand()->printResources();
+	player->getHand()->printResources();
 }
 
 //Check if player has enough resources
-bool enoughResources(Player& player,int index)
+bool enoughResources(Player* player,int index)
 {
 	//Type of resources
-	int buildingResource = player.getBuildings().at(index).getLabel();
+	int buildingResource = player->getBuildings()->at(index).getLabel();
 	//Number of resources
-	int resourceAmount = player.getBuildings().at(index).getNumber();
+	int resourceAmount = player->getBuildings()->at(index).getNumber();
 	
 
 
-	return (player.getHand()->getResourceMarkers()->at(buildingResource) >= resourceAmount);
+	return (player->getHand()->getResourceMarkers()->at(buildingResource) >= resourceAmount);
 }
 //Remove used resources
-void removeUsedResources(Player& player, int index)
+void removeUsedResources(Player* player, int index)
 {
-	int buildingResource = player.getBuildings().at(index).getLabel();
-	int resourceAmount = player.getBuildings().at(index).getNumber();
+	int buildingResource = player->getBuildings()->at(index).getLabel();
+	int resourceAmount = player->getBuildings()->at(index).getNumber();
 
-	player.getHand()->getResourceMarkers()->at(buildingResource) -= resourceAmount;
+	player->getHand()->getResourceMarkers()->at(buildingResource) -= resourceAmount;
 	
 }
 
@@ -160,7 +160,7 @@ void endTurnDrawBuildings(Player* activePlayer, vector<Building>* buildingsOnBoa
 				countBuildingsToDraw--;
 			}
 			else if (boardOrDeck == 2) {
-				activePlayer->getBuildings().push_back(deck->draw());
+				activePlayer->getBuildings()->push_back(deck->draw());
 				countBuildingsToDraw--;
 			}
 			else {
@@ -188,7 +188,7 @@ void endTurnDrawBuildingFromBoard(Player* activePlayer, vector<Building>* buildi
 		cin >> numEntered;
 	}
 	Building buildingChosen = buildingsOnBoard->at(numEntered - 1);
-	activePlayer->getBuildings().push_back(buildingChosen);
+	activePlayer->getBuildings()->push_back(buildingChosen);
 	buildingsOnBoard->erase(buildingsOnBoard->begin() + numEntered - 1); // will it erase the one in the player's hand too? test it
 }
 
@@ -223,7 +223,7 @@ void turnSequence(vector<Player*>* players, int nbPlayers) {
 
 				//Player place building
 				//players->at(i)->placeHarvestTile()
-				buildPlayerVillage(*(players->at(i)));
+				buildPlayerVillage((players->at(i)));
 
 				cout << "Do you want to build another building? (y/n): ";
 				cin >> answer;
@@ -283,7 +283,7 @@ void shareWealth(vector<Player*>* players,int nbPlayers,int index)
 		//If yes to building
 		while (answer.compare("y") == 0)
 		{
-			buildPlayerVillage(*(players->at(shared_index)));
+			buildPlayerVillage((players->at(shared_index)));
 			cout << "Do you want to build another building? (y/n): ";
 			cin >> answer;
 		}
@@ -310,9 +310,9 @@ void buildingSequence(vector<Player*>* players, int nbPlayers, int index) {
 		//Asking if they want to build
 		if (!resourcesEmpty(activePlayer)) {
 			cout << "Here are your buildings: " << endl;
-			vector<Building> buildings = activePlayer->getBuildings();
-			for (int i = 0; i < buildings.size(); i++) {
-				buildings.at(i).display();
+			vector<Building>* buildings = activePlayer->getBuildings();
+			for (int i = 0; i < buildings->size(); i++) {
+				buildings->at(i).display();
 			}
 			cout << "Do you want to build a building? (y/n): ";
 			cin >> answer;
@@ -320,7 +320,7 @@ void buildingSequence(vector<Player*>* players, int nbPlayers, int index) {
 			//If yes to building
 			while (answer.compare("y") == 0 && !resourcesEmpty(activePlayer))
 			{
-				buildPlayerVillage(*activePlayer);
+				buildPlayerVillage(activePlayer);
 				cout << "Do you want to build another building? (y/n): ";
 				cin >> answer;
 			}

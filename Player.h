@@ -39,8 +39,8 @@ public:
     void displayState();
     void resetResourceMarkers();
     //getters
-    vector<Building> getBuildings() { return *buildings; };
-    vector<HarvestTile> getTiles() { return *tiles; };
+    vector<Building>* getBuildings() { return buildings; };
+    vector<HarvestTile>* getTiles() { return tiles; };
      Hand* getHand() { return hand;  };
      VGMap* getVillageBoard() { return vb; };
      bool getShipmentTileUsed() { return *shipmentTileUsed; };
