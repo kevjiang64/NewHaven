@@ -13,15 +13,25 @@ using namespace std;
 
 //places a harvest tile on the board
 void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck) {
-	cout << "Here is the board: " << endl;
+	cout << "\nHere is the board: " << endl;
 	board->display();
-	cout << "Here are the tile you possess: " << endl;
+	cout << "\nHere are the tile you possess: " << endl;
 	activePlayer->getTiles()->at(0).display();
 	activePlayer->getTiles()->at(1).display();
 	if (!activePlayer->getShipmentTileUsed()) {
 		cout << "You can also play your shipment tile" << endl;
 	}
 	cout << "" << endl;
+
+	cout << "Which tile do you want to place? (1 for your first tile, 2 for your second one, or 3 for your shipment tile) ";
+	int enteredNumTile;
+	cin >> enteredNumTile;
+	while (!(enteredNumTile == 1 || enteredNumTile == 2 || enteredNumTile == 3)) {
+		cout << "Invalid number!" << endl;
+		cout << "Which tile do you want to place? (1 for your first tile, 2 for your second one, or 3 for your shipment tile) ";
+		cin >> enteredNumTile;
+	}
+
 	cout << "Where do you want to place the tile? Please indicate the corresponding number." << endl;
 	cout << "Row: ";
 	int enteredRow;
@@ -40,14 +50,7 @@ void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck) {
 
 	
 
-	cout << "Which tile do you want to place? (1 for your first tile, 2 for your second one, or 3 for your shipment tile) ";
-	int enteredNumTile;
-	cin >> enteredNumTile;
-	while (!(enteredNumTile == 1 || enteredNumTile == 2 || enteredNumTile == 3)) {
-		cout << "Invalid number!" << endl;
-		cout << "Which tile do you want to place? (1 for your first tile, 2 for your second one, or 3 for your shipment tile) ";
-		cin >> enteredNumTile;
-	}
+	
 
 	cout << "Which corner do you want to place as the top left corner? (Please enter 1 for top left, 2 for top right, 3 for bottom right and 4 for bottom left) ";
 	int enteredTopLeft;
@@ -57,14 +60,14 @@ void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck) {
 		cout << "Which corner do you want to place as the top left corner? (Please enter 1 for top left, 2 for top right, 3 for bottom right and 4 for bottom left) ";
 		cin >> enteredTopLeft;
 	}
-
+	
 	bool tilePlaced = activePlayer->placeHarvestTile(enteredNumTile - 1, (enteredRow - 1) * 2, (enteredCol - 1) * 2, board, *deck, enteredTopLeft - 1);
 	if (!tilePlaced) {
 		cout << "Error! The tile cannot be placed, please try again!" << endl;
 		placeTile(activePlayer, board, deck);
 	}
 	else {
-		cout << "Here is the resulting board: " << endl;
+		cout << "\nHere is the resulting board: " << endl;
 		board->display();
 	}
 }
@@ -72,19 +75,58 @@ void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck) {
 //Place a building in the VGMap board
 void buildPlayerVillage(Player* player)
 {
-	int row, col, index;
+	int rowEntered, colEntered, indexEntered;
+	string flippedEntered;
 	bool result = false;
 
 	//Checking what building and where to put it
-	cout << "Which building do you want to place in board? (0-?)" << "\n";
-	cin >> index;
-	cout << "On which row do you want to place the building? (0-5)" << "\n";
-	cin >> row;
-	cout << "On which column do you want to place the building? (0-5)" << "\n";
-	cin >> col;
+	cout << "Which building do you want to place in board? (1-?)" << "\n";
+	cin >> indexEntered;
+	while (indexEntered < 1) {
+		cout << "Error, incorrect index! Please try again." << endl;
+		cout << "Which building do you want to place in board? (1-?)" << "\n";
+		cin >> indexEntered;
+	}
+	int index = indexEntered - 1;
 
-	//Showing player's resources
-	player->getHand()->printResources();
+	cout << "On which row do you want to place the building? (1-6)" << "\n";
+	cin >> rowEntered;
+	while (rowEntered < 1 || rowEntered>6) {
+		cout << "Error, incorrect row value! Please try again." << endl;
+		cout << "On which row do you want to place the building? (1-6)" << "\n";
+		cin >> rowEntered;
+	}
+	int row = 6 - rowEntered;
+
+	cout << "On which column do you want to place the building? (1-5)" << "\n";
+	cin >> colEntered;
+	while (colEntered < 1 || colEntered>5) {
+		cout << "Error, incorrect column value! Please try again." << endl;
+		cout << "On which row do you want to place the building? (1-5)" << "\n";
+		cin >> colEntered;
+	}
+	int col = colEntered - 1;
+
+	cout << "Do you want to flip it? (y/n) ";
+	cin >> flippedEntered;
+	while (flippedEntered.compare("y") != 0 && flippedEntered.compare("n") != 0) {
+		cout << "Error, invalid value! Please try again." << endl;
+		cout << "Do you want to flip it? (y/n) ";
+		cin >> flippedEntered;
+	}
+	bool flipped;
+	if (flippedEntered.compare("y") == 0) {
+		flipped = true;
+	}
+	else {
+		flipped = false;
+	}
+
+	if (flipped) {
+		//number of the building becomes row number entered
+		player->getBuildings()->at(index)->setNumber(rowEntered);
+		player->getBuildings()->at(index)->setFlipped(true);
+	}
 
 	//Checking if player has enough resources
 	if (enoughResources(player,index))
@@ -100,7 +142,7 @@ void buildPlayerVillage(Player* player)
 	if (result)
 	{
 		removeUsedResources(player, index);
-		vector<Building>* buildings = player->getBuildings();
+		vector<Building*>* buildings = player->getBuildings();
 		buildings->erase(buildings->begin() + index);
 	}
 	//Showing player's new resources
@@ -111,9 +153,9 @@ void buildPlayerVillage(Player* player)
 bool enoughResources(Player* player,int index)
 {
 	//Type of resources
-	int buildingResource = player->getBuildings()->at(index).getLabel();
+	int buildingResource = player->getBuildings()->at(index)->getLabel();
 	//Number of resources
-	int resourceAmount = player->getBuildings()->at(index).getNumber();
+	int resourceAmount = player->getBuildings()->at(index)->getNumber();
 	
 
 
@@ -122,20 +164,23 @@ bool enoughResources(Player* player,int index)
 //Remove used resources
 void removeUsedResources(Player* player, int index)
 {
-	int buildingResource = player->getBuildings()->at(index).getLabel();
-	int resourceAmount = player->getBuildings()->at(index).getNumber();
+	int buildingResource = player->getBuildings()->at(index)->getLabel();
+	int resourceAmount = player->getBuildings()->at(index)->getNumber();
 
 	player->getHand()->getResourceMarkers()->at(buildingResource) -= resourceAmount;
 	
 }
 
-void endOfTurn(Player* activePlayer, vector<Building>* buildingsOnBoard, DeckBuilding* deck, vector<Player*>* players) {
+void endOfTurn(Player* activePlayer, vector<Building*>* buildingsOnBoard, DeckBuilding* deck, vector<Player*>* players) {
 	endTurnDrawBuildings(activePlayer, buildingsOnBoard, deck);
 	endTurnResetResourceMarkers(players);
 	endTurnDrawNewBuildingsToBoard(buildingsOnBoard, deck);
+	cout << "\nHere are your possessions at the end of your turn:" << endl;
+	activePlayer->displayState();
 }
 
-void endTurnDrawBuildings(Player* activePlayer, vector<Building>* buildingsOnBoard, DeckBuilding* deck) {
+void endTurnDrawBuildings(Player* activePlayer, vector<Building*>* buildingsOnBoard, DeckBuilding* deck) {
+	cout << "\nPlayer #" << activePlayer->getID() << "," << endl;
 	cout << "You can now draw new buildings for each empty resource." << endl;
 	int countBuildingsToDraw = 0;
 	for (int i = 0; i < 4; i++) {
@@ -147,7 +192,7 @@ void endTurnDrawBuildings(Player* activePlayer, vector<Building>* buildingsOnBoa
 		endTurnDrawBuildingFromBoard(activePlayer, buildingsOnBoard);
 		countBuildingsToDraw--;
 		while (countBuildingsToDraw > 0) {
-			cout << "For the next building to draw, do you want to draw it from the board or the deck? (1 for board, 2 for deck) ";
+			cout << "\nFor the next building to draw, do you want to draw it from the board or the deck? (1 for board, 2 for deck) ";
 			int boardOrDeck = 0;
 			cin >> boardOrDeck;
 			while (!(boardOrDeck == 1 || boardOrDeck == 2)) {
@@ -160,7 +205,10 @@ void endTurnDrawBuildings(Player* activePlayer, vector<Building>* buildingsOnBoa
 				countBuildingsToDraw--;
 			}
 			else if (boardOrDeck == 2) {
-				activePlayer->getBuildings()->push_back(deck->draw());
+				Building* buildingDrawn = deck->draw();
+				activePlayer->getBuildings()->push_back(buildingDrawn);
+				cout << "\nBuilding drawn:\t";
+				buildingDrawn->display();
 				countBuildingsToDraw--;
 			}
 			else {
@@ -173,21 +221,21 @@ void endTurnDrawBuildings(Player* activePlayer, vector<Building>* buildingsOnBoa
 	}
 }
 
-void endTurnDrawBuildingFromBoard(Player* activePlayer, vector<Building>* buildingsOnBoard) {
+void endTurnDrawBuildingFromBoard(Player* activePlayer, vector<Building*>* buildingsOnBoard) {
 	cout << "Here are the buildings on the board: " << endl;
 	for (int i = 0; i < buildingsOnBoard->size(); i++) {
-		cout << i + 1 << " - ";
-		buildingsOnBoard->at(i).display();
+		cout << i + 1 << " -\t";
+		buildingsOnBoard->at(i)->display();
 	}
-	cout << "Which one do you want to take? Please enter the corresponding number. ";
+	cout << "\nWhich one do you want to take? Please enter the corresponding number. ";
 	int numEntered = 0;
 	cin >> numEntered;
-	while (!(numEntered == 1 || numEntered == 2 || numEntered == 3 || numEntered == 4 || numEntered == 5)) {
+	while (numEntered<1 || numEntered > buildingsOnBoard->size()) {
 		cout << "Error in entering your choice." << endl;
 		cout << "Which one do you want to take? Please enter the corresponding number. ";
 		cin >> numEntered;
 	}
-	Building buildingChosen = buildingsOnBoard->at(numEntered - 1);
+	Building* buildingChosen = buildingsOnBoard->at(numEntered - 1);
 	activePlayer->getBuildings()->push_back(buildingChosen);
 	buildingsOnBoard->erase(buildingsOnBoard->begin() + numEntered - 1); // will it erase the one in the player's hand too? test it
 }
@@ -198,7 +246,7 @@ void endTurnDrawBuildingFromBoard(Player* activePlayer, vector<Building>* buildi
 	}
 }
 
-void endTurnDrawNewBuildingsToBoard(vector<Building>* buildingsOnBoard, DeckBuilding* deck) {
+void endTurnDrawNewBuildingsToBoard(vector<Building*>* buildingsOnBoard, DeckBuilding* deck) {
 	for (int i = buildingsOnBoard->size(); i < 5; i++) {
 		buildingsOnBoard->push_back(deck->draw());
 	}
@@ -309,20 +357,45 @@ void buildingSequence(vector<Player*>* players, int nbPlayers, int index) {
 		string answer;
 		//Asking if they want to build
 		if (!resourcesEmpty(activePlayer)) {
-			cout << "Here are your buildings: " << endl;
-			vector<Building>* buildings = activePlayer->getBuildings();
+			cout << "\nPlayer #" << activePlayer->getID() << ":" << endl;
+			cout << "\nHere are your buildings: " << endl;
+			vector<Building*>* buildings = activePlayer->getBuildings();
 			for (int i = 0; i < buildings->size(); i++) {
-				buildings->at(i).display();
+				cout << "Building #" << i + 1 << "\t";
+				buildings->at(i)->display();
 			}
-			cout << "Do you want to build a building? (y/n): ";
+			cout << "\nHere is your board: " << endl;
+			activePlayer->getVillageBoard()->displayVGmap();
+
+			cout << "\nDo you want to build a building? (y/n): ";
 			cin >> answer;
+			while (answer.compare("y") != 0 && answer.compare("n") != 0) {
+				cout << "Error, invalid value! Please try again.";
+				cout << "\nDo you want to build a building? (y/n): ";
+				cin >> answer;
+			}
 
 			//If yes to building
 			while (answer.compare("y") == 0 && !resourcesEmpty(activePlayer))
 			{
 				buildPlayerVillage(activePlayer);
-				cout << "Do you want to build another building? (y/n): ";
+
+				cout << "\nHere are your buildings: " << endl;
+				vector<Building*>* buildings = activePlayer->getBuildings();
+				for (int i = 0; i < buildings->size(); i++) {
+					cout << "Building #" << i + 1 << "\t";
+					buildings->at(i)->display();
+				}
+				cout << "\nHere is your board: " << endl;
+				activePlayer->getVillageBoard()->displayVGmap();
+
+				cout << "\nDo you want to build a building? (y/n): ";
 				cin >> answer;
+				while (answer.compare("y") != 0 && answer.compare("n") != 0) {
+					cout << "Error, invalid value! Please try again.";
+					cout << "\nDo you want to build a building? (y/n): ";
+					cin >> answer;
+				}
 			}
 
 			//transférer au suivant

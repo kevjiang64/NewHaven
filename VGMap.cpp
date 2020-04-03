@@ -208,7 +208,7 @@ bool VGMap:: checkFirst(int resource)
 	return true;
 };
 
-bool VGMap::canBuild(Building building, int row, int col) {
+bool VGMap::canBuild(Building* building, int row, int col) {
 	
 	bool canBuildNum = true;
 	bool canBuildAdj = true;
@@ -219,16 +219,16 @@ bool VGMap::canBuild(Building building, int row, int col) {
 		return false;
 	}
 	else {
-		if ((building.getNumber()) != 6 - row) {
+		if ((building->getNumber()) != 6 - row) {
 			return false;
 		}
 		else {
-			if (checkFirst((building.getLabel()))) {
+			if (checkFirst((building->getLabel()))) {
 				return true;
 			}
 			else {
 				for (int i = 0; i < (node.getAdjNode()).size(); i++) {
-					if (building.getLabel() == node.getAdjNode()[i].getBuilding()->getLabel())
+					if (building->getLabel() == node.getAdjNode()[i].getBuilding()->getLabel())
 						return true;
 				}
 			}
@@ -238,14 +238,74 @@ bool VGMap::canBuild(Building building, int row, int col) {
 	return false;
 }
 
-void VGMap::build(Building building, int row, int col) {
+void VGMap::build(Building* building, int row, int col) {
 	//if (canBuild(building, row, col)) {
-		(*board)[row][col].setBuilding(building);
+		(*board)[row][col].setBuilding(*building);
 	//}
 }
 
-//Display the VGMap 
 void VGMap::displayVGmap() {
+	for (int row = 0; row < 6; row++)
+	{
+		cout << 6-row << " ";
+		for (int col = 0; col < 5; col++)
+		{
+			//If the position possess a building
+			if ((*board)[row][col].getBuilding() != NULL)
+			{
+				string flipped, resources;
+				int label = (*(*board)[row][col].getBuilding()).getLabel();
+				//Attributing a resource based on the label (0: meadow, 1: quarry, 2: forest, 3: wheatfield)
+				switch (label)
+				{
+				case 0: resources = "M";
+					break;
+				case 1: resources = "Q";
+					break;
+				case 2: resources = "F";
+					break;
+				case 3: resources = "W";
+					break;
+				}
+				//Value of the building
+				int number = (*(*board)[row][col].getBuilding()).getNumber();
+
+				//Giving flipped string F or NF
+				if ((*(*board)[row][col].getBuilding()).isFlipped())
+				{
+					flipped = "f";
+				}
+				else
+				{
+					flipped = " ";
+				}
+				if (number == -1) {
+					cout << "|   ";
+				}
+				else {
+					//Printing each building
+					cout << "|" << number << resources << flipped;
+				}
+				
+			}
+			else
+			{
+				//Printing empty building
+				cout << "|   ";
+			}
+		}
+		//Going to next row
+		cout << "|\n";
+	}
+	cout << "  ";
+	for (int i = 1; i < 6; i++) {
+		cout << "  " << i << " ";
+	}
+	cout << "" << endl;
+}
+
+//Display the VGMap 
+void VGMap::display() {
 	for (int row = 0; row < 6; row++)
 	{
 		for (int col = 0; col < 5; col++)

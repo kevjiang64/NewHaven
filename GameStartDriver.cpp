@@ -13,10 +13,10 @@
 /*int main() {
 	int nbPlayers = askNbPlayers();
 	Map* board = selectBoard(nbPlayers);
-	vector<Player*>* players = createPlayers(nbPlayers);
-	assignVillageBoards(players, nbPlayers);
 	DeckHarvestTile* deckTiles = new DeckHarvestTile(); //Deck of Tiles not created ==> only count = 60
 	DeckBuilding* deckBuildings = new DeckBuilding(); //Same ?
+	vector<Player*>* players = createPlayers(nbPlayers, deckBuildings);
+	assignVillageBoards(players, nbPlayers);
 	vector<Building>* buildingsOnBoard = drawBuildingsOnBoard(deckBuildings); //Don't Understand ? + where does each player draw 6 building tiles and 2 harvest tiles
 	displayAtGameStart(nbPlayers, players, board);
 
@@ -68,10 +68,13 @@ Map* selectBoard(int nbPlayers) {
     return gameMap;
 }
 
- vector<Player*>* createPlayers(int nbPlayers) {
+ vector<Player*>* createPlayers(int nbPlayers, DeckBuilding* deckBuilding) {
 	vector<Player*>* players = new vector<Player*>(nbPlayers);
 	for (int i = 0; i < nbPlayers; i++) {
 		Player* player = new Player();
+		for (int j = 0; j < 6; j++) {
+			player->drawBuilding(*deckBuilding);
+		}
 		(*players)[i] = player;
 	}
 	//Display each player's game resource Markers
@@ -141,8 +144,8 @@ void assignVillageBoards(vector<Player*>* players, int nbPlayers) {
 		}
 	}
 }
-vector<Building>* drawBuildingsOnBoard(DeckBuilding* deckBuildings) {
-	vector<Building>* buildingsOnBoard = new vector<Building>(5);
+vector<Building*>* drawBuildingsOnBoard(DeckBuilding* deckBuildings) {
+	vector<Building*>* buildingsOnBoard = new vector<Building*>(5);
 	for (int i = 0; i < 5; i++) {
 		(*buildingsOnBoard)[i] = deckBuildings->draw();
 	}

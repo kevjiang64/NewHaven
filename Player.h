@@ -20,7 +20,7 @@ private:
     int* id;
     static int* currentId;
     VGMap* vb;
-    vector<Building>* buildings;
+    vector<Building*>* buildings;
     vector<HarvestTile>* tiles;
     Hand* hand;
     bool* shipmentTileUsed;
@@ -39,7 +39,7 @@ public:
     void displayState();
     void resetResourceMarkers();
     //getters
-    vector<Building>* getBuildings() { return buildings; };
+    vector<Building*>* getBuildings() { return buildings; };
     vector<HarvestTile>* getTiles() { return tiles; };
      Hand* getHand() { return hand;  };
      VGMap* getVillageBoard() { return vb; };

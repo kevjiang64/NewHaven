@@ -19,7 +19,7 @@ int main() {
 	DeckBuilding* deckBuildings = new DeckBuilding(); //Same ?
 	vector<Player*>* players = createPlayers(nbPlayers, deckBuildings);
 	assignVillageBoards(players, nbPlayers);
-	vector<Building>* buildingsOnBoard = drawBuildingsOnBoard(deckBuildings); //Don't Understand ? + where does each player draw 6 building tiles and 2 harvest tiles
+	vector<Building*>* buildingsOnBoard = drawBuildingsOnBoard(deckBuildings); //Don't Understand ? + where does each player draw 6 building tiles and 2 harvest tiles
 	displayAtGameStart(nbPlayers, players, board);
 
 	//turn sequence for the first player in the vector, for testing purposes
@@ -29,7 +29,7 @@ int main() {
 	activePlayer->getHand()->printResources();
 	buildingSequence(players, nbPlayers, 0);
 	endOfTurn(activePlayer, buildingsOnBoard, deckBuildings, players);
-	activePlayer->displayState();
+	
 
 	return 0;
 }

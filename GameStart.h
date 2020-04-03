@@ -14,7 +14,7 @@ using namespace std;
 
 int askNbPlayers();
 Map* selectBoard(int nbPlayers);
-vector<Player*>* createPlayers(int nbPlayers);
+vector<Player*>* createPlayers(int nbPlayers, DeckBuilding* deckBuildings);
 void assignVillageBoards(vector<Player*>* players, int nbPlayers);
-vector<Building>* drawBuildingsOnBoard(DeckBuilding* deckBuildings);
+vector<Building*>* drawBuildingsOnBoard(DeckBuilding* deckBuildings);
 void displayAtGameStart(int nbPlayers, vector<Player*>* players, Map* board);

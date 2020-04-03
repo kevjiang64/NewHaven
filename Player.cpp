@@ -22,7 +22,7 @@ Player::Player() {
 
 	vb = new VGMap();
 
-	buildings = new vector<Building>;
+	buildings = new vector<Building*>;
 
 	tiles = new vector<HarvestTile>;
 	HarvestTile tile1;
@@ -95,7 +95,7 @@ bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarv
 		}
 	}
 	else if (noTile == 2) {
-		if (shipmentTileUsed) {
+		if (*shipmentTileUsed) {
 			cout << "Your shipment tile is no longer available" << endl;
 			return false;
 		}
@@ -145,8 +145,8 @@ bool Player::placeShipmentTile(int row, int col, Map* board, DeckHarvestTile dec
 }
 
 void Player::drawBuilding(DeckBuilding deckBuilding) {
-	Building buildingDrawn = deckBuilding.draw();
-	(*buildings).push_back(buildingDrawn);
+	Building* buildingDrawn = deckBuilding.draw();
+	buildings->push_back(buildingDrawn);
 }
 
 void Player::drawHarvestTile(DeckHarvestTile deck, int no) {
@@ -185,10 +185,9 @@ void Player::calculateResources(Map board) {
 //Methods build and canBuild have to be implemented.
  bool Player::buildVillage(int buildingIndex, int row, int col) {
 	 
-	 Building building = (*buildings).at(buildingIndex);
+	 Building* building = (*buildings).at(buildingIndex);
 	if ((*vb).canBuild(building, row, col)) { 
 		(*vb).build(building, row, col);
-		cout << "Building built" << endl;
 		return true;
 	}
 	else {
@@ -198,11 +197,11 @@ void Player::calculateResources(Map board) {
 }
 
  void Player::displayState() {
-	 cout << "Player #" << *id << endl;
+	 cout << "\nPlayer #" << *id << "\n" << endl;
 	vb->displayVGmap();
-	cout << "List of buildings: " << endl;
+	cout << "\nList of buildings: " << endl;
 	for (int i = 0; i < buildings->size(); i++) {
-		buildings->at(i).display();
+		buildings->at(i)->display();
 	}
 	cout << "" << endl;
 	cout << "Harvest tiles: " << endl;

@@ -46,9 +46,10 @@ public:
 	//Methods
 	int countPoints();
 	bool checkFirst(int resource);
-	bool canBuild(Building building, int row, int col);
-	void build(Building building, int row, int col);
+	bool canBuild(Building* building, int row, int col);
+	void build(Building* building, int row, int col);
 	void displayVGmap();
+	void display();
 };
 
 #endif 

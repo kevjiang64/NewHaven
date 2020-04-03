@@ -19,7 +19,7 @@ class HarvestTile {
 		void display();
 		void completeDisplay();
 		void setResources(int r, int i) { resources[i] = r;  };
-		void setTopLeft(int tl) { topLeft = &tl;  };
+		void setTopLeft(int tl) { *topLeft = tl;  };
 		int* getResources() { return resources; };
 		int* getTopLeft() { return topLeft; };
 };
@@ -66,14 +66,14 @@ class DeckBuilding {
 	private:
 		int* totalCount;
         int** count;
-        Building* allBuildings;
+        Building** allBuildings;
 
 	public:
 		DeckBuilding();
 		~DeckBuilding();
-        Building* getAllBuildings() { return allBuildings; };
+        Building** getAllBuildings() { return allBuildings; };
 		bool validBuilding(Building b);
-		Building draw();
+		Building* draw();
 };
 
 class Hand {

@@ -34,13 +34,13 @@ vector<int> CountResources::calculResourceMarkers(Map board) {
 				
 				if (k == 0) {
 					if ((board.getMapNodes()->at(board.getMapNodes()->size() - k - 3)) != nullptr && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 3)->getResourceType()) == res && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 2)->getResourceType()) != res && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 4)->getResourceType()) != res) {
-						cout << "I have found another resource in diagonal" << endl;
+						
 						markersArray[res] += recursiveCountResourceFromSquare(res, board.getMapNodes()->at(board.getMapNodes()->size() - k - 3));
 					}
 				}
 				else if (k == 1 ) {
 					if ((board.getMapNodes()->at(board.getMapNodes()->size() - k - 3)) != nullptr && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 3)->getResourceType()) == res && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 2)->getResourceType()) != res && *(board.getMapNodes()->at(board.getMapNodes()->size() - k )->getResourceType()) != res) {
-						cout << "I have found another resource in diagonal" << endl;
+						
 						markersArray[res] += recursiveCountResourceFromSquare(res, board.getMapNodes()->at(board.getMapNodes()->size() - k - 3));
 					}
 				}
@@ -56,13 +56,13 @@ vector<int> CountResources::calculResourceMarkers(Map board) {
 int CountResources::recursiveCountResourceFromSquare(int res, Map::Node* node) {
 	int score = 1;
 	(*node).setCounted(true);
-	cout << "Entering the recursive method for ressource type #" << res << endl;
+	
 	vector<Map::Node*>* adjacentNodes = new vector<Map::Node*>();
 	adjacentNodes = (*node).getAdjNodes(); //returns an array of 4 values, either a node or null (or an empty node, depend on how the board is done) (but even if it's the side it should be an array of 4 things) else test? just cannot be undefined
 	for (int i = 0; i < (*adjacentNodes).size(); i++) { //for all 4 values
 		
 		Map::Node* ptrTestedNode = (*adjacentNodes).at(i);
-		cout << "Is the adjacent resource the same type ? (1 for yes, 0 for no) " << (*((*ptrTestedNode).getResourceType()) == res) << endl;
+		
 		
 		if (ptrTestedNode != nullptr && !(*ptrTestedNode).getCounted() && *((*ptrTestedNode).getResourceType()) == res) {
 			score += recursiveCountResourceFromSquare(res, ptrTestedNode);

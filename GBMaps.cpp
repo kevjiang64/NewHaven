@@ -122,7 +122,7 @@ Map::Tile::Tile(const Tile& toCopy) {
  */
 
 Map::Node::Node() {
-    cout << "default node" << endl;
+   
     resourceType = new int(0);
     pAdjNodes = new std::vector<Node*>;
     isCounted = new bool(false);
@@ -148,7 +148,7 @@ Map::Node::Node(int resource, std::vector<Node*> pAdjNode, bool counted) {
  * Node destructor
  */
 Map::Node::~Node() {
-    cout << "destr node" << endl;
+    
     if (resourceType != nullptr) delete resourceType;
     if (pAdjNodes != nullptr) delete pAdjNodes;
     if (isCounted != nullptr) delete isCounted;
@@ -162,7 +162,7 @@ Map::Node::~Node() {
 * Node operator
 */
 void Map::Node::operator=(Map::Node& rhs) {
-    cout << "= node" << endl;
+    
     this->resourceType = rhs.resourceType;
     this->pAdjNodes = rhs.pAdjNodes;
     this->isCounted = rhs.isCounted;
@@ -174,7 +174,7 @@ void Map::Node::operator=(Map::Node& rhs) {
 * Node copy constructor
 */
 Map::Node::Node(const Node& toCopy) {
-    cout << "copy constr node" << endl;
+   
     resourceType = new int();
     if (toCopy.resourceType != nullptr) *resourceType = *toCopy.resourceType;
     pAdjNodes = new std::vector<Node*>;
@@ -279,13 +279,13 @@ vector<Map::Node*> Map::placeHarvestTile(HarvestTile tile, int row, int col) {
         Node* newNode = new Node();
         newNode->setResourceType(&(tile.getResources()[i]));
         newNodes.push_back(newNode);
-        cout << "PlaceHarvestTile: resource added " << i << "-->" << tile.getResources()[i] << endl;
+        
     }
     for (int i = 0; i < *(tile.getTopLeft()); i++) {
         Node* newNode = new Node();
         newNode->setResourceType(&(tile.getResources()[i]));
         newNodes.push_back(newNode);
-        cout << "PlaceHarvestTile: resource added " << i << "-->" << tile.getResources()[i] << endl;
+        
     }
     //now we have a vector of 4 nodes in the right order
 
@@ -327,22 +327,22 @@ vector<Map::Node*> Map::placeHarvestTile(HarvestTile tile, int row, int col) {
         if ((testedRow == row - 1 && testedCol == col) || (testedRow == row && testedCol == col - 1)) {
             newNodes[0]->getAdjNodes()->push_back(mapNodes->at(i));
             mapNodes->at(i)->getAdjNodes()->push_back((newNodes[0]));
-            cout<<" nodes adjacent of the 1st one "<<endl;
+            
         }
         else if ((testedRow == row - 1 && testedCol == col + 1) || (testedRow == row && testedCol == col + 2)) {
             newNodes[1]->getAdjNodes()->push_back(mapNodes->at(i));
             mapNodes->at(i)->getAdjNodes()->push_back((newNodes[1]));
-            cout << " nodes adjacent of the 2nd one " << endl;
+           
         }
         else if ((testedRow == row + 1 && testedCol == col + 2) || (testedRow == row + 2 && testedCol == col + 1)) {
             newNodes[2]->getAdjNodes()->push_back(mapNodes->at(i));
             mapNodes->at(i)->getAdjNodes()->push_back((newNodes[2]));
-            cout << " nodes adjacent of the 3rd one " << endl;
+           
         }
         else if ((testedRow == row + 2 && testedCol == col) || (testedRow == row + 1 && testedCol == col - 1)) {
             newNodes[3]->getAdjNodes()->push_back(mapNodes->at(i));
             mapNodes->at(i)->getAdjNodes()->push_back((newNodes[3]));
-            cout << " nodes adjacent of the 4th one " << endl;
+            
         }
     }
 

@@ -306,134 +306,134 @@ DeckBuilding::DeckBuilding() {
 	totalCount = new int(0);
     count = new int*[4];
 	
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < 4; i++) {
 		count[i] = new int[6];
 	}
     
-    allBuildings = new Building[144];
+    allBuildings = new Building*[144];
     
     //create 144 buildings at the beginning
     for (int i=0; i<144; i++) {
-        Building building;
+        Building* building = new Building();
         
         if(i < 6) {
-            building.setLabel(0);
-            building.setNumber(1);
+            building->setLabel(0);
+            building->setNumber(1);
         }
         
         if((i>=6) && (i<12)) {
-            building.setLabel(0);
-            building.setNumber(2);
+            building->setLabel(0);
+            building->setNumber(2);
         }
         
         if((i>=12) && (i<18)) {
-            building.setLabel(0);
-            building.setNumber(3);
+            building->setLabel(0);
+            building->setNumber(3);
         }
         
         if((i>=18) && (i<24)) {
-            building.setLabel(0);
-            building.setNumber(4);
+            building->setLabel(0);
+            building->setNumber(4);
         }
         
         if((i>=24) && (i<30)) {
-            building.setLabel(0);
-            building.setNumber(5);
+            building->setLabel(0);
+            building->setNumber(5);
         }
         
         if((i>=30) && (i<36)) {
-            building.setLabel(0);
-            building.setNumber(6);
+            building->setLabel(0);
+            building->setNumber(6);
         }
         
         if((i>=36) && (i<42)) {
-            building.setLabel(1);
-            building.setNumber(1);
+            building->setLabel(1);
+            building->setNumber(1);
         }
         
         if((i>=42) && (i<48)) {
-            building.setLabel(1);
-            building.setNumber(2);
+            building->setLabel(1);
+            building->setNumber(2);
         }
         
         if((i>=48) && (i<54)) {
-            building.setLabel(1);
-            building.setNumber(3);
+            building->setLabel(1);
+            building->setNumber(3);
         }
         
         if((i>=54) && (i<60)) {
-            building.setLabel(1);
-            building.setNumber(4);
+            building->setLabel(1);
+            building->setNumber(4);
         }
         
         if((i>=60) && (i<66)) {
-            building.setLabel(1);
-            building.setNumber(5);
+            building->setLabel(1);
+            building->setNumber(5);
         }
         
         if((i>=66) && (i<72)) {
-            building.setLabel(1);
-            building.setNumber(6);
+            building->setLabel(1);
+            building->setNumber(6);
         }
         
         if((i>=72) && (i<78)) {
-            building.setLabel(2);
-            building.setNumber(1);
+            building->setLabel(2);
+            building->setNumber(1);
         }
         
         if((i>=78) && (i<84)) {
-            building.setLabel(2);
-            building.setNumber(2);
+            building->setLabel(2);
+            building->setNumber(2);
         }
         
         if((i>=84) && (i<90)) {
-            building.setLabel(2);
-            building.setNumber(3);
+            building->setLabel(2);
+            building->setNumber(3);
         }
         
         if((i>=90) && (i<96)) {
-            building.setLabel(2);
-            building.setNumber(4);
+            building->setLabel(2);
+            building->setNumber(4);
         }
         
         if((i>=96) && (i<102)) {
-            building.setLabel(2);
-            building.setNumber(5);
+            building->setLabel(2);
+            building->setNumber(5);
         }
         
         if((i>=102) && (i<108)) {
-            building.setLabel(2);
-            building.setNumber(6);
+            building->setLabel(2);
+            building->setNumber(6);
         }
         
         if((i>=108) && (i<114)) {
-            building.setLabel(3);
-            building.setNumber(1);
+            building->setLabel(3);
+            building->setNumber(1);
         }
         
         if((i>=114) && (i<120)) {
-            building.setLabel(3);
-            building.setNumber(2);
+            building->setLabel(3);
+            building->setNumber(2);
         }
         
         if((i>=120) && (i<126)) {
-            building.setLabel(3);
-            building.setNumber(3);
+            building->setLabel(3);
+            building->setNumber(3);
         }
         
         if((i>=126) && (i<132)) {
-            building.setLabel(3);
-            building.setNumber(4);
+            building->setLabel(3);
+            building->setNumber(4);
         }
         
         if((i>=132) && (i<138)) {
-            building.setLabel(3);
-            building.setNumber(5);
+            building->setLabel(3);
+            building->setNumber(5);
         }
         
         if((i>=138) && (i<144)) {
-            building.setLabel(3);
-            building.setNumber(6);
+            building->setLabel(3);
+            building->setNumber(6);
         }
         allBuildings[i] = building;
     }
@@ -457,13 +457,13 @@ bool DeckBuilding::validBuilding(Building b) {
 	return true;
 };
 
-Building DeckBuilding::draw() {
+Building* DeckBuilding::draw() {
     if (*totalCount >= 144) {
 		cout << "There is no building left." << endl;
 		
-		Building emptyBuilding;
-		emptyBuilding.setLabel(-1);
-        emptyBuilding.setNumber(-1);
+		Building* emptyBuilding = new Building();
+		emptyBuilding->setLabel(-1);
+        emptyBuilding->setNumber(-1);
 		return emptyBuilding;
     }
     
@@ -476,11 +476,11 @@ Building DeckBuilding::draw() {
 
         int index = dist(rng) % 144;
         
-        while(allBuildings[index].getUsed() == true) {
+        while(allBuildings[index]->getUsed() == true) {
             index = dist(rng) % 144;
         }
         
-        allBuildings[index].setUsed(true);
+        allBuildings[index]->setUsed(true);
         
         return allBuildings[index];
     }
@@ -507,7 +507,7 @@ void Hand::exchange(vector<int> resources) {
 }
 
 void Hand::printResources() {
-    cout << "Resources:\nMeadow: " << (*resourceMarkers).at(0) << "\nQuarry: " << (*resourceMarkers).at(1) << "\nForest: " << (*resourceMarkers).at(2) << "\nWheatfield:" << (*resourceMarkers).at(3) << endl;
+    cout << "\nResources:\nMeadow: " << (*resourceMarkers).at(0) << "\nQuarry: " << (*resourceMarkers).at(1) << "\nForest: " << (*resourceMarkers).at(2) << "\nWheatfield:" << (*resourceMarkers).at(3) << endl;
 }
 
 void Hand::resetResourceMarkers() {
