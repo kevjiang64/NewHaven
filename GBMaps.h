@@ -95,6 +95,7 @@ public:
     inline int* getPlayerNumber() { return playerNum; };
     inline void setPlayerNumber(int* playerNumber) { playerNum = playerNumber; };
     void display();
+    bool oneTileLeft();
 
 private:
     int* playerNum;

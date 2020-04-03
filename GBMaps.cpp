@@ -496,3 +496,30 @@ void Map::display() {
         cout << "|" << endl;
     }
 }
+
+bool Map::oneTileLeft() {
+    if (*playerNum == 2) {
+        if (mapNodes->size() == (5*5-1)*4) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else if (*playerNum == 3) {
+        if (mapNodes->size() == (7*5-1)*4) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else if (*playerNum == 4) {
+        if (mapNodes->size() == (7*7-5)*4) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+}
