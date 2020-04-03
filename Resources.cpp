@@ -26,7 +26,7 @@ HarvestTile::HarvestTile() {
         int output = dist(rng) % 4;
         
         if (index == 0)
-            *topLeft = output;
+            *topLeft = 0;
 
         if ((output == 0 && wheatCount >= 3) || (output == 1 && sheepCount >= 3) || (output == 2 && timberCount >= 3) || (output == 3 && stoneCount >= 3))
             continue;
@@ -74,6 +74,59 @@ HarvestTile::~HarvestTile() {
 };
 
 void HarvestTile::display() {
+    
+    string firstResourceChar;
+    switch (resources[0])
+    {
+    case 0: firstResourceChar = "M";
+        break;
+    case 1: firstResourceChar = "Q";
+        break;
+    case 2: firstResourceChar = "F";
+        break;
+    case 3: firstResourceChar = "W";
+        break;
+    }
+    string secondResourceChar;
+    switch (resources[1])
+    {
+    case 0: secondResourceChar = "M";
+        break;
+    case 1: secondResourceChar = "Q";
+        break;
+    case 2: secondResourceChar = "F";
+        break;
+    case 3: secondResourceChar = "W";
+        break;
+    }
+    cout << "|" << firstResourceChar << " " << secondResourceChar << "|" << endl;
+    switch (resources[3])
+    {
+    case 0: firstResourceChar = "M";
+        break;
+    case 1: firstResourceChar = "Q";
+        break;
+    case 2: firstResourceChar = "F";
+        break;
+    case 3: firstResourceChar = "W";
+        break;
+    }
+    switch (resources[2])
+    {
+    case 0: secondResourceChar = "M";
+        break;
+    case 1: secondResourceChar = "Q";
+        break;
+    case 2: secondResourceChar = "F";
+        break;
+    case 3: secondResourceChar = "W";
+        break;
+    }
+    cout << "|" << firstResourceChar << " " << secondResourceChar << "|" << endl;
+    cout << "" << endl;
+}
+
+void HarvestTile::completeDisplay() {
     cout << "Resources of the harvest tile: ";
 
     for (int i = 0; i < 4; i++) {
@@ -81,16 +134,16 @@ void HarvestTile::display() {
 
         switch (value) {
         case 0:
-            cout << "Wheat ";
+            cout << "Meadow ";
             continue;
         case 1:
-            cout << "Sheep ";
+            cout << "Quarry ";
             continue;
         case 2:
-            cout << "Timber ";
+            cout << "Forest ";
             continue;
         case 3:
-            cout << "Stone ";
+            cout << "Wheatfield ";
             continue;
         default:
             cout << "empty ";
@@ -158,6 +211,35 @@ Building::~Building() {
 };
 
 void Building::display() {
+    int label = this->getLabel();
+
+    switch (label) {
+    case 0:
+        cout << "Meadow\t\t";
+        break;
+
+    case 1:
+        cout << "Quarry\t\t";
+        break;
+
+    case 2:
+        cout << "Forest\t\t";
+        break;
+
+    case 3:
+        cout << "Wheatfield\t";
+        break;
+
+    default:
+        cout << "Empty\t\t";
+        break;
+    }
+
+    cout << this->getNumber() << endl;
+
+}
+
+void Building::completeDisplay() {
     cout << "Color of the building: ";
 
     int color = this->getLabel();
@@ -425,7 +507,7 @@ void Hand::exchange(vector<int> resources) {
 }
 
 void Hand::printResources() {
-    cout << "Resources:\nWheat: " << (*resourceMarkers).at(0) << "\nSheep: " << (*resourceMarkers).at(1) << "\nTimber: " << (*resourceMarkers).at(2) << "\nStone:" << (*resourceMarkers).at(3);
+    cout << "Resources:\nMeadow: " << (*resourceMarkers).at(0) << "\nQuarry: " << (*resourceMarkers).at(1) << "\nForest: " << (*resourceMarkers).at(2) << "\nWheatfield:" << (*resourceMarkers).at(3) << endl;
 }
 
 void Hand::resetResourceMarkers() {

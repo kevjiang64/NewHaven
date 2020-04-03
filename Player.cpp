@@ -24,12 +24,6 @@ Player::Player() {
 
 	buildings = new vector<Building>;
 
-	for (int i = 0; i < 6; i++) {
-		Building building = *(new Building());
-		if (i == 2) building.setFlipped(true);
-		(*buildings).push_back(building);
-	}
-
 	tiles = new vector<HarvestTile>;
 	HarvestTile tile1;
 	HarvestTile tile2;
@@ -195,7 +189,6 @@ void Player::calculateResources(Map board) {
 	if ((*vb).canBuild(building, row, col)) { 
 		(*vb).build(building, row, col);
 		cout << "Building built" << endl;
-		buildings->erase(buildings->begin() + buildingIndex);
 		return true;
 	}
 	else {
@@ -209,12 +202,12 @@ void Player::calculateResources(Map board) {
 	vb->displayVGmap();
 	cout << "List of buildings: " << endl;
 	for (int i = 0; i < buildings->size(); i++) {
-		//buildings->at(i).display();
+		buildings->at(i).display();
 	}
 	cout << "" << endl;
 	cout << "Harvest tiles: " << endl;
 	for (int i = 0; i < 2; i++) {
-		//tiles->at(i).display();
+		tiles->at(i).display();
 	}
 	if (*shipmentTileUsed) cout << "The shipment tile has been used." << endl;
 	else cout << "The shipment tile has not been used." << endl;

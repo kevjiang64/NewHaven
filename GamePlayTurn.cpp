@@ -15,6 +15,13 @@ using namespace std;
 void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck) {
 	cout << "Here is the board: " << endl;
 	board->display();
+	cout << "Here are the tile you possess: " << endl;
+	activePlayer->getTiles().at(0).display();
+	activePlayer->getTiles().at(1).display();
+	if (!activePlayer->getShipmentTileUsed()) {
+		cout << "You can also play your shipment tile" << endl;
+	}
+	cout << "" << endl;
 	cout << "Where do you want to place the tile? Please indicate the corresponding number." << endl;
 	cout << "Row: ";
 	int enteredRow;
@@ -31,12 +38,7 @@ void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck) {
 		cin >> enteredCol;
 	}
 
-	cout << "Here are the tile you possess: " << endl;
-	activePlayer->getTiles().at(0).display();
-	activePlayer->getTiles().at(1).display();
-	if (!activePlayer->getShipmentTileUsed()) {
-		cout << "You can also play your shipment tile" << endl;
-	}
+	
 
 	cout << "Which tile do you want to place? (1 for your first tile, 2 for your second one, or 3 for your shipment tile) ";
 	int enteredNumTile;
@@ -60,6 +62,10 @@ void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck) {
 	if (!tilePlaced) {
 		cout << "Error! The tile cannot be placed, please try again!" << endl;
 		placeTile(activePlayer, board, deck);
+	}
+	else {
+		cout << "Here is the resulting board: " << endl;
+		board->display();
 	}
 }
 
@@ -94,6 +100,8 @@ void buildPlayerVillage(Player& player)
 	if (result)
 	{
 		removeUsedResources(player, index);
+		vector<Building> buildings = player.getBuildings();
+		buildings.erase(buildings.begin() + index);
 	}
 	//Showing player's new resources
 	player.getHand()->printResources();
@@ -106,8 +114,10 @@ bool enoughResources(Player& player,int index)
 	int buildingResource = player.getBuildings().at(index).getLabel();
 	//Number of resources
 	int resourceAmount = player.getBuildings().at(index).getNumber();
+	
 
-	return (player.getHand()->getResourceMarkers()->at(buildingResource) > resourceAmount);
+
+	return (player.getHand()->getResourceMarkers()->at(buildingResource) >= resourceAmount);
 }
 //Remove used resources
 void removeUsedResources(Player& player, int index)
@@ -116,6 +126,7 @@ void removeUsedResources(Player& player, int index)
 	int resourceAmount = player.getBuildings().at(index).getNumber();
 
 	player.getHand()->getResourceMarkers()->at(buildingResource) -= resourceAmount;
+	
 }
 
 void endOfTurn(Player* activePlayer, vector<Building>* buildingsOnBoard, DeckBuilding* deck, vector<Player*>* players) {
@@ -166,7 +177,7 @@ void endTurnDrawBuildingFromBoard(Player* activePlayer, vector<Building>* buildi
 	cout << "Here are the buildings on the board: " << endl;
 	for (int i = 0; i < buildingsOnBoard->size(); i++) {
 		cout << i + 1 << " - ";
-		//buildingsOnBoard->at(i).display();
+		buildingsOnBoard->at(i).display();
 	}
 	cout << "Which one do you want to take? Please enter the corresponding number. ";
 	int numEntered = 0;
@@ -288,13 +299,83 @@ void shareWealth(vector<Player*>* players,int nbPlayers,int index)
 	}
 }
 
-static void transferResourceMarkers(vector<Player*>* players, int i) {
+void buildingSequence(vector<Player*>* players, int nbPlayers, int index) {
+	int i = 0;
+	int indexPlayer = index;
+	bool stillResources = true;
+	while (i < nbPlayers && stillResources) { //pour chaque player
+		Player* activePlayer = players->at(indexPlayer);
+		//construire autant de building qu'il veut
+		string answer;
+		//Asking if they want to build
+		if (!resourcesEmpty(activePlayer)) {
+			cout << "Here are your buildings: " << endl;
+			vector<Building> buildings = activePlayer->getBuildings();
+			for (int i = 0; i < buildings.size(); i++) {
+				buildings.at(i).display();
+			}
+			cout << "Do you want to build a building? (y/n): ";
+			cin >> answer;
+
+			//If yes to building
+			while (answer.compare("y") == 0 && !resourcesEmpty(activePlayer))
+			{
+				buildPlayerVillage(*activePlayer);
+				cout << "Do you want to build another building? (y/n): ";
+				cin >> answer;
+			}
+
+			//transférer au suivant
+			if (!resourcesEmpty(activePlayer)) {
+				transferResourceMarkers(players, indexPlayer);
+
+				indexPlayer++;
+				if (indexPlayer == nbPlayers) {
+					indexPlayer = 0;
+				}
+			}
+			else {
+				cout << "No more resources available" << endl;
+				stillResources = false;
+			}
+			
+		}
+		else {
+			cout << "No more resources available (shouldn't be happening at this point...)" << endl;
+			stillResources = false;
+		}
+		i++;
+		
+	}
+
+}
+
+bool resourcesEmpty(Player* activePlayer) {
+	vector<int>* resourceMarkers = activePlayer->getHand()->getResourceMarkers();
+	bool isEmpty = true;
+	int index = 0;
+	while (isEmpty && index<4) {
+		if (resourceMarkers->at(index) != 0) {
+			isEmpty = false;
+		}
+		index++;
+	}
+	return isEmpty;
+}
+ 
+void transferResourceMarkers(vector<Player*>* players, int i) {
 	Hand prevHand = *players->at(i)->getHand();
-	*(players->at(i + 1)->getHand()) = prevHand;
+	if (i == players->size() - 1) {
+		*(players->at(0)->getHand()) = prevHand;
+	}
+	else {
+		*(players->at(i + 1)->getHand()) = prevHand;
+	}
+	
 }
 
 //Reordering the players in the actual vector based on their ID (lowest : at index 0 , highest : at n-1)
-static void turnOrder(vector<Player*>* players, int nbPlayers)
+void turnOrder(vector<Player*>* players, int nbPlayers)
 {
 	Player* tempPlayer;
 
