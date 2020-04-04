@@ -13,12 +13,17 @@
 #include "GBMaps.h"
 #include <iostream>
 #include "Part6.h"
+#include <random>
 
 using namespace std;
 
 Player::Player() {
 	//Each player is assigned a random ID ranging from 1 to 100
-	id = new int(rand() % 100 + 1);
+    mt19937 rng;
+    rng.seed(random_device()());
+    uniform_int_distribution<mt19937::result_type> dist;
+    
+	id = new int(dist(rng) % 100 + 1);
 
 	vb = new VGMap();
 

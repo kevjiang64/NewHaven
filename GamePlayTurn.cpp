@@ -8,6 +8,7 @@
 #include "Resources.h"
 #include "Part6.h"
 #include "GamePlayTurn.h"
+#include <random>
 
 using namespace std;
 
@@ -445,6 +446,45 @@ void transferResourceMarkers(vector<Player*>* players, int i) {
 		*(players->at(i + 1)->getHand()) = prevHand;
 	}
 	
+}
+
+int checkFirstPlayer(vector<Player*>* players, int nbPlayers) {
+    
+    // check if all ID numbers are different from each other
+    int index = 0;
+    
+    while(true) {
+        if (index >= nbPlayers)
+            break;
+        
+        for (int i = 0; i < nbPlayers; i++) {
+            if (i == index)
+                continue;
+            if (players->at(index)->getID() == players->at(i)->getID()) {
+                mt19937 rng;
+                rng.seed(random_device()());
+                uniform_int_distribution<mt19937::result_type> dist;
+                
+                int* newID = new int(dist(rng) % 100 + 1);
+                players->at(i)->setID(newID);
+                index = 0;
+            }
+        }
+        
+        index++;
+    }
+    
+    // check the smallest ID number from the players
+    int indexSmallestID = 0;
+    
+    for (int i = 0; i < nbPlayers; i++) {
+        if (i == nbPlayers - 1)
+            break;
+        if (players->at(i + 1)->getID() < players->at(i)->getID())
+            indexSmallestID = i + 1;
+    }
+    
+    return indexSmallestID;
 }
 
 //Reordering the players in the actual vector based on their ID (lowest : at index 0 , highest : at n-1)

@@ -26,6 +26,7 @@ void endTurnDrawNewBuildingsToBoard(vector<Building*>* buildingsOnBoard, DeckBui
 
 void turnSequence(vector<Player*>* players, int nbPlayers);
 void transferResourceMarkers(vector<Player*>* players, int i);
+int checkFirstPlayer(vector<Player*>* players, int nbPlayers);
 void shareWealth(vector<Player*>* players, int nbPlayers, int index);
 
 void buildingSequence(vector<Player*>* players, int nbPlayers, int index);

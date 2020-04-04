@@ -23,11 +23,12 @@ int main() {
 	displayAtGameStart(nbPlayers, players, board);
 
 	//turn sequence for the first player in the vector, for testing purposes
-	Player* activePlayer = players->at(0);
+    // player with smallest ID will begin
+	Player* activePlayer = players->at(checkFirstPlayer(players, nbPlayers));
 	activePlayer->displayState();
 	placeTile(activePlayer, board, deckTiles);
 	activePlayer->getHand()->printResources();
-	buildingSequence(players, nbPlayers, 0);
+	buildingSequence(players, nbPlayers, checkFirstPlayer(players, nbPlayers));
 	endOfTurn(activePlayer, buildingsOnBoard, deckBuildings, players);
 	
 
