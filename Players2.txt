@@ -1,0 +1,7 @@
+Valid Map
+
+Players:2
+Tile#1: Stone,Sheep,Timber,Timber
+Tile#2: Wheat,Sheep,Timber,Wheat
+Tile#3: Stone,Stone,Wheat,Timber
+Tile#4: Sheep,Stone,Wheat,Sheep
