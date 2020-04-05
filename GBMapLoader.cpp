@@ -58,7 +58,7 @@ std::vector<Map::Node*>* checkValidTile(std::string file)
     std::string str;
     std::vector<Map::Node*>* initTile = new std::vector<Map::Node*>();
     while (getline(ifile, str)) {
-        if (str.find("Tile#1 :Stone,Sheep,Timber,Timber") != std::string::npos)
+        if (str.find("Tile#1: Stone,Sheep,Timber,Timber") != std::string::npos)
         {
             Map::Node* topLeft = new Map::Node(3, {}, false);
             Map::Node* topRight = new Map::Node(1, {}, false);
@@ -201,4 +201,33 @@ std::vector<Map::Node*>* checkValidTile(std::string file)
     }
     //cout << "The inputed value for the tile is invalid!\n";
     return initTile;
+}
+
+void placeTilesFromLoader(string fileName, Map* board) {
+    ifstream ifile(fileName);
+    std::string str;
+    std::vector<Map::Node*>* initTile = new std::vector<Map::Node*>();
+    while (getline(ifile, str)) {
+        if (str.find("Tile#1: Stone,Sheep,Timber,Timber") != std::string::npos)
+        {
+            HarvestTile* newTile = new HarvestTile(1, 3, 2, 2);
+            board->placeHarvestTile(*newTile, 2, 2);
+        }
+        if (str.find("Tile#2: Wheat,Sheep,Timber,Wheat") != std::string::npos)
+        {
+            HarvestTile* newTile = new HarvestTile(3, 0, 2, 3);
+            board->placeHarvestTile(*newTile, 2, 10);
+        }
+        if (str.find("Tile#3: Stone,Stone,Wheat,Timber") != std::string::npos)
+        {
+            HarvestTile* newTile = new HarvestTile(1, 1, 3, 2);
+            board->placeHarvestTile(*newTile, 10, 10);
+        }
+        if (str.find("Tile#4: Sheep,Stone,Wheat,Sheep") != std::string::npos)
+        {
+            HarvestTile* newTile = new HarvestTile(0, 1, 3, 0);
+            board->placeHarvestTile(*newTile, 10, 2);
+        }
+    }
+
 }

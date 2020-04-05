@@ -68,6 +68,11 @@ HarvestTile::HarvestTile() {
     }
 };
 
+HarvestTile::HarvestTile(int first, int second, int third, int fourth) {
+    topLeft = new int(0);
+    resources = new int[4]{ first, second, third, fourth };
+}
+
 HarvestTile::~HarvestTile() {
 	//delete topLeft;
     //delete[] resources;

@@ -46,34 +46,31 @@ int askNbPlayers() {
 }
 
 //Selects the right file from the GBMapsLoader depending on the nb of players
-static Map* selectBoard(int nbPlayers) {
+Map* selectBoard(int nbPlayers) {
     //create an empty Map object
     Map* gameMap = new Map();
     //Depending on the number of players, run the setMapSize method from GBMaps to assign the correct ammount of nodes to the map
     //Prints out the correct game size (Map vector size)
     //Sets the nodes in the map vector
     if (nbPlayers == 2) {
-        int val = 4;
-        int* numPlayers = &val;
-        gameMap->setMapSize(2);
+		int* numPlayers = new int(nbPlayers);
+        gameMap->setMapSize(nbPlayers);
         gameMap->setPlayerNumber(numPlayers);
-        gameMap->setMapNodes(&checkValidTile("Players2.txt"));
+		placeTilesFromLoader("Players2.txt", gameMap);
         return gameMap;
     }
     else if (nbPlayers == 3) {
-        int val = 3;
-        int* numPlayers = &val;
-        gameMap->setMapSize(3);
+		int* numPlayers = new int(nbPlayers);
+        gameMap->setMapSize(nbPlayers);
         gameMap->setPlayerNumber(numPlayers);
-        gameMap->setMapNodes(&checkValidTile("Players3.txt"));
+		placeTilesFromLoader("Players3.txt", gameMap);
         return gameMap;
     }
     else if (nbPlayers == 4) {
-        int val = 4;
-        int* numPlayers = &val;
-        gameMap->setMapSize(4);
+        int* numPlayers = new int(nbPlayers);
+        gameMap->setMapSize(nbPlayers);
         gameMap->setPlayerNumber(numPlayers);
-        gameMap->setMapNodes(&checkValidTile("Players4.txt"));
+		placeTilesFromLoader("Players4.txt", gameMap);
         return gameMap;
     }
     return gameMap;

@@ -27,5 +27,6 @@ private:
 
 bool checkFile(string fileName);
 int checkValidPlayerNum(string fileName);
-std::vector<Map::Node*> checkValidTile(string fileName);
+std::vector<Map::Node*>* checkValidTile(string fileName);
+void placeTilesFromLoader(string fileName, Map* board);
 #endif /* GBMapLoader_h */
