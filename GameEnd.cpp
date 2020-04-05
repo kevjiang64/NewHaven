@@ -7,11 +7,12 @@
 #include "Player.h"
 #include "Resources.h"
 #include "Part6.h"
+#include "GameEnd.h"
+
 
 //Method to check if the game is finished and outputs the results
 void gameTie(Map* gameMap, vector<Player*>* players) {
-    if (gameMap->oneTileLeft == true) {
-        int scores[players->size];
+        int* scores = new int[players->size()];
 
         //fill up the array of scores
         for (int i = 0; i < players->size(); i++) {
@@ -28,7 +29,7 @@ void gameTie(Map* gameMap, vector<Player*>* players) {
 
         //check if there is a tie
         int count = 0;
-        vector<Player*>* tiedPlayers;
+        vector<Player*>* tiedPlayers = new vector<Player*>(players->size());
         vector<bool>* tied = new vector<bool>(players->size());
         for (int i = 0; i < players->size(); i++) {
             if (max == scores[i]) {
@@ -58,10 +59,15 @@ void gameTie(Map* gameMap, vector<Player*>* players) {
             }
             cout << "With " << max << "points!" << endl;
         }
+<<<<<<< HEAD
     }   
     else {
          
     }
+=======
+ 
+   
+>>>>>>> a09c18ca43486baf7273017d02f3f50eef6b49ca
 }
 
 //returns the index of the player between the ones indicated
@@ -153,8 +159,36 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
 
 int GameEndDriver() {
 
+    Map* gameMap = new Map();
+    vector<Map::Node*>* mapNodes = new vector<Map::Node*>(96);
+    gameMap->setMapNodes(mapNodes);
+
+    vector<Player*>* playerVector = new vector<Player*>();
+
     Player* player1 = new Player();
     Player* player2 = new Player();
 
+<<<<<<< HEAD
+=======
+
+    player1->getVillageBoard()->build(new Building(), 3, 1);
+    player1->getVillageBoard()->build(new Building(), 3, 2);
+    player1->getVillageBoard()->build(new Building(), 3, 3);
+    player1->getVillageBoard()->build(new Building(), 3, 4);
+    player1->getVillageBoard()->build(new Building(), 3, 5);
+
+    player2->getVillageBoard()->build(new Building(), 2, 1);
+    player2->getVillageBoard()->build(new Building(), 2, 2);
+    player2->getVillageBoard()->build(new Building(), 2, 3);
+    player2->getVillageBoard()->build(new Building(), 2, 4);
+    player2->getVillageBoard()->build(new Building(), 2, 5);
+
+    playerVector->push_back(player1);
+    playerVector->push_back(player2);
+
+    gameTie(gameMap, playerVector);
+
+
+>>>>>>> a09c18ca43486baf7273017d02f3f50eef6b49ca
     return 0;
 }
