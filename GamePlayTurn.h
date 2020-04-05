@@ -32,4 +32,4 @@ void shareWealth(vector<Player*>* players, int nbPlayers, int index);
 void buildingSequence(vector<Player*>* players, int nbPlayers, int index);
 bool resourcesEmpty(Player* activePlayer);
 
-void oneTurn(Player* activePlayer, Map* board, DeckHarvestTile* deckTiles, vector<Player*>* players, int nbPlayers, vector<Building*>* buildingsOnBoard, DeckBuilding* deckBuildings);
+void oneTurn(int indexActivePlayer, Map* board, DeckHarvestTile* deckTiles, vector<Player*>* players, int nbPlayers, vector<Building*>* buildingsOnBoard, DeckBuilding* deckBuildings);

@@ -10,6 +10,8 @@
 
 using namespace std;
 
+vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied);
+
 //returns the index of the player between the ones indicated 
 vector<int>* fewestEmptySpaces(vector<Player*>* players, vector<bool>* tied) {
 	vector<int>* emptySpaces = new vector<int>(players->size());

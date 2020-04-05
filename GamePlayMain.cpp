@@ -28,8 +28,8 @@ int main() {
 	int indexActivePlayer = checkFirstPlayer(players, nbPlayers);
 	
 	while (!board->oneTileLeft()) {
-		Player* activePlayer = players->at(indexActivePlayer);
-		oneTurn(activePlayer, board, deckTiles, players, nbPlayers, buildingsOnBoard, deckBuildings);
+		
+		oneTurn(indexActivePlayer, board, deckTiles, players, nbPlayers, buildingsOnBoard, deckBuildings);
 
 		indexActivePlayer++;
 		if (indexActivePlayer == nbPlayers) {

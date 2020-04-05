@@ -364,5 +364,6 @@ int VGMap::numberOfEmptySpaces() {
 			}
 		}
 	}
+	return countEmptySpaces;
 }
 

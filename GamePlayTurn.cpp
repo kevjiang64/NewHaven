@@ -123,6 +123,8 @@ void buildPlayerVillage(Player* player)
 		flipped = false;
 	}
 
+	int originalBuildingNumber = player->getBuildings()->at(index)->getNumber();
+
 	if (flipped) {
 		//number of the building becomes row number entered
 		player->getBuildings()->at(index)->setNumber(rowEntered);
@@ -138,6 +140,7 @@ void buildPlayerVillage(Player* player)
 	else
 	{
 		cout << "Player can't doesn't have enough resources" << "\n";
+		player->getBuildings()->at(index)->setNumber(originalBuildingNumber);
 	}
 	//Reducing the number of resources of player's hand
 	if (result)
@@ -145,6 +148,9 @@ void buildPlayerVillage(Player* player)
 		removeUsedResources(player, index);
 		vector<Building*>* buildings = player->getBuildings();
 		buildings->erase(buildings->begin() + index);
+	}
+	else {
+		player->getBuildings()->at(index)->setNumber(originalBuildingNumber);
 	}
 	//Showing player's new resources
 	player->getHand()->printResources();
@@ -507,11 +513,12 @@ void turnOrder(vector<Player*>* players, int nbPlayers)
 	}
 }
 
-void oneTurn(Player* activePlayer, Map* board, DeckHarvestTile* deckTiles, vector<Player*>* players, int nbPlayers, vector<Building*>* buildingsOnBoard, DeckBuilding* deckBuildings) {
+void oneTurn(int indexActivePlayer, Map* board, DeckHarvestTile* deckTiles, vector<Player*>* players, int nbPlayers, vector<Building*>* buildingsOnBoard, DeckBuilding* deckBuildings) {
+	Player* activePlayer = players->at(indexActivePlayer);
 	cout << "\nPlayer #" << activePlayer->getID() << " it is your turn!" << endl;
 	activePlayer->displayState();
 	placeTile(activePlayer, board, deckTiles);
 	activePlayer->getHand()->printResources();
-	buildingSequence(players, nbPlayers, checkFirstPlayer(players, nbPlayers));
+	buildingSequence(players, nbPlayers, indexActivePlayer);
 	endOfTurn(activePlayer, buildingsOnBoard, deckBuildings, players);
 }
