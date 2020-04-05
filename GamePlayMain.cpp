@@ -9,6 +9,7 @@
 #include "Part6.h"
 #include "GameStart.h"
 #include "GamePlayTurn.h"
+#include "GameEnd.h"
 
 
 int main() {

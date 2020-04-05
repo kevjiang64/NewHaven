@@ -7,11 +7,12 @@
 #include "Player.h"
 #include "Resources.h"
 #include "Part6.h"
+#include "GameEnd.h"
+
 
 //Method to check if the game is finished and outputs the results
 void gameTie(Map* gameMap, vector<Player*>* players) {
-    if (gameMap->oneTileLeft == true) {
-        int scores[players->size];
+        int* scores = new int[players->size()];
 
         //fill up the array of scores
         for (int i = 0; i < players->size(); i++) {
@@ -28,7 +29,7 @@ void gameTie(Map* gameMap, vector<Player*>* players) {
 
         //check if there is a tie
         int count = 0;
-        vector<Player*>* tiedPlayers;
+        vector<Player*>* tiedPlayers = new vector<Player*>(players->size());
         vector<bool>* tied = new vector<bool>(players->size());
         for (int i = 0; i < players->size(); i++) {
             if (max == scores[i]) {
@@ -58,10 +59,8 @@ void gameTie(Map* gameMap, vector<Player*>* players) {
             }
             cout << "With " << max << "points!" << endl;
         }
-    }
-    else {
-         
-    }
+ 
+   
 }
 
 //returns the index of the player between the ones indicated
