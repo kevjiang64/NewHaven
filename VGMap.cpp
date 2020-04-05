@@ -18,7 +18,7 @@ VGMap::VGMap(int row, int col, string name)
 		cout << "The inputed values for the rows and columns will create a 6x5 VGMap\n";
 		for (int i = 0; i < row; i++) 
 		{
-			cout << "Pushing Back Row " << i <<"\n";
+			//cout << "Pushing Back Row " << i <<"\n";
 			vector<Node> column(col);
 			(*board).push_back(column);
 		}
@@ -28,7 +28,7 @@ VGMap::VGMap(int row, int col, string name)
 		{
 			for (int j = 0; j < col; j++)
 			{
-				cout << "("<<i<<","<<j<<") Filled\n";
+				//cout << "("<<i<<","<<j<<") Filled\n";
 				Node node = (*board)[i][j];
 				vector<Node> vect = node.fillAdjNodes(*board, i, j);
 				node.setAdjNode(vect);
@@ -60,7 +60,7 @@ VGMap::VGMap()
 	//(0,0) is at the top left	
 	for (int i = 0; i < 6; i++)
 	{
-		cout << "Pushing Back Row " << i << "\n";
+		//cout << "Pushing Back Row " << i << "\n";
 		vector<Node> column(5);
 		(*board).push_back(column);
 	}
@@ -69,7 +69,7 @@ VGMap::VGMap()
 	{
 		for (int j = 0; j < 5; j++)
 		{
-			cout << "(" << i << "," << j << ") Filled\n";
+			//cout << "(" << i << "," << j << ") Filled\n";
 			Node node = (*board)[i][j];
 			vector<Node> vect = node.fillAdjNodes(*board, i, j);
 			node.setAdjNode(vect);
@@ -89,32 +89,32 @@ VGMap::Node::Node() {
 //Clockwise => 0 : left , 1 : up, 2 : right, 3 : down
 vector<VGMap::Node> VGMap::Node::fillAdjNodes(vector <vector<VGMap::Node>> board, int row, int col) {
 
-	cout << "row: " << row << " col: " << col << "\n";
+	//cout << "row: " << row << " col: " << col << "\n";
 	//For left adjNode
 	if (col - 1 >= 0)
 	{
-		cout << "Linking to Left Node:("<< row <<","<< col-1 << ")\n";
+		//cout << "Linking to Left Node:("<< row <<","<< col-1 << ")\n";
 		adjNode->push_back(board[row][col - 1]);
 	} 
 	//For up adjNode
 	if (row - 1 >= 0)
 	{
-		cout << "Linking to Up Node:(" << row-1 << "," << col << ")\n";
+		//cout << "Linking to Up Node:(" << row-1 << "," << col << ")\n";
 		adjNode->push_back(board[row - 1][col]);
 	}
 	//For right adjNode
 	if (col + 1 <= 4)
 	{
-		cout << "Linking to Right Node:(" << row << "," << col+1 << ")\n";
+		//cout << "Linking to Right Node:(" << row << "," << col+1 << ")\n";
 		adjNode->push_back(board[row][col + 1]);
 	}
 	//For down adjNode
 	if (row + 1 <= 5)
 	{
-		cout << "Linking to Down Node:(" << row+1 << "," << col << ")\n";
+		//cout << "Linking to Down Node:(" << row+1 << "," << col << ")\n";
 		adjNode->push_back(board[row + 1][col]);
 	}
-	cout << "Finish connecting the adjacents nodes for (" <<row<<","<<col<<")\n\n";
+	//cout << "Finish connecting the adjacents nodes for (" <<row<<","<<col<<")\n\n";
 	return *adjNode;
 }
 //Count the amount of points

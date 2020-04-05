@@ -69,11 +69,6 @@ Map* selectBoard(int nbPlayers) {
 		}
 		(*players)[i] = player;
 	}
-	//Display each player's game resource Markers
-	for (int i = 0; i < nbPlayers; i++) {
-		(*players)[i]->resourceTracker();
-	}
-	cout << "works up to here" << endl;
 
 	return players;
 }

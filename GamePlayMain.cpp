@@ -24,7 +24,7 @@ int main() {
 
 	//turn sequence for the first player in the vector, for testing purposes
 	// player with smallest ID will begin
-	cout << "The game starts" << endl;
+	cout << "\n\nThe game starts" << endl;
 	int indexActivePlayer = checkFirstPlayer(players, nbPlayers);
 	
 	while (!board->oneTileLeft()) {
