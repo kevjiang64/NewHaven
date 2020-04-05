@@ -17,4 +17,4 @@ Map* selectBoard(int nbPlayers);
 vector<Player*>* createPlayers(int nbPlayers, DeckBuilding* deckBuildings);
 void assignVillageBoards(vector<Player*>* players, int nbPlayers);
 vector<Building*>* drawBuildingsOnBoard(DeckBuilding* deckBuildings);
-void displayAtGameStart(int nbPlayers, vector<Player*>* players, Map* board);
+void displayAtGameStart(int nbPlayers, vector<Player*>* players, Map* board, vector<Building*>* buildingsOnBoard);

@@ -13,23 +13,29 @@
 /*int main() {
 	int nbPlayers = askNbPlayers();
 	Map* board = selectBoard(nbPlayers);
-	DeckHarvestTile* deckTiles = new DeckHarvestTile(); //Deck of Tiles not created ==> only count = 60
-	DeckBuilding* deckBuildings = new DeckBuilding(); //Same ?
+	DeckHarvestTile* deckTiles = new DeckHarvestTile(); 
+	DeckBuilding* deckBuildings = new DeckBuilding(); 
 	vector<Player*>* players = createPlayers(nbPlayers, deckBuildings);
 	assignVillageBoards(players, nbPlayers);
-	vector<Building>* buildingsOnBoard = drawBuildingsOnBoard(deckBuildings); //Don't Understand ? + where does each player draw 6 building tiles and 2 harvest tiles
-	displayAtGameStart(nbPlayers, players, board);
+	vector<Building*>* buildingsOnBoard = drawBuildingsOnBoard(deckBuildings); 
+	displayAtGameStart(nbPlayers, players, board, buildingsOnBoard);
 
 	return 0;
 }*/
 
-void displayAtGameStart(int nbPlayers, vector<Player*>* players, Map* board) {
+void displayAtGameStart(int nbPlayers, vector<Player*>* players, Map* board, vector<Building*>* buildingsOnBoard) {
 	//Showing Display for every player 
 	for (int i = 0; i < nbPlayers; i++)
 		players->at(i)->displayState();
 
 	cout << "" << endl;
 	board->display();
+
+	cout << "\nHere are the buildings on the board: " << endl;
+	for (int i = 0; i < buildingsOnBoard->size(); i++) {
+		cout << i + 1 << " -\t";
+		buildingsOnBoard->at(i)->display();
+	}
 }
 
 //Asks to the user and returns the nb of players wanted
