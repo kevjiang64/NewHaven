@@ -50,6 +50,7 @@ public:
 	void build(Building* building, int row, int col);
 	void displayVGmap();
 	void display();
+	int numberOfEmptySpaces();
 };
 
 #endif 

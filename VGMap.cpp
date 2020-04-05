@@ -352,3 +352,17 @@ void VGMap::display() {
 	}
 }
 
+int VGMap::numberOfEmptySpaces() {
+	int countEmptySpaces = 0;
+	for (int row = 0; row < 6; row++)
+	{
+		for (int col = 0; col < 5; col++)
+		{
+			int number = (*(*board)[row][col].getBuilding()).getNumber();
+			if (number == -1) {
+				countEmptySpaces++;
+			}
+		}
+	}
+}
+
