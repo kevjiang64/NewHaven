@@ -10,7 +10,7 @@
 #include "GameStart.h"
 
 
-/*int main() {
+int main() {
 	int nbPlayers = askNbPlayers();
 	Map* board = selectBoard(nbPlayers);
 	DeckHarvestTile* deckTiles = new DeckHarvestTile(); 
@@ -21,7 +21,7 @@
 	displayAtGameStart(nbPlayers, players, board, buildingsOnBoard);
 
 	return 0;
-}*/
+}
 
 void displayAtGameStart(int nbPlayers, vector<Player*>* players, Map* board, vector<Building*>* buildingsOnBoard) {
 	//Showing Display for every player 
@@ -36,6 +36,8 @@ void displayAtGameStart(int nbPlayers, vector<Player*>* players, Map* board, vec
 		cout << i + 1 << " -\t";
 		buildingsOnBoard->at(i)->display();
 	}
+
+	cout << "\n"<<"The deck of buildings and HarvestTiles has been created." << "\n";
 }
 
 //Asks to the user and returns the nb of players wanted

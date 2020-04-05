@@ -58,7 +58,7 @@ void gameTie(Map* gameMap, vector<Player*>* players) {
             }
             cout << "With " << max << "points!" << endl;
         }
-    }
+    }   
     else {
          
     }
@@ -155,9 +155,6 @@ int GameEndDriver() {
 
     Player* player1 = new Player();
     Player* player2 = new Player();
-
-
-
 
     return 0;
 }

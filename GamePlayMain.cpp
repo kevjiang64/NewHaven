@@ -36,9 +36,5 @@ int main() {
 			indexActivePlayer = 0;
 		}
 	}
-	
-	
-
-
 	return 0;
 }
