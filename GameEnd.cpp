@@ -152,10 +152,32 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
 
 int GameEndDriver() {
 
+    Map* gameMap = new Map();
+    vector<Map::Node*>* mapNodes = new vector<Map::Node*>(96);
+    gameMap->setMapNodes(mapNodes);
+
+    vector<Player*>* playerVector = new vector<Player*>();
+
     Player* player1 = new Player();
     Player* player2 = new Player();
 
 
+    player1->getVillageBoard()->build(new Building(), 3, 1);
+    player1->getVillageBoard()->build(new Building(), 3, 2);
+    player1->getVillageBoard()->build(new Building(), 3, 3);
+    player1->getVillageBoard()->build(new Building(), 3, 4);
+    player1->getVillageBoard()->build(new Building(), 3, 5);
+
+    player2->getVillageBoard()->build(new Building(), 2, 1);
+    player2->getVillageBoard()->build(new Building(), 2, 2);
+    player2->getVillageBoard()->build(new Building(), 2, 3);
+    player2->getVillageBoard()->build(new Building(), 2, 4);
+    player2->getVillageBoard()->build(new Building(), 2, 5);
+
+    playerVector->push_back(player1);
+    playerVector->push_back(player2);
+
+    gameTie(gameMap, playerVector);
 
 
     return 0;
