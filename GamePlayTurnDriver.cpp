@@ -11,7 +11,7 @@
 #include "GamePlayTurn.h"
 
 
-int main() {
+/*int main() {
 	//gameStart
 	int nbPlayers = askNbPlayers();
 	Map* board = selectBoard(nbPlayers);
@@ -25,12 +25,8 @@ int main() {
 	//turn sequence for the first player in the vector, for testing purposes
     // player with smallest ID will begin
 	Player* activePlayer = players->at(checkFirstPlayer(players, nbPlayers));
-	activePlayer->displayState();
-	placeTile(activePlayer, board, deckTiles);
-	activePlayer->getHand()->printResources();
-	buildingSequence(players, nbPlayers, checkFirstPlayer(players, nbPlayers));
-	endOfTurn(activePlayer, buildingsOnBoard, deckBuildings, players);
+	oneTurn(activePlayer, board, deckTiles, players, nbPlayers, buildingsOnBoard, deckBuildings);
 	
 
 	return 0;
-}
+}*/

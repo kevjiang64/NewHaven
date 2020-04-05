@@ -506,3 +506,12 @@ void turnOrder(vector<Player*>* players, int nbPlayers)
 		}
 	}
 }
+
+void oneTurn(Player* activePlayer, Map* board, DeckHarvestTile* deckTiles, vector<Player*>* players, int nbPlayers, vector<Building*>* buildingsOnBoard, DeckBuilding* deckBuildings) {
+	cout << "\nPlayer #" << activePlayer->getID() << " it is your turn!" << endl;
+	activePlayer->displayState();
+	placeTile(activePlayer, board, deckTiles);
+	activePlayer->getHand()->printResources();
+	buildingSequence(players, nbPlayers, checkFirstPlayer(players, nbPlayers));
+	endOfTurn(activePlayer, buildingsOnBoard, deckBuildings, players);
+}

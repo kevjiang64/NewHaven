@@ -7,5 +7,38 @@
 #include "Player.h"
 #include "Resources.h"
 #include "Part6.h"
+#include "GameStart.h"
+#include "GamePlayTurn.h"
 
-//Method Signatures
+
+int main() {
+	//gameStart
+	int nbPlayers = askNbPlayers();
+	Map* board = selectBoard(nbPlayers);
+	DeckHarvestTile* deckTiles = new DeckHarvestTile(); //Deck of Tiles not created ==> only count = 60
+	DeckBuilding* deckBuildings = new DeckBuilding(); //Same ?
+	vector<Player*>* players = createPlayers(nbPlayers, deckBuildings);
+	assignVillageBoards(players, nbPlayers);
+	vector<Building*>* buildingsOnBoard = drawBuildingsOnBoard(deckBuildings); //Don't Understand ? + where does each player draw 6 building tiles and 2 harvest tiles
+	displayAtGameStart(nbPlayers, players, board);
+
+	//turn sequence for the first player in the vector, for testing purposes
+	// player with smallest ID will begin
+	cout << "The game starts" << endl;
+	int indexActivePlayer = checkFirstPlayer(players, nbPlayers);
+	
+	while (!board->oneTileLeft()) {
+		Player* activePlayer = players->at(indexActivePlayer);
+		oneTurn(activePlayer, board, deckTiles, players, nbPlayers, buildingsOnBoard, deckBuildings);
+
+		indexActivePlayer++;
+		if (indexActivePlayer == nbPlayers) {
+			indexActivePlayer = 0;
+		}
+	}
+	
+	
+
+
+	return 0;
+}
