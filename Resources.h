@@ -16,7 +16,7 @@ class HarvestTile {
 	public:
 		HarvestTile();
 		~HarvestTile();
-		HarvestTile(int first, int second, int third, int fourth);
+		HarvestTile(vector<int>* vectorResources);
 		void display();
 		void completeDisplay();
 		void setResources(int r, int i) { resources[i] = r;  };

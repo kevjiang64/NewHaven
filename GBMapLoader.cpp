@@ -208,24 +208,92 @@ void placeTilesFromLoader(string fileName, Map* board) {
     std::string str;
     std::vector<Map::Node*>* initTile = new std::vector<Map::Node*>();
     while (getline(ifile, str)) {
-        if (str.find("Tile#1: Stone,Sheep,Timber,Timber") != std::string::npos)
+        if (str.find("Tile1") != std::string::npos)
         {
-            HarvestTile* newTile = new HarvestTile(1, 3, 2, 2);
+            vector<int>* vectorResources = new vector<int>(4);
+            for (int i = 0; i < 4; i++) {
+                getline(ifile, str);
+                if (str.find("Meadow") != std::string::npos) {
+                    vectorResources->at(i) = 0;
+                } 
+                else if (str.find("Quarry") != std::string::npos) {
+                    vectorResources->at(i) = 1;
+                }
+                else if (str.find("Forest") != std::string::npos) {
+                    vectorResources->at(i) = 2;
+                }
+                else if (str.find("Wheatfield") != std::string::npos) {
+                    vectorResources->at(i) = 3;
+                }
+            }
+            
+            HarvestTile* newTile = new HarvestTile(vectorResources);
             board->placeHarvestTile(*newTile, 2, 2);
         }
-        if (str.find("Tile#2: Wheat,Sheep,Timber,Wheat") != std::string::npos)
+        if (str.find("Tile2") != std::string::npos)
         {
-            HarvestTile* newTile = new HarvestTile(3, 0, 2, 3);
+            vector<int>* vectorResources = new vector<int>(4);
+            for (int i = 0; i < 4; i++) {
+                getline(ifile, str);
+                if (str.find("Meadow") != std::string::npos) {
+                    vectorResources->at(i) = 0;
+                }
+                else if (str.find("Quarry") != std::string::npos) {
+                    vectorResources->at(i) = 1;
+                }
+                else if (str.find("Forest") != std::string::npos) {
+                    vectorResources->at(i) = 2;
+                }
+                else if (str.find("Wheatfield") != std::string::npos) {
+                    vectorResources->at(i) = 3;
+                }
+            }
+
+            HarvestTile* newTile = new HarvestTile(vectorResources);
             board->placeHarvestTile(*newTile, 2, 10);
         }
-        if (str.find("Tile#3: Stone,Stone,Wheat,Timber") != std::string::npos)
+        if (str.find("Tile3") != std::string::npos)
         {
-            HarvestTile* newTile = new HarvestTile(1, 1, 3, 2);
+            vector<int>* vectorResources = new vector<int>(4);
+            for (int i = 0; i < 4; i++) {
+                getline(ifile, str);
+                if (str.find("Meadow") != std::string::npos) {
+                    vectorResources->at(i) = 0;
+                }
+                else if (str.find("Quarry") != std::string::npos) {
+                    vectorResources->at(i) = 1;
+                }
+                else if (str.find("Forest") != std::string::npos) {
+                    vectorResources->at(i) = 2;
+                }
+                else if (str.find("Wheatfield") != std::string::npos) {
+                    vectorResources->at(i) = 3;
+                }
+            }
+
+            HarvestTile* newTile = new HarvestTile(vectorResources);
             board->placeHarvestTile(*newTile, 10, 10);
         }
-        if (str.find("Tile#4: Sheep,Stone,Wheat,Sheep") != std::string::npos)
+        if (str.find("Tile4") != std::string::npos)
         {
-            HarvestTile* newTile = new HarvestTile(0, 1, 3, 0);
+            vector<int>* vectorResources = new vector<int>(4);
+            for (int i = 0; i < 4; i++) {
+                getline(ifile, str);
+                if (str.find("Meadow") != std::string::npos) {
+                    vectorResources->at(i) = 0;
+                }
+                else if (str.find("Quarry") != std::string::npos) {
+                    vectorResources->at(i) = 1;
+                }
+                else if (str.find("Forest") != std::string::npos) {
+                    vectorResources->at(i) = 2;
+                }
+                else if (str.find("Wheatfield") != std::string::npos) {
+                    vectorResources->at(i) = 3;
+                }
+            }
+
+            HarvestTile* newTile = new HarvestTile(vectorResources);
             board->placeHarvestTile(*newTile, 10, 2);
         }
     }

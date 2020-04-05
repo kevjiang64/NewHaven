@@ -68,9 +68,13 @@ HarvestTile::HarvestTile() {
     }
 };
 
-HarvestTile::HarvestTile(int first, int second, int third, int fourth) {
+HarvestTile::HarvestTile(vector<int>* vectorResources) {
     topLeft = new int(0);
-    resources = new int[4]{ first, second, third, fourth };
+    
+    resources = new int[4];
+    for (int i = 0; i < 4; i++) {
+        resources[i] = vectorResources->at(i);
+    }
 }
 
 HarvestTile::~HarvestTile() {

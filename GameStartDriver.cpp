@@ -52,27 +52,11 @@ Map* selectBoard(int nbPlayers) {
     //Depending on the number of players, run the setMapSize method from GBMaps to assign the correct ammount of nodes to the map
     //Prints out the correct game size (Map vector size)
     //Sets the nodes in the map vector
-    if (nbPlayers == 2) {
-		int* numPlayers = new int(nbPlayers);
-        gameMap->setMapSize(nbPlayers);
-        gameMap->setPlayerNumber(numPlayers);
-		placeTilesFromLoader("Players2.txt", gameMap);
-        return gameMap;
-    }
-    else if (nbPlayers == 3) {
-		int* numPlayers = new int(nbPlayers);
-        gameMap->setMapSize(nbPlayers);
-        gameMap->setPlayerNumber(numPlayers);
-		placeTilesFromLoader("Players3.txt", gameMap);
-        return gameMap;
-    }
-    else if (nbPlayers == 4) {
-        int* numPlayers = new int(nbPlayers);
-        gameMap->setMapSize(nbPlayers);
-        gameMap->setPlayerNumber(numPlayers);
-		placeTilesFromLoader("Players4.txt", gameMap);
-        return gameMap;
-    }
+	int* numPlayers = new int(nbPlayers);
+	gameMap->setMapSize(nbPlayers);
+	gameMap->setPlayerNumber(numPlayers);
+	string numberPlayers = std::to_string(nbPlayers);
+	placeTilesFromLoader("MapFor" + numberPlayers + "Players.txt", gameMap);
     return gameMap;
 }
 

@@ -1,0 +1,29 @@
+Valid Map
+
+Players:3
+5x5 + top/bottom Map
+
+Tile1
+Quarry
+Meadow
+Forest
+Forest
+
+Tile2
+Wheatfield
+Meadow
+Forest
+Wheatfield
+
+Tile3
+Quarry
+Quarry
+Wheatfield
+Forest
+
+Tile4
+Meadow
+Quarry
+Wheatfield
+Meadow
+
