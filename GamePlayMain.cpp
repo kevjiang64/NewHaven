@@ -12,7 +12,7 @@
 #include "GameEnd.h"
 
 
-int main() {
+/*int main() {
 	//gameStart
 	int nbPlayers = askNbPlayers();
 	Map* board = selectBoard(nbPlayers);
@@ -38,4 +38,4 @@ int main() {
 		}
 	}
 	return 0;
-}
+}*/
