@@ -60,15 +60,19 @@ Player::Player() {
 }*/
 
 Player::~Player() {
-	//delete[] vb;
-	//delete[] tiles;
-	//delete[] buildings;
-	//delete[] resourceMarkers;
+	delete vb;
+	delete tiles;
+	delete buildings;
+	delete hand;
+	delete shipmentTileUsed;
+	delete id;
 
-	//vb = NULL;
-	//tiles = NULL;
-	//buildings = NULL;
-	//resourceMarkers = NULL;
+	vb = nullptr;
+	tiles = nullptr;
+	buildings = nullptr;
+	hand = nullptr;
+	shipmentTileUsed = nullptr;
+	id = nullptr;
 }
 
 bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarvestTile deck, int topLeftCorner) {

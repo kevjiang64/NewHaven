@@ -12,7 +12,7 @@
 #include "GameEnd.h"
 
 
-/*int main() {
+int main() {
 	//gameStart
 	int nbPlayers = askNbPlayers();
 	Map* board = selectBoard(nbPlayers);
@@ -37,5 +37,11 @@
 			indexActivePlayer = 0;
 		}
 	}
+<<<<<<< HEAD
+=======
+	gameTie(players);
+
+
+>>>>>>> 8e91389511ebc22164b15d66c84474c0ea90bbfc
 	return 0;
-}*/
+}

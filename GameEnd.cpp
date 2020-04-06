@@ -26,6 +26,7 @@ void gameTie(vector<Player*>* players) {
         if (scores[i] > max) {
             max = scores[i];
         }
+<<<<<<< HEAD
     }
 
     //check if there is a tie
@@ -52,6 +53,43 @@ void gameTie(vector<Player*>* players) {
         cout << "The winner is: ";
         for (int i = 0; i < winner->size(); i++) {
             cout << players->at(winner->at(i))->getID() << endl;
+=======
+        
+        //check if there is a tie
+        int count = 0;
+        vector<Player*>* tiedPlayers = new vector<Player*>(players->size());
+        vector<bool>* tied = new vector<bool>(players->size());
+        for (int i = 0; i < players->size(); i++) {
+            
+            if (max == scores[i]) {
+                
+                count++;
+                tiedPlayers->at(i) = players->at(i);
+                tied->at(i) = true;
+            }
+        }
+        
+        //if there is a tie enter this
+        if (count >= 2) {
+            vector<int>* winner = new vector<int>();
+            winner = fewestEmptySpaces(tiedPlayers, tied);
+
+            //displays the winner/winners (in case of a shared win)
+            if (winner->size() == 1) {
+                cout << "\nThe winner is: ";
+                cout << players->at(winner->at(0))->getID() << endl;
+                cout << "With " << max << " points!" << endl;
+            }
+            else {
+                cout << "\nThe winners are: ";
+                cout << players->at(winner->at(0))->getID();
+                for (int i = 1; i < winner->size(); i++) {
+                    cout <<", " << players->at(winner->at(i))->getID();
+                }
+                cout << "\nWith " << max << " points!" << endl;
+            }
+            
+>>>>>>> 8e91389511ebc22164b15d66c84474c0ea90bbfc
         }
     }
 
@@ -72,25 +110,30 @@ void gameTie(vector<Player*>* players) {
 
 //returns the index of the player between the ones indicated
 vector<int>* fewestEmptySpaces(vector<Player*>* players, vector<bool>* tied) {
+    
     vector<int>* emptySpaces = new vector<int>(players->size());
     for (int i = 0; i < players->size(); i++) {
         emptySpaces->at(i) = players->at(i)->getVillageBoard()->numberOfEmptySpaces();
+        
     }
-
-    int maxScore = 0;
+    
+    int maxScore = emptySpaces->at(0);
+    
     bool twoMaxScores = false;
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < players->size(); i++) {
+        
         if (tied->at(i)) {
-            if (emptySpaces->at(i) > maxScore) {
+            
+            if (emptySpaces->at(i) < maxScore) {
                 maxScore = emptySpaces->at(i);
                 twoMaxScores = false;
             }
-            else if (emptySpaces->at(i) == maxScore) {
+            else if (emptySpaces->at(i) == maxScore && i!=0) {
                 twoMaxScores = true;
             }
         }
     }
-
+    
     if (twoMaxScores) {
         vector<bool>* tiedAgain = new vector<bool>(players->size());
         for (int i = 0; i < players->size(); i++) {
@@ -104,37 +147,42 @@ vector<int>* fewestEmptySpaces(vector<Player*>* players, vector<bool>* tied) {
         leastBuildingsLeftOver(players, tiedAgain);
     }
     else {
+        
         int indexWinner = 0;
         while (true) {
             if (tied->at(indexWinner) && emptySpaces->at(indexWinner) == maxScore) {
-                vector<int>* indexesWinners = new vector<int>(1);
+                vector<int>* indexesWinners = new vector<int>();
                 indexesWinners->push_back(indexWinner);
+                
                 return indexesWinners;
-            }
+            } 
+            indexWinner++;
         }
     }
 }
 
 vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied) {
+    
     vector<int>* buildingsLeftover = new vector<int>(players->size());
     for (int i = 0; i < players->size(); i++) {
         buildingsLeftover->at(i) = players->at(i)->getBuildings()->size(); //I assume that we don't count the numbers... do we?
     }
+    
 
-    int maxScore = 0;
+    int maxScore = buildingsLeftover->at(0);
     bool twoMaxScores = false;
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < players->size(); i++) {
         if (tied->at(i)) {
-            if (buildingsLeftover->at(i) > maxScore) {
+            if (buildingsLeftover->at(i) < maxScore) {
                 maxScore = buildingsLeftover->at(i);
                 twoMaxScores = false;
             }
-            else if (buildingsLeftover->at(i) == maxScore) {
+            else if (buildingsLeftover->at(i) == maxScore && i!=0) {
                 twoMaxScores = true;
             }
         }
     }
-
+    
     if (twoMaxScores) {
         vector<int>* indexesWinners = new vector<int>();
         for (int i = 0; i < players->size(); i++) {
@@ -153,15 +201,12 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
                 indexesWinners->push_back(i);
                 return indexesWinners;
             }
+            i++;
         }
     }
 }
 
-int main() {
-
-    /*Map* gameMap = new Map();
-    vector<Map::Node*>* mapNodes = new vector<Map::Node*>(96);
-    gameMap->setMapNodes(mapNodes);*/
+/*int main() {
 
     vector<Player*>* playerVector1 = new vector<Player*>();
     vector<Player*>* playerVector2 = new vector<Player*>();
@@ -204,6 +249,7 @@ int main() {
 
 
     //case 2: Both players have equal points, however player 3 wins since they have more buildings on their board.
+<<<<<<< HEAD
     player3->getVillageBoard()->build(new Building(), 3, 1);
     player3->getVillageBoard()->build(new Building(), 3, 2);
     player3->getVillageBoard()->build(new Building(), 3, 3);
@@ -216,7 +262,22 @@ int main() {
     player4->getVillageBoard()->build(new Building(), 3, 3);
     player4->getVillageBoard()->build(new Building(), 3, 4);
     player4->getVillageBoard()->build(new Building(), 3, 0);
+=======
+    player3->getVillageBoard()->build(deckBuildings->draw(), 3, 1);
+    player3->getVillageBoard()->build(deckBuildings->draw(), 3, 2);
+    player3->getVillageBoard()->build(deckBuildings->draw(), 3, 3);
+    player3->getVillageBoard()->build(deckBuildings->draw(), 3, 4);
+    player3->getVillageBoard()->build(deckBuildings->draw(), 3, 0);
+    player3->getVillageBoard()->build(deckBuildings->draw(), 2, 2);
+>>>>>>> 8e91389511ebc22164b15d66c84474c0ea90bbfc
 
+    player4->getVillageBoard()->build(deckBuildings->draw(), 3, 1);
+    player4->getVillageBoard()->build(deckBuildings->draw(), 3, 2);
+    player4->getVillageBoard()->build(deckBuildings->draw(), 3, 3);
+    player4->getVillageBoard()->build(deckBuildings->draw(), 3, 4);
+    player4->getVillageBoard()->build(deckBuildings->draw(), 3, 0);
+
+    
     playerVector2->push_back(player3);
     playerVector2->push_back(player4);
 
@@ -226,7 +287,11 @@ int main() {
     player4->getVillageBoard()->displayVGmap();
 
     gameTie(playerVector2);
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 8e91389511ebc22164b15d66c84474c0ea90bbfc
     //case 3: Both players have equal points, however player 6 wins since they have more buildings in their hand.
     player5->getVillageBoard()->build(deckBuildings->draw(), 3, 1);
     player5->getVillageBoard()->build(deckBuildings->draw(), 3, 2);
@@ -270,11 +335,19 @@ int main() {
     player8->getVillageBoard()->build(deckBuildings->draw(), 3, 4);
     player8->getVillageBoard()->build(deckBuildings->draw(), 3, 0);
 
+<<<<<<< HEAD
     //Player5 will have 2 buildings leftover 
     player7->drawBuilding(*(deckBuildings));
     player7->drawBuilding(*(deckBuildings));
 
     //Player6 will have 2 building leftover 
+=======
+    //Player7 will have 2 buildings leftover 
+    player7->drawBuilding(*(deckBuildings));
+    player7->drawBuilding(*(deckBuildings));
+
+    //Player8 will have 2 building leftover 
+>>>>>>> 8e91389511ebc22164b15d66c84474c0ea90bbfc
     player8->drawBuilding(*(deckBuildings));
     player8->drawBuilding(*(deckBuildings));
 
@@ -288,7 +361,10 @@ int main() {
 
     gameTie(playerVector4);
 
+<<<<<<< HEAD
     //Fix Memory Leaks
+=======
+>>>>>>> 8e91389511ebc22164b15d66c84474c0ea90bbfc
     delete player1;
     delete player2;
     delete player3;
@@ -305,6 +381,11 @@ int main() {
 
     delete deckBuildings;
 
+<<<<<<< HEAD
 
     return 0;
 }
+=======
+    return 0;
+}*/
+>>>>>>> 8e91389511ebc22164b15d66c84474c0ea90bbfc
