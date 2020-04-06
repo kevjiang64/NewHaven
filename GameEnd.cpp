@@ -11,14 +11,15 @@
 
 
 //Method to check if the game is finished and outputs the results
-void gameTie(Map* gameMap, vector<Player*>* players) {
-        int* scores = new int[players->size()];
+void gameTie(vector<Player*>* players) {
 
+        int* scores = new int[players->size()];
+        
         //fill up the array of scores
         for (int i = 0; i < players->size(); i++) {
-            scores[i] = players->at(i)->getVillageBoard()->getPoints();
+            scores[i] = players->at(i)->getVillageBoard()->countPoints();
         }
-
+        
         //find the max score of the players in the score array
         int max = scores[0];
         for (int i = 1; i < players->size(); i++) {
@@ -26,19 +27,24 @@ void gameTie(Map* gameMap, vector<Player*>* players) {
                 max = scores[i];
             }
         }
-
+        
         //check if there is a tie
         int count = 0;
         vector<Player*>* tiedPlayers = new vector<Player*>(players->size());
         vector<bool>* tied = new vector<bool>(players->size());
         for (int i = 0; i < players->size(); i++) {
+            
             if (max == scores[i]) {
+                
                 count++;
                 tiedPlayers->at(i) = players->at(i);
+                
             }
         }
+        
         //if there is a tie enter this
         if (count >= 2) {
+            
             vector<int>* winner = new vector<int>();
             winner = fewestEmptySpaces(tiedPlayers, tied);
 
@@ -51,13 +57,14 @@ void gameTie(Map* gameMap, vector<Player*>* players) {
 
         //no tie; displays the winner, and their points
         else {
-            cout << "The winner is: ";
+            
+            cout << "\nThe winner is: ";
             for (int i = 0; i < players->size(); i++) {
-                if (max == players->at(i)->getVillageBoard()->getPoints()) {
+                if (max == players->at(i)->getVillageBoard()->countPoints()) {
                     cout << players->at(i)->getID() << endl;
                 }
             }
-            cout << "With " << max << "points!" << endl;
+            cout << "With " << max << " points!" << endl;
         }
  
    
@@ -150,34 +157,40 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
     }
 }
 
-int GameEndDriver() {
+int main() {
 
-    Map* gameMap = new Map();
+    /*Map* gameMap = new Map();
     vector<Map::Node*>* mapNodes = new vector<Map::Node*>(96);
-    gameMap->setMapNodes(mapNodes);
+    gameMap->setMapNodes(mapNodes);*/
 
     vector<Player*>* playerVector = new vector<Player*>();
-
+    
     Player* player1 = new Player();
     Player* player2 = new Player();
-
-
-    player1->getVillageBoard()->build(new Building(), 3, 1);
-    player1->getVillageBoard()->build(new Building(), 3, 2);
-    player1->getVillageBoard()->build(new Building(), 3, 3);
-    player1->getVillageBoard()->build(new Building(), 3, 4);
-    player1->getVillageBoard()->build(new Building(), 3, 5);
-
-    player2->getVillageBoard()->build(new Building(), 2, 1);
-    player2->getVillageBoard()->build(new Building(), 2, 2);
-    player2->getVillageBoard()->build(new Building(), 2, 3);
-    player2->getVillageBoard()->build(new Building(), 2, 4);
-    player2->getVillageBoard()->build(new Building(), 2, 5);
-
+   
+    DeckBuilding* deckBuildings = new DeckBuilding();
+    player1->getVillageBoard()->build(deckBuildings->draw(), 3, 1);
+    player1->getVillageBoard()->build(deckBuildings->draw(), 3, 2);
+    player1->getVillageBoard()->build(deckBuildings->draw(), 3, 3);
+    player1->getVillageBoard()->build(deckBuildings->draw(), 3, 4);
+    player1->getVillageBoard()->build(deckBuildings->draw(), 3, 0);
+    
+    
+    player2->getVillageBoard()->build(deckBuildings->draw(), 2, 1);
+    player2->getVillageBoard()->build(deckBuildings->draw(), 2, 2);
+    player2->getVillageBoard()->build(deckBuildings->draw(), 2, 3);
+    player2->getVillageBoard()->build(deckBuildings->draw(), 2, 4);
+    player2->getVillageBoard()->build(deckBuildings->draw(), 2, 0);
+    
     playerVector->push_back(player1);
     playerVector->push_back(player2);
 
-    gameTie(gameMap, playerVector);
+    cout << "\nPlayer #" << player1->getID() << endl;
+    player1->getVillageBoard()->displayVGmap();
+    cout << "\nPlayer #" << player2->getID() << endl;
+    player2->getVillageBoard()->displayVGmap();
+
+    gameTie(playerVector);
 
 
     return 0;

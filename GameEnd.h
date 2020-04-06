@@ -12,6 +12,6 @@
 
 using namespace std;
 
-void gameTie(Map* gameMap, vector<Player*>* players);
+void gameTie(vector<Player*>* players);
 vector<int>* fewestEmptySpaces(vector<Player*>* players, vector<bool>* tied);
 vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied);
