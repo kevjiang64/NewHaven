@@ -38,21 +38,21 @@ void gameTie(vector<Player*>* players) {
                 
                 count++;
                 tiedPlayers->at(i) = players->at(i);
-                
+                tied->at(i) = true;
             }
         }
         
         //if there is a tie enter this
         if (count >= 2) {
-            
             vector<int>* winner = new vector<int>();
             winner = fewestEmptySpaces(tiedPlayers, tied);
 
             //displays the winner/winners (in case of a shared win)
-            cout << "The winner is: ";
+            cout << "\nThe winner is: ";
             for (int i = 0; i < winner->size(); i++) {
                 cout << players->at(winner->at(i))->getID() << endl;
             }
+            cout << "With " << max << " points!" << endl;
         }
 
         //no tie; displays the winner, and their points
@@ -72,25 +72,30 @@ void gameTie(vector<Player*>* players) {
 
 //returns the index of the player between the ones indicated
 vector<int>* fewestEmptySpaces(vector<Player*>* players, vector<bool>* tied) {
+    
     vector<int>* emptySpaces = new vector<int>(players->size());
     for (int i = 0; i < players->size(); i++) {
         emptySpaces->at(i) = players->at(i)->getVillageBoard()->numberOfEmptySpaces();
+        
     }
-
-    int maxScore = 0;
+    
+    int maxScore = emptySpaces->at(0);
+    
     bool twoMaxScores = false;
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < players->size(); i++) {
+        
         if (tied->at(i)) {
-            if (emptySpaces->at(i) > maxScore) {
+            
+            if (emptySpaces->at(i) < maxScore) {
                 maxScore = emptySpaces->at(i);
                 twoMaxScores = false;
             }
-            else if (emptySpaces->at(i) == maxScore) {
+            else if (emptySpaces->at(i) == maxScore && i!=0) {
                 twoMaxScores = true;
             }
         }
     }
-
+    
     if (twoMaxScores) {
         vector<bool>* tiedAgain = new vector<bool>(players->size());
         for (int i = 0; i < players->size(); i++) {
@@ -104,13 +109,16 @@ vector<int>* fewestEmptySpaces(vector<Player*>* players, vector<bool>* tied) {
         leastBuildingsLeftOver(players, tiedAgain);
     }
     else {
+        
         int indexWinner = 0;
         while (true) {
             if (tied->at(indexWinner) && emptySpaces->at(indexWinner) == maxScore) {
-                vector<int>* indexesWinners = new vector<int>(1);
+                vector<int>* indexesWinners = new vector<int>();
                 indexesWinners->push_back(indexWinner);
+                
                 return indexesWinners;
-            }
+            } 
+            indexWinner++;
         }
     }
 }
@@ -204,19 +212,20 @@ int main() {
 
     
     //case 2: Both players have equal points, however player 3 wins since they have more buildings on their board.
-    player3->getVillageBoard()->build(new Building(), 3, 1);
-    player3->getVillageBoard()->build(new Building(), 3, 2);
-    player3->getVillageBoard()->build(new Building(), 3, 3);
-    player3->getVillageBoard()->build(new Building(), 3, 4);
-    player3->getVillageBoard()->build(new Building(), 3, 5);
-    player3->getVillageBoard()->build(new Building(), 2, 2);
+    player3->getVillageBoard()->build(deckBuildings->draw(), 3, 1);
+    player3->getVillageBoard()->build(deckBuildings->draw(), 3, 2);
+    player3->getVillageBoard()->build(deckBuildings->draw(), 3, 3);
+    player3->getVillageBoard()->build(deckBuildings->draw(), 3, 4);
+    player3->getVillageBoard()->build(deckBuildings->draw(), 3, 0);
+    player3->getVillageBoard()->build(deckBuildings->draw(), 2, 2);
 
-    player4->getVillageBoard()->build(new Building(), 3, 1);
-    player4->getVillageBoard()->build(new Building(), 3, 2);
-    player4->getVillageBoard()->build(new Building(), 3, 3);
-    player4->getVillageBoard()->build(new Building(), 3, 4);
-    player4->getVillageBoard()->build(new Building(), 3, 5);
+    player4->getVillageBoard()->build(deckBuildings->draw(), 3, 1);
+    player4->getVillageBoard()->build(deckBuildings->draw(), 3, 2);
+    player4->getVillageBoard()->build(deckBuildings->draw(), 3, 3);
+    player4->getVillageBoard()->build(deckBuildings->draw(), 3, 4);
+    player4->getVillageBoard()->build(deckBuildings->draw(), 3, 0);
 
+    
     playerVector2->push_back(player3);
     playerVector2->push_back(player4);
 
