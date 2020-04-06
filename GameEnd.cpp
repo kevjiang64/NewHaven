@@ -163,11 +163,21 @@ int main() {
     vector<Map::Node*>* mapNodes = new vector<Map::Node*>(96);
     gameMap->setMapNodes(mapNodes);*/
 
-    vector<Player*>* playerVector = new vector<Player*>();
+    vector<Player*>* playerVector1 = new vector<Player*>();
+    vector<Player*>* playerVector2 = new vector<Player*>();
+    vector<Player*>* playerVector3 = new vector<Player*>();
+    vector<Player*>* playerVector4 = new vector<Player*>();
     
     Player* player1 = new Player();
     Player* player2 = new Player();
+    Player* player3 = new Player();
+    Player* player4 = new Player();
+    Player* player5 = new Player();
+    Player* player6 = new Player();
+    Player* player7 = new Player();
+    Player* player8 = new Player();
    
+    //Case 1: Player 1 has more points than Player 2
     DeckBuilding* deckBuildings = new DeckBuilding();
     player1->getVillageBoard()->build(deckBuildings->draw(), 3, 1);
     player1->getVillageBoard()->build(deckBuildings->draw(), 3, 2);
@@ -182,16 +192,40 @@ int main() {
     player2->getVillageBoard()->build(deckBuildings->draw(), 2, 4);
     player2->getVillageBoard()->build(deckBuildings->draw(), 2, 0);
     
-    playerVector->push_back(player1);
-    playerVector->push_back(player2);
+    playerVector1->push_back(player1);
+    playerVector1->push_back(player2);
 
     cout << "\nPlayer #" << player1->getID() << endl;
     player1->getVillageBoard()->displayVGmap();
     cout << "\nPlayer #" << player2->getID() << endl;
     player2->getVillageBoard()->displayVGmap();
 
-    gameTie(playerVector);
+    gameTie(playerVector1);
 
+    
+    //case 2: Both players have equal points, however player 3 wins since they have more buildings on their board.
+    player3->getVillageBoard()->build(new Building(), 3, 1);
+    player3->getVillageBoard()->build(new Building(), 3, 2);
+    player3->getVillageBoard()->build(new Building(), 3, 3);
+    player3->getVillageBoard()->build(new Building(), 3, 4);
+    player3->getVillageBoard()->build(new Building(), 3, 5);
+    player3->getVillageBoard()->build(new Building(), 2, 2);
 
+    player4->getVillageBoard()->build(new Building(), 3, 1);
+    player4->getVillageBoard()->build(new Building(), 3, 2);
+    player4->getVillageBoard()->build(new Building(), 3, 3);
+    player4->getVillageBoard()->build(new Building(), 3, 4);
+    player4->getVillageBoard()->build(new Building(), 3, 5);
+
+    playerVector2->push_back(player3);
+    playerVector2->push_back(player4);
+
+    cout << "\nPlayer #" << player3->getID() << endl;
+    player3->getVillageBoard()->displayVGmap();
+    cout << "\nPlayer #" << player4->getID() << endl;
+    player4->getVillageBoard()->displayVGmap();
+
+    gameTie(playerVector2);
+    
     return 0;
 }
