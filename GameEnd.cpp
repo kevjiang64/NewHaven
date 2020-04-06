@@ -208,14 +208,14 @@ int main() {
     player3->getVillageBoard()->build(new Building(), 3, 2);
     player3->getVillageBoard()->build(new Building(), 3, 3);
     player3->getVillageBoard()->build(new Building(), 3, 4);
-    player3->getVillageBoard()->build(new Building(), 3, 5);
+    player3->getVillageBoard()->build(new Building(), 3, 0);
     player3->getVillageBoard()->build(new Building(), 2, 2);
 
     player4->getVillageBoard()->build(new Building(), 3, 1);
     player4->getVillageBoard()->build(new Building(), 3, 2);
     player4->getVillageBoard()->build(new Building(), 3, 3);
     player4->getVillageBoard()->build(new Building(), 3, 4);
-    player4->getVillageBoard()->build(new Building(), 3, 5);
+    player4->getVillageBoard()->build(new Building(), 3, 0);
 
     playerVector2->push_back(player3);
     playerVector2->push_back(player4);
@@ -226,6 +226,85 @@ int main() {
     player4->getVillageBoard()->displayVGmap();
 
     gameTie(playerVector2);
+
+    //case 3: Both players have equal points, however player 6 wins since they have more buildings in their hand.
+    player5->getVillageBoard()->build(deckBuildings->draw(), 3, 1);
+    player5->getVillageBoard()->build(deckBuildings->draw(), 3, 2);
+    player5->getVillageBoard()->build(deckBuildings->draw(), 3, 3);
+    player5->getVillageBoard()->build(deckBuildings->draw(), 3, 4);
+    player5->getVillageBoard()->build(deckBuildings->draw(), 3, 0);
+
+    player6->getVillageBoard()->build(deckBuildings->draw(), 3, 1);
+    player6->getVillageBoard()->build(deckBuildings->draw(), 3, 2);
+    player6->getVillageBoard()->build(deckBuildings->draw(), 3, 3);
+    player6->getVillageBoard()->build(deckBuildings->draw(), 3, 4);
+    player6->getVillageBoard()->build(deckBuildings->draw(), 3, 0);
+
+    //Player5 will have 2 buildings leftover 
+    player5->drawBuilding(*(deckBuildings));
+    player5->drawBuilding(*(deckBuildings));
+
+    //Player6 will have 1 building leftover 
+    player6->drawBuilding(*(deckBuildings));
+
+    playerVector3->push_back(player5);
+    playerVector3->push_back(player6);
+
+    cout << "\nPlayer #" << player5->getID() << endl;
+    player5->getVillageBoard()->displayVGmap();
+    cout << "\nPlayer #" << player6->getID() << endl;
+    player6->getVillageBoard()->displayVGmap();
+
+    gameTie(playerVector3);
+
+    //case 4: Both players have equal points, board spaces and buildings leftover
+    player7->getVillageBoard()->build(deckBuildings->draw(), 3, 1);
+    player7->getVillageBoard()->build(deckBuildings->draw(), 3, 2);
+    player7->getVillageBoard()->build(deckBuildings->draw(), 3, 3);
+    player7->getVillageBoard()->build(deckBuildings->draw(), 3, 4);
+    player7->getVillageBoard()->build(deckBuildings->draw(), 3, 0);
+
+    player8->getVillageBoard()->build(deckBuildings->draw(), 3, 1);
+    player8->getVillageBoard()->build(deckBuildings->draw(), 3, 2);
+    player8->getVillageBoard()->build(deckBuildings->draw(), 3, 3);
+    player8->getVillageBoard()->build(deckBuildings->draw(), 3, 4);
+    player8->getVillageBoard()->build(deckBuildings->draw(), 3, 0);
+
+    //Player5 will have 2 buildings leftover 
+    player7->drawBuilding(*(deckBuildings));
+    player7->drawBuilding(*(deckBuildings));
+
+    //Player6 will have 2 building leftover 
+    player8->drawBuilding(*(deckBuildings));
+    player8->drawBuilding(*(deckBuildings));
+
+    playerVector4->push_back(player7);
+    playerVector4->push_back(player8);
+
+    cout << "\nPlayer #" << player7->getID() << endl;
+    player7->getVillageBoard()->displayVGmap();
+    cout << "\nPlayer #" << player8->getID() << endl;
+    player8->getVillageBoard()->displayVGmap();
+
+    gameTie(playerVector4);
+
+    //Fix Memory Leaks
+    delete player1;
+    delete player2;
+    delete player3;
+    delete player4;
+    delete player5;
+    delete player6;
+    delete player7;
+    delete player8;
+
+    delete playerVector1;
+    delete playerVector2;
+    delete playerVector3;
+    delete playerVector4;
+
+    delete deckBuildings;
+
 
     return 0;
 }
