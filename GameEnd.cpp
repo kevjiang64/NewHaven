@@ -59,16 +59,7 @@ void gameTie(Map* gameMap, vector<Player*>* players) {
             }
             cout << "With " << max << "points!" << endl;
         }
-<<<<<<< HEAD
-    }   
-    else {
-         
     }
-=======
- 
-   
->>>>>>> a09c18ca43486baf7273017d02f3f50eef6b49ca
-}
 
 //returns the index of the player between the ones indicated
 vector<int>* fewestEmptySpaces(vector<Player*>* players, vector<bool>* tied) {
@@ -164,13 +155,13 @@ int GameEndDriver() {
     gameMap->setMapNodes(mapNodes);
 
     vector<Player*>* playerVector = new vector<Player*>();
-
+    
+    //Situation 1
     Player* player1 = new Player();
     Player* player2 = new Player();
+    //Flipped Building
 
-<<<<<<< HEAD
-=======
-
+    //Situation 1
     player1->getVillageBoard()->build(new Building(), 3, 1);
     player1->getVillageBoard()->build(new Building(), 3, 2);
     player1->getVillageBoard()->build(new Building(), 3, 3);
@@ -189,6 +180,6 @@ int GameEndDriver() {
     gameTie(gameMap, playerVector);
 
 
->>>>>>> a09c18ca43486baf7273017d02f3f50eef6b49ca
+
     return 0;
 }
