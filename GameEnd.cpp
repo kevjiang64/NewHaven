@@ -195,14 +195,16 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
    
     //Case 1: Player 1 has more points than Player 2
     DeckBuilding* deckBuildings = new DeckBuilding();
+
     player1->getVillageBoard()->build(deckBuildings->draw(), 3, 1);
     player1->getVillageBoard()->build(deckBuildings->draw(), 3, 2);
     player1->getVillageBoard()->build(deckBuildings->draw(), 3, 3);
     player1->getVillageBoard()->build(deckBuildings->draw(), 3, 4);
     player1->getVillageBoard()->build(deckBuildings->draw(), 3, 0);
     
-    
-    player2->getVillageBoard()->build(deckBuildings->draw(), 2, 1);
+    Building* building1 = deckBuildings->draw();
+    building1->setFlipped(true);
+    player2->getVillageBoard()->build(building1, 2, 1);
     player2->getVillageBoard()->build(deckBuildings->draw(), 2, 2);
     player2->getVillageBoard()->build(deckBuildings->draw(), 2, 3);
     player2->getVillageBoard()->build(deckBuildings->draw(), 2, 4);
@@ -320,6 +322,7 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
     delete playerVector4;
 
     delete deckBuildings;
+    delete building1;
 
     return 0;
 }*/
