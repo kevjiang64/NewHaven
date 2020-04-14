@@ -80,8 +80,9 @@ void gameTie(vector<Player*>* players) {
 }
 
 //returns the index of the player between the ones indicated
+//modified this function
 vector<int>* fewestEmptySpaces(vector<Player*>* players, vector<bool>* tied) {
-    
+    vector<int>* indexesWinners = new vector<int>();
     vector<int>* emptySpaces = new vector<int>(players->size());
     for (int i = 0; i < players->size(); i++) {
         emptySpaces->at(i) = players->at(i)->getVillageBoard()->numberOfEmptySpaces();
@@ -122,7 +123,7 @@ vector<int>* fewestEmptySpaces(vector<Player*>* players, vector<bool>* tied) {
         int indexWinner = 0;
         while (true) {
             if (tied->at(indexWinner) && emptySpaces->at(indexWinner) == maxScore) {
-                vector<int>* indexesWinners = new vector<int>();
+//                vector<int>* indexesWinners = new vector<int>();
                 indexesWinners->push_back(indexWinner);
                 
                 return indexesWinners;
@@ -130,6 +131,7 @@ vector<int>* fewestEmptySpaces(vector<Player*>* players, vector<bool>* tied) {
             indexWinner++;
         }
     }
+    return indexesWinners;
 }
 
 vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied) {
