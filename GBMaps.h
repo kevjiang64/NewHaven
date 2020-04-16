@@ -96,6 +96,8 @@ public:
     inline void setPlayerNumber(int* playerNumber) { playerNum = playerNumber; };
     void display();
     bool oneTileLeft();
+    void replaceResourcesShipmentTile(vector<int*>* newResources);
+    void resetCounted();
 
 private:
     int* playerNum;
