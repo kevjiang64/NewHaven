@@ -80,7 +80,7 @@ bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarv
 		if (board->validPosition(row, col)) {
 			tiles->at(0).setTopLeft(topLeftCorner);
 			vector<Map::Node*> nodesJustPlaced = board->placeHarvestTile((*tiles).at(0), row, col);
-			calculateResources(*board);
+			calculateResources(*board, false);
 			drawHarvestTile(deck, 0);
 			cout << "board: " << board->getMapNodes()->at(0)->getCol() << endl;
 			return true;
@@ -94,7 +94,7 @@ bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarv
 		if (board->validPosition(row, col)) {
 			tiles->at(1).setTopLeft(topLeftCorner);
 			vector<Map::Node*> nodesJustPlaced = board->placeHarvestTile((*tiles).at(1), row, col);
-			calculateResources(*board);
+			calculateResources(*board, false);
 			drawHarvestTile(deck, 1);
 			return true;
 		}
@@ -121,10 +121,7 @@ bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarv
 
 bool Player::placeShipmentTile(int row, int col, Map* board, DeckHarvestTile deck) {
 	if (board->validPosition(row, col)) {
-		vector<Map::Node*> nodesJustPlaced = board->placeHarvestTile((*tiles).at(1), row, col);
-		
-		cout << "You just placed your shipment tile!" << endl;
-		cout << "You can have four instances of a resource of your choice." << endl;
+		cout << "You can have instances of a resource of your choice." << endl;
 		cout << "Which resource do you choose? Please enter the number (1 - Meadow, 2 - Quarry, 3 - Forest or 4 - Wheatfield). ";
 		int resourceEntered = 0;
 		cin >> resourceEntered;
@@ -133,16 +130,24 @@ bool Player::placeShipmentTile(int row, int col, Map* board, DeckHarvestTile dec
 			cout << "Which resource do you choose? Please enter the number (1 - Meadow, 2 - Quarry, 3 - Forest or 4 - Wheatfield). ";
 			cin >> resourceEntered;
 		}
-		vector<int>* resources = new vector<int>(4);
+		vector<int>* ressources = new vector<int>();
 		for (int i = 0; i < 4; i++) {
-			if (i + 1 == resourceEntered) {
-				resources->at(i) = 4;
-			}
-			else {
-				resources->at(i) = 0;
-			}
+			ressources->push_back(resourceEntered-1);
 		}
-		hand->exchange(*resources);
+		HarvestTile* newTile = new HarvestTile(ressources);
+		vector<Map::Node*> nodesJustPlaced = board->placeHarvestTile(*newTile, row, col);
+		
+		cout << "You just placed your shipment tile!" << endl;
+		calculateResources(*board, true);
+
+		int* resourcesTile = tiles->at(2).getResources();
+		vector<int*>* vectorResourcesTile = new vector<int*>();
+		for (int i = 0; i < 4; i++) {
+			int* theResource = new int(resourcesTile[i]);
+			vectorResourcesTile->push_back(theResource);
+		}
+		//board->replaceResourcesShipmentTile(vectorResourcesTile);
+		
 		*shipmentTileUsed = true;
 		cout << "Your shipment tile has been played and is no longer available." << endl;
 		return true;
@@ -174,9 +179,9 @@ void Player::drawHarvestTile(DeckHarvestTile deck, int no) {
 	}
 }
 
-void Player::calculateResources(Map board) {
+void Player::calculateResources(Map board, bool itIsTheShipmentTile) {
 	CountResources* score = (new CountResources());
-	vector<int> resources = score->calculResourceMarkers(board);
+	vector<int> resources = score->calculResourceMarkers(board, itIsTheShipmentTile);
 	hand->exchange(resources);
 	
 	

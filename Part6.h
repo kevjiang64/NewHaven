@@ -15,7 +15,7 @@ public :
 class CountResources {
 public: 
 	CountResources();
-	vector<int> calculResourceMarkers(Map board);
+	vector<int> calculResourceMarkers(Map board, bool itIsTheShipmentTile);
 private:
 	int recursiveCountResourceFromSquare(int res, Map::Node* node);
 };

@@ -526,3 +526,18 @@ bool Map::oneTileLeft() {
     
     return false;
 }
+
+void Map::replaceResourcesShipmentTile(vector<int*>* newResources) {
+    int j = 0;
+    for (int i = mapNodes->size() - 4; i < mapNodes->size(); i++) {
+        mapNodes->at(i)->setResourceType(newResources->at(j));
+        j++;
+        
+    }
+}
+
+void Map::resetCounted() {
+    for (int i = 0; i < mapNodes->size(); i++) {
+        mapNodes->at(i)->setCounted(false);
+    }
+}

@@ -34,7 +34,7 @@ public:
     void drawBuilding(DeckBuilding deckBuilding);
     void drawHarvestTile(DeckHarvestTile deck, int no);
     void resourceTracker();
-    void calculateResources(Map board);
+    void calculateResources(Map board, bool itIsTheShipmentTile);
     bool buildVillage(int buildingIndex, int row, int col);
     void displayState();
     void resetResourceMarkers();
