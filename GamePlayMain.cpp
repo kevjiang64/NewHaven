@@ -37,11 +37,8 @@ int main() {
 			indexActivePlayer = 0;
 		}
 	}
-<<<<<<< HEAD
-=======
 	gameTie(players);
 
 
->>>>>>> 8e91389511ebc22164b15d66c84474c0ea90bbfc
 	return 0;
 }
