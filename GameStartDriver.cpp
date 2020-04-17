@@ -86,7 +86,6 @@ void assignVillageBoards(vector<Player*>* players, int nbPlayers) {
 	int row, col;
 	string board;
 	ifstream input("valid.txt");
-	VGMap tempBoard1, tempBoard2, tempBoard3, tempBoard4;
 	VGMap* playerBoard1, *playerBoard2, *playerBoard3, *playerBoard4;
 	
 	for (int i = 0; i < nbPlayers; i++)
@@ -99,40 +98,36 @@ void assignVillageBoards(vector<Player*>* players, int nbPlayers) {
 			{
 				board = checkValidName(input, "Milford");
 				row = checkValidRow(input);
-				col = checkValidRow(input);
+				col = checkValidColumn(input);
 				//Assigning and creating vg for each player
-				tempBoard1 = VGMap(row, col, board);
-				playerBoard1 = &tempBoard1;
+				playerBoard1 = new VGMap(row, col, board);
 				players->at(i)->setVillageBoard(playerBoard1);
 			}
 			if (i == 1)
 			{
 				board = checkValidName(input, "Guilford");
 				row = checkValidRow(input);
-				col = checkValidRow(input);
+				col = checkValidColumn(input);
 				//Assigning and creating vg for each player
-				tempBoard2 = VGMap(row, col, board);
-				playerBoard2 = &tempBoard2;
+				playerBoard2 = new  VGMap(row, col, board);
 				players->at(i)->setVillageBoard(playerBoard2);
 			}
 			if (i == 2)
 			{
 				board = checkValidName(input, "Stratford");
 				row = checkValidRow(input);
-				col = checkValidRow(input);
+				col = checkValidColumn(input);
 				//Assigning and creating vg for each player
-				tempBoard3 = VGMap(row, col, board);
-				playerBoard3 = &tempBoard3;
+				playerBoard3 = new VGMap(row, col, board);
 				players->at(i)->setVillageBoard(playerBoard3);
 			}
 			if (i == 3)
 			{
 				board = checkValidName(input, "Fairfield");
 				row = checkValidRow(input);
-				col = checkValidRow(input);
+				col = checkValidColumn(input);
 				//Assigning and creating vg for each player
-				tempBoard4 = VGMap(row, col, board);
-				playerBoard4 = &tempBoard4;
+				playerBoard4 = new VGMap(row, col, board);
 				players->at(i)->setVillageBoard(playerBoard4);
 			}
 		}
