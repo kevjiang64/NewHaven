@@ -13,7 +13,9 @@
 #include "GBMaps.h"
 #include <iostream>
 #include "Part6.h"
+#include "GameObservers.h"
 #include <random>
+#include <list>;
 
 using namespace std;
 
@@ -42,6 +44,8 @@ Player::Player() {
 
 	hand = new Hand();
 	
+	_observersTile = new vector<GameObserver*>();
+	_observersBuild = new vector<GameObserver*>();
 }
 
 //Copy constructors of VillageBoard, Building and HarvestTile have to be defined
@@ -84,6 +88,7 @@ bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarv
 			calculateResources(*board, false);
 			drawHarvestTile(deck, 0);
 			cout << "board: " << board->getMapNodes()->at(0)->getCol() << endl;
+			notify(true);
 			return true;
 		}
 		else {
@@ -97,6 +102,7 @@ bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarv
 			vector<Map::Node*> nodesJustPlaced = board->placeHarvestTile((*tiles).at(1), row, col);
 			calculateResources(*board, false);
 			drawHarvestTile(deck, 1);
+			notify(true);
 			return true;
 		}
 		else {
@@ -143,6 +149,7 @@ bool Player::placeShipmentTile(int row, int col, Map* board, DeckHarvestTile dec
 		
 		*shipmentTileUsed = true;
 		cout << "Your shipment tile has been played and is no longer available." << endl;
+		notify(true);
 		return true;
 	}
 	else {
@@ -207,6 +214,7 @@ void Player::calculateResources(Map board, bool itIsTheShipmentTile) {
 	 
 	if ((*vb).canBuild(building, row, col)) { 
 		(*vb).build(building, row, col);
+		notify(false);
 		return true;
 	}
 	else {
@@ -235,3 +243,40 @@ void Player::calculateResources(Map board, bool itIsTheShipmentTile) {
  void Player::resetResourceMarkers() {
 	 hand->resetResourceMarkers();
  }
+
+
+
+ //Subject
+  void Player::attach(GameObserver* o, bool tileList)
+ {
+	  
+	  if (tileList) {
+		  _observersTile->push_back(o);
+	  }
+	  else {
+		  _observersBuild->push_back(o);
+	  }
+ }
+
+ void Player::detach(GameObserver* o, bool tileList)
+ {
+	 if (tileList) _observersTile->erase(std::remove(_observersTile->begin(), _observersTile->end(), o), _observersTile->end());
+	 else _observersBuild->erase(std::remove(_observersBuild->begin(), _observersBuild->end(), o), _observersBuild->end());
+ }
+
+ void Player::notify(bool tileList) 
+ {
+	 
+	 if (tileList) {
+		 for (int i = 0; i < _observersTile->size(); i++) {
+			 _observersTile->at(i)->update();
+		 }
+	 }
+	 else {
+		 for (int i = 0; i < _observersBuild->size(); i++) {
+			 _observersBuild->at(i)->update();
+		 }
+	 }
+ }
+
+

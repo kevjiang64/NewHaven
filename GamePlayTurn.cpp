@@ -8,6 +8,7 @@
 #include "Resources.h"
 #include "Part6.h"
 #include "GamePlayTurn.h"
+#include "GameObservers.h"
 #include <random>
 
 using namespace std;

@@ -1,7 +1,11 @@
-#include "GameObservers.h";
+#include "GameObservers.h"
+#include "Player.h"
+#include <iostream>
+
+using namespace std;
 
 //Creating a list to attach observers
-Subject::Subject()
+/*Subject::Subject()
 {
 	_observers = new list<GameObserver*>;
 }
@@ -27,17 +31,26 @@ void Subject::notify()
 	{
 		(*i)->update();
 	}
+}*/
+
+GameObserver::GameObserver() {
+}
+
+GameObserver::~GameObserver() {
+
 }
 
 placeTileObserver::placeTileObserver(Player* aPlayer)
 {
+	
 	_subject = aPlayer;
-	//_subject.attach(aPlayer);
+	_subject->attach(this, true);
+	
 }
 
 placeTileObserver::~placeTileObserver()
 {
-	//_subject.detach(aPlayer);
+	_subject->detach(this, true);
 }
 
 void placeTileObserver::update()
@@ -46,17 +59,17 @@ void placeTileObserver::update()
 }
 void placeTileObserver::display()
 {
-
+	cout << "tile observer" << endl;
 }
 countBuildingObserver::countBuildingObserver(Player* aPlayer)
 {
 	_subject = aPlayer;
-	//_subject.attach(aPlayer);
+	_subject->attach(this, false);
 }
 
 countBuildingObserver::~countBuildingObserver()
 {
-	//_subject.detach(aPlayer);
+	_subject->detach(this, false);
 }
 
 void countBuildingObserver::update()
@@ -66,18 +79,18 @@ void countBuildingObserver::update()
 
 void countBuildingObserver::display()
 {
-
+	cout << "count building observer" << endl;
 }
 
 decreaseResourcesObserver::decreaseResourcesObserver(Player* aPlayer)
 {
 	_subject = aPlayer;
-	//_subject.attach(aPlayer);
+	_subject->attach(this, false);
 }
 
 decreaseResourcesObserver::~decreaseResourcesObserver()
 {
-	//_subject.detach(aPlayer);
+	_subject->detach(this, false);
 }
 
 void decreaseResourcesObserver::update()
@@ -87,7 +100,7 @@ void decreaseResourcesObserver::update()
 
 void decreaseResourcesObserver::display()
 {
-
+	cout << "decrease resources observer" << endl;
 }
 
 

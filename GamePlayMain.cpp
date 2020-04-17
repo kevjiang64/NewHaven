@@ -10,6 +10,7 @@
 #include "GameStart.h"
 #include "GamePlayTurn.h"
 #include "GameEnd.h"
+#include "GameObservers.h"
 
 
 int main() {

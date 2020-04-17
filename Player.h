@@ -6,14 +6,20 @@
 //  Copyright © 2020 Arianne Chau. All rights reserved.
 //
 
+#pragma once
+
 #include <vector>
 #include "VGMap.h"
 #include "Resources.h"
 #include "GBMaps.h"
 #include "Part6.h"
-#ifndef Player_h
-#define Player_h
+#include <list>;
+#include "GameObservers.h"
 
+
+using namespace std;
+
+class GameObserver;
 
 class Player {
 private:
@@ -24,9 +30,11 @@ private:
     vector<HarvestTile>* tiles;
     Hand* hand;
     bool* shipmentTileUsed;
-    bool placeShipmentTile(int row, int col, Map* board, DeckHarvestTile deck);
    
+    vector<GameObserver*>* _observersTile;
+    vector<GameObserver*>* _observersBuild;
 
+    bool placeShipmentTile(int row, int col, Map* board, DeckHarvestTile deck);
 
 public:
     Player();
@@ -51,8 +59,13 @@ public:
      void setVillageBoard(VGMap* board) { vb = board; };
      void setID(int* i) { id = i; };
      void setHand(Hand* newHand) { hand = newHand; };
+
+     //Subject
+     virtual void attach(GameObserver* o, bool tileList);
+     virtual void detach(GameObserver* o, bool tileList);
+     virtual void notify(bool tileList);
     
 };
 
 
-#endif  Player_h 
+

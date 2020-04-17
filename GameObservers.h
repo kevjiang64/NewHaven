@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Player.h";
-#include <list>;
+#include "Player.h"
+#include <list>
 
-using namespace std;
+class Player;
 
 //Default Model for specific Observers
 class GameObserver
@@ -15,26 +15,16 @@ protected:
 	GameObserver();
 };
 
-//Observer for part #1 (i)
-class placeTileObserver : GameObserver
-{
-public:
-	placeTileObserver();
-	placeTileObserver(Player* aPlayer);
-	~placeTileObserver();
-	//Overrride GameObserver's update
-	void update();
-};
 
 //Observer for part #1 (i)
-class placeTileObserver : GameObserver
+class placeTileObserver : public GameObserver
 {
 public:
-	placeTileObserver();
+	placeTileObserver() {};
 	placeTileObserver(Player* aPlayer);
 	~placeTileObserver();
 	void display();
-	//Overrride GameObserver's update
+	//Override GameObserver's update
 	void update();
 
 private:
@@ -42,10 +32,10 @@ private:
 };
 
 //Observer for part #1 (ii)
-class countBuildingObserver : GameObserver
+class countBuildingObserver : public GameObserver
 {
 public:
-	countBuildingObserver();
+	countBuildingObserver() {};
 	countBuildingObserver(Player* aPlayer);
 	~countBuildingObserver();
 	void display();
@@ -56,10 +46,10 @@ private:
 };
 
 //Observer for part #1 (iii)
-class decreaseResourcesObserver : GameObserver
+class decreaseResourcesObserver : public GameObserver
 {
 public:
-	decreaseResourcesObserver();
+	decreaseResourcesObserver() {};
 	decreaseResourcesObserver(Player* aPlayer);
 	~decreaseResourcesObserver();
 	void display();
@@ -70,7 +60,7 @@ private:
 };
 
 //Default model for Subject
-class Subject
+/*class Subject
 {
 public:
 	virtual void attach(GameObserver* o);
@@ -80,5 +70,5 @@ public:
 	~Subject();
 private:
 	list<GameObserver*>* _observers;
-};
+};*/
 
