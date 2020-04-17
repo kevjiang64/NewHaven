@@ -79,6 +79,16 @@ VGMap::VGMap()
 	*points = 0;
 };
 
+VGMap::~VGMap() {
+	/*if (board != nullptr) delete board;
+	if (points != nullptr) delete points;
+	if (nameOfBoard != nullptr) delete nameOfBoard;
+
+	board = nullptr;
+	points = nullptr;
+	nameOfBoard = nullptr;*/
+}
+
 VGMap::Node::Node() {
 	building = new Building();
 	building->setLabel(-1);
@@ -240,7 +250,7 @@ bool VGMap::canBuild(Building* building, int row, int col) {
 
 void VGMap::build(Building* building, int row, int col) {
 	//if (canBuild(building, row, col)) {
-		(*board)[row][col].setBuilding(*building);
+		(*board)[row][col].setBuilding(building);
 	//}
 }
 

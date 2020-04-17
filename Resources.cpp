@@ -78,8 +78,11 @@ HarvestTile::HarvestTile(vector<int>* vectorResources) {
 }
 
 HarvestTile::~HarvestTile() {
-	//delete topLeft;
-    //delete[] resources;
+	/*if (topLeft != nullptr) delete topLeft;
+    if (resources != nullptr) delete[] resources;
+
+    topLeft = nullptr;
+    resources = nullptr;*/
 };
 
 void HarvestTile::display() {
@@ -213,10 +216,15 @@ Building::Building() {
 };
 
 Building::~Building() {
-	//delete label;
-    //delete number;
-	//delete flipped;
-    //delete used;
+	if (label != nullptr ) delete label;
+    if (number != nullptr) delete number;
+	if (flipped != nullptr) delete flipped;
+    if (used != nullptr) delete used;
+
+    label = nullptr;
+    number = nullptr;
+    flipped = nullptr;
+    used = nullptr;
 };
 
 void Building::display() {
@@ -449,8 +457,13 @@ DeckBuilding::DeckBuilding() {
 };
 
 DeckBuilding::~DeckBuilding() {
-	//delete totalCount;
-    //delete count;
+	if (totalCount != nullptr) delete totalCount;
+    if (count != nullptr) delete count;
+    if (allBuildings != nullptr) delete allBuildings;
+
+    totalCount = nullptr;
+    count = nullptr;
+    allBuildings = nullptr;
 };
 
 //keep track of the limit of buildings created

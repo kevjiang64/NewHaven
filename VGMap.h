@@ -21,11 +21,12 @@ class VGMap
     public:
         //Constructors
         Node();
+
         //Getters
         inline Building* getBuilding(){ return building; };
         inline vector<Node> getAdjNode(){ return *adjNode; };
         //Setters
-        inline void setBuilding(Building building2) { *building = building2; };
+        inline void setBuilding(Building* building2) { building = building2; };
         inline void setAdjNode(vector<Node> vect) { *adjNode = vect; };
         //Methods
         vector<VGMap::Node> fillAdjNodes(vector <vector<VGMap::Node>> board, int row, int col);
@@ -35,6 +36,7 @@ class VGMap
     //Constructors
     VGMap(int row, int col, string nameOfBoard);
     VGMap();
+    ~VGMap();
     //Getters
     inline vector<vector<Node>> getBoard(){ return *board; };
     inline int getPoints(){ return *points; };

@@ -71,7 +71,7 @@ Map* selectBoard(int nbPlayers) {
 	for (int i = 0; i < nbPlayers; i++) {
 		Player* player = new Player();
 		for (int j = 0; j < 6; j++) {
-			player->drawBuilding(*deckBuilding);
+			player->drawBuilding(deckBuilding);
 		}
 		(*players)[i] = player;
 	}
@@ -81,7 +81,6 @@ Map* selectBoard(int nbPlayers) {
 
 //Assign a village board from a file from the loader to each of the players
 void assignVillageBoards(vector<Player*>* players, int nbPlayers) {
-	
 	int row, col;
 	string board;
 	ifstream input("valid.txt");
