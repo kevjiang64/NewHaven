@@ -50,6 +50,7 @@ public:
      //setters
      void setVillageBoard(VGMap* board) { vb = board; };
      void setID(int* i) { id = i; };
+     void setHand(Hand* newHand) { hand = newHand; };
     
 };
 

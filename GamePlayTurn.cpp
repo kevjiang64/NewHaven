@@ -250,9 +250,11 @@ void endTurnDrawBuildingFromBoard(Player* activePlayer, vector<Building*>* build
 }
 
  void endTurnResetResourceMarkers(vector<Player*>* players) {
+	 cout << "at the beginning of reset" << endl;
 	for (int i = 0; i < players->size(); i++) {
 		players->at(i)->resetResourceMarkers();
 	}
+	cout << "at the end of reset" << endl;
 }
 
 void endTurnDrawNewBuildingsToBoard(vector<Building*>* buildingsOnBoard, DeckBuilding* deck) {
@@ -365,6 +367,7 @@ void buildingSequence(vector<Player*>* players, int nbPlayers, int index) {
 		//construire autant de building qu'il veut
 		string answer;
 		//Asking if they want to build
+		cout << "before resourceEmpty i=" << players->at(indexPlayer)->getHand()->getResourceMarkers()->size() << endl;
 		if (!resourcesEmpty(activePlayer)) {
 			cout << "\nPlayer #" << activePlayer->getID() << ":" << endl;
 			cout << "\nHere are your buildings: " << endl;
@@ -383,7 +386,7 @@ void buildingSequence(vector<Player*>* players, int nbPlayers, int index) {
 				cout << "\nDo you want to build a building? (y/n): ";
 				cin >> answer;
 			}
-
+			
 			//If yes to building
 			while (answer.compare("y") == 0 && !resourcesEmpty(activePlayer))
 			{
@@ -406,15 +409,16 @@ void buildingSequence(vector<Player*>* players, int nbPlayers, int index) {
 					cin >> answer;
 				}
 			}
-
+			
 			//transférer au suivant
 			if (!resourcesEmpty(activePlayer)) {
 				transferResourceMarkers(players, indexPlayer);
-
+				
 				indexPlayer++;
 				if (indexPlayer == nbPlayers) {
 					indexPlayer = 0;
 				}
+				
 			}
 			else {
 				cout << "No more resources available" << endl;
@@ -446,12 +450,12 @@ bool resourcesEmpty(Player* activePlayer) {
 }
  
 void transferResourceMarkers(vector<Player*>* players, int i) {
-	Hand prevHand = *players->at(i)->getHand();
+	Hand* prevHand = players->at(i)->getHand();
 	if (i == players->size() - 1) {
-		*(players->at(0)->getHand()) = prevHand;
+		players->at(0)->setHand(prevHand);
 	}
 	else {
-		*(players->at(i + 1)->getHand()) = prevHand;
+		players->at(i+1)->setHand(prevHand);
 	}
 	
 }
