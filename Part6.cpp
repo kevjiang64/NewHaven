@@ -10,13 +10,12 @@
 using namespace std;
 
 //Part 6 i
-static int counter = 0;
 
 CountResources::CountResources() {
 
 }
 
-vector<int> CountResources::calculResourceMarkers(Map board, bool itIsTheShipmentTile) {
+vector<int> CountResources::calculResourceMarkers(Map board) {
 	//nodesJustPlaced is an array in the right order of the 4 resources just placed on the board (they are the nodes on the actual board that corresponds to the current tile)
 	vector<int> markersArray = *(new vector<int>);
 	for (int i = 0; i < 4; i++) {
@@ -33,20 +32,20 @@ vector<int> CountResources::calculResourceMarkers(Map board, bool itIsTheShipmen
 
 				markersArray[res] = recursiveCountResourceFromSquare(res, board.getMapNodes()->at(board.getMapNodes()->size() - k - 1));
 				
-				if (!itIsTheShipmentTile) {
-					if (k == 0) {
-						if ((board.getMapNodes()->at(board.getMapNodes()->size() - k - 3)) != nullptr && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 3)->getResourceType()) == res && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 2)->getResourceType()) != res && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 4)->getResourceType()) != res) {
+				if (k == 0) {
+					if ((board.getMapNodes()->at(board.getMapNodes()->size() - k - 3)) != nullptr && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 3)->getResourceType()) == res && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 2)->getResourceType()) != res && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 4)->getResourceType()) != res) {
 
-							markersArray[res] += recursiveCountResourceFromSquare(res, board.getMapNodes()->at(board.getMapNodes()->size() - k - 3));
-						}
-					}
-					else if (k == 1) {
-						if ((board.getMapNodes()->at(board.getMapNodes()->size() - k - 3)) != nullptr && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 3)->getResourceType()) == res && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 2)->getResourceType()) != res && *(board.getMapNodes()->at(board.getMapNodes()->size() - k)->getResourceType()) != res) {
-
-							markersArray[res] += recursiveCountResourceFromSquare(res, board.getMapNodes()->at(board.getMapNodes()->size() - k - 3));
-						}
+						markersArray[res] += recursiveCountResourceFromSquare(res, board.getMapNodes()->at(board.getMapNodes()->size() - k - 3));
 					}
 				}
+				else if (k == 1) {
+					if ((board.getMapNodes()->at(board.getMapNodes()->size() - k - 3)) != nullptr && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 3)->getResourceType()) == res && *(board.getMapNodes()->at(board.getMapNodes()->size() - k - 2)->getResourceType()) != res && *(board.getMapNodes()->at(board.getMapNodes()->size() - k)->getResourceType()) != res) {
+
+						markersArray[res] += recursiveCountResourceFromSquare(res, board.getMapNodes()->at(board.getMapNodes()->size() - k - 3));
+					}
+				}
+					
+				
 				
 				
 				
@@ -65,12 +64,8 @@ int CountResources::recursiveCountResourceFromSquare(int res, Map::Node* node) {
 	vector<Map::Node*>* adjacentNodes = new vector<Map::Node*>();
 	adjacentNodes = (*node).getAdjNodes(); //returns an array of 4 values, either a node or null (or an empty node, depend on how the board is done) (but even if it's the side it should be an array of 4 things) else test? just cannot be undefined
 	for (int i = 0; i < (*adjacentNodes).size(); i++) { //for all 4 values
-		
 		Map::Node* ptrTestedNode = (*adjacentNodes).at(i);
-		
-		cout << "in the recursive count method" << counter << endl;
 		if (ptrTestedNode != nullptr && !(*ptrTestedNode).getCounted() && *((*ptrTestedNode).getResourceType()) == res) {
-			counter++;
 			score += recursiveCountResourceFromSquare(res, ptrTestedNode);
 		}
 	}
