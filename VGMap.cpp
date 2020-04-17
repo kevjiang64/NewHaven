@@ -220,12 +220,12 @@ bool VGMap:: checkFirst(int resource)
 
 bool VGMap::canBuild(Building* building, int row, int col) {
 	
-	bool canBuildNum = true;
-	bool canBuildAdj = true;
+	//bool canBuildNum = true;
+	//bool canBuildAdj = true;
 
-	VGMap::Node node = (*board)[row][col];
+	VGMap::Node* node = new Node((*board)[row][col]);
 	
-	if (node.getBuilding() == nullptr) {
+	if (node->getBuilding() == nullptr) {
 		return false;
 	}
 	else {
@@ -237,9 +237,48 @@ bool VGMap::canBuild(Building* building, int row, int col) {
 				return true;
 			}
 			else {
-				for (int i = 0; i < (node.getAdjNode()).size(); i++) {
-					if (building->getLabel() == node.getAdjNode()[i].getBuilding()->getLabel())
+				cout << "before for" << endl;
+				/*for (int i = 0; i < (node->getAdjNode())->size(); i++) {
+					cout << "in for" << building->getLabel() << " and " << node->getAdjNode()->at(i).getBuilding()->getLabel() << endl;
+					if (building->getLabel() == node->getAdjNode()->at(i).getBuilding()->getLabel()) {
+						cout << "in if" << endl;
 						return true;
+					}
+						
+				}*/
+				//For left adjNode
+				if (col - 1 >= 0)
+				{
+					//cout << "Linking to Left Node:("<< row <<","<< col-1 << ")\n";
+					if ((*board)[row][col - 1].getBuilding()->getLabel() == building->getLabel()) {
+						return true;
+					}
+				}
+				//For up adjNode
+				if (row - 1 >= 0)
+				{
+					//cout << "Linking to Up Node:(" << row-1 << "," << col << ")\n";
+					if ((*board)[row - 1][col].getBuilding()->getLabel() == building->getLabel()) {
+						return true;
+					}
+					
+				}
+				//For right adjNode
+				if (col + 1 <= 4)
+				{
+					//cout << "Linking to Right Node:(" << row << "," << col+1 << ")\n";
+					if ((*board)[row][col + 1].getBuilding()->getLabel() == building->getLabel()) {
+						return true;
+					}
+					
+				}
+				//For down adjNode
+				if (row + 1 <= 5)
+				{
+					//cout << "Linking to Down Node:(" << row+1 << "," << col << ")\n";
+					if ((*board)[row + 1][col].getBuilding()->getLabel() == building->getLabel()) {
+						return true;
+					}
 				}
 			}
 	

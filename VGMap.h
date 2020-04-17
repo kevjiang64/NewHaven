@@ -24,7 +24,7 @@ class VGMap
 
         //Getters
         inline Building* getBuilding(){ return building; };
-        inline vector<Node> getAdjNode(){ return *adjNode; };
+        inline vector<Node>* getAdjNode(){ return adjNode; };
         //Setters
         inline void setBuilding(Building* building2) { building = building2; };
         inline void setAdjNode(vector<Node> vect) { *adjNode = vect; };
