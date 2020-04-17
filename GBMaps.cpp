@@ -55,8 +55,11 @@ Map::Map(const Map& toCopy) {
  * Map destructor
  */
 Map::~Map() {
-    //delete playerNum;
-    //delete mapNodes;
+    if (playerNum != nullptr) delete playerNum;
+    if (mapNodes != nullptr) delete mapNodes;
+
+    playerNum = nullptr;
+    mapNodes = nullptr;
 }
 
 /**
@@ -532,8 +535,19 @@ void Map::replaceResourcesShipmentTile(vector<int*>* newResources) {
     for (int i = mapNodes->size() - 4; i < mapNodes->size(); i++) {
         mapNodes->at(i)->setResourceType(newResources->at(j));
         j++;
-        
     }
+}
+
+bool Map::lastTilePlacedIsShipmentTile() {
+    bool itIs = true;
+    int resourceSearched = *(mapNodes->at(mapNodes->size() - 1)->getResourceType());
+    for (int i = mapNodes->size() - 4; i < mapNodes->size() ; i++) {
+        if (*(mapNodes->at(i)->getResourceType()) != resourceSearched) {
+            itIs = false;
+        }
+    }
+    cout << "the shipmentTile was the last one placed" << endl;
+    return itIs;
 }
 
 void Map::resetCounted() {

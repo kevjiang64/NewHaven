@@ -136,6 +136,7 @@ void buildPlayerVillage(Player* player)
 	{
 		//Method return true if the village is successfully put
 		result = player->buildVillage(index, row, col);
+		
 	}
 	else
 	{
@@ -164,7 +165,7 @@ bool enoughResources(Player* player,int index)
 	//Number of resources
 	int resourceAmount = player->getBuildings()->at(index)->getNumber();
 	
-
+	
 
 	return (player->getHand()->getResourceMarkers()->at(buildingResource) >= resourceAmount);
 }
@@ -173,12 +174,13 @@ void removeUsedResources(Player* player, int index)
 {
 	int buildingResource = player->getBuildings()->at(index)->getLabel();
 	int resourceAmount = player->getBuildings()->at(index)->getNumber();
-
+	
 	player->getHand()->getResourceMarkers()->at(buildingResource) -= resourceAmount;
 	
 }
 
-void endOfTurn(Player* activePlayer, vector<Building*>* buildingsOnBoard, DeckBuilding* deck, vector<Player*>* players) {
+void endOfTurn(Player* activePlayer, vector<Building*>* buildingsOnBoard, DeckBuilding* deck, vector<Player*>* players, Map* board) {
+	activePlayer->turnShipmentTile(board);
 	endTurnDrawBuildings(activePlayer, buildingsOnBoard, deck);
 	endTurnResetResourceMarkers(players);
 	endTurnDrawNewBuildingsToBoard(buildingsOnBoard, deck);
@@ -520,5 +522,5 @@ void oneTurn(int indexActivePlayer, Map* board, DeckHarvestTile* deckTiles, vect
 	placeTile(activePlayer, board, deckTiles);
 	activePlayer->getHand()->printResources();
 	buildingSequence(players, nbPlayers, indexActivePlayer);
-	endOfTurn(activePlayer, buildingsOnBoard, deckBuildings, players);
+	endOfTurn(activePlayer, buildingsOnBoard, deckBuildings, players, board);
 }

@@ -22,20 +22,21 @@ Player::Player() {
     mt19937 rng;
     rng.seed(random_device()());
     uniform_int_distribution<mt19937::result_type> dist;
-    
+	
 	id = new int(dist(rng) % 100 + 1);
 
 	vb = new VGMap();
 
 	buildings = new vector<Building*>;
-
+	
 	tiles = new vector<HarvestTile>;
-	HarvestTile tile1;
-	HarvestTile tile2;
-	HarvestTile shipmentTile;
-	(*tiles).push_back(tile1);
-	(*tiles).push_back(tile2);
-	tiles->push_back(shipmentTile);
+	
+	HarvestTile* tile1 = new HarvestTile();
+	HarvestTile* tile2 = new HarvestTile();
+	HarvestTile* shipmentTile = new HarvestTile();
+	(*tiles).push_back(*tile1);
+	(*tiles).push_back(*tile2);
+	tiles->push_back(*shipmentTile);
 
 	shipmentTileUsed = new bool(false);
 
@@ -139,14 +140,6 @@ bool Player::placeShipmentTile(int row, int col, Map* board, DeckHarvestTile dec
 		
 		cout << "You just placed your shipment tile!" << endl;
 		calculateResources(*board, true);
-
-		int* resourcesTile = tiles->at(2).getResources();
-		vector<int*>* vectorResourcesTile = new vector<int*>();
-		for (int i = 0; i < 4; i++) {
-			int* theResource = new int(resourcesTile[i]);
-			vectorResourcesTile->push_back(theResource);
-		}
-		//board->replaceResourcesShipmentTile(vectorResourcesTile);
 		
 		*shipmentTileUsed = true;
 		cout << "Your shipment tile has been played and is no longer available." << endl;
@@ -158,8 +151,21 @@ bool Player::placeShipmentTile(int row, int col, Map* board, DeckHarvestTile dec
 	}
 }
 
-void Player::drawBuilding(DeckBuilding deckBuilding) {
-	Building* buildingDrawn = deckBuilding.draw();
+void Player::turnShipmentTile(Map* board) {
+	if (board->lastTilePlacedIsShipmentTile()) {
+		int* resourcesTile = tiles->at(2).getResources();
+		vector<int*>* vectorResourcesTile = new vector<int*>();
+		for (int i = 0; i < 4; i++) {
+			int* theResource = new int(resourcesTile[i]);
+			vectorResourcesTile->push_back(theResource);
+		}
+		board->replaceResourcesShipmentTile(vectorResourcesTile);
+	}
+	
+}
+
+void Player::drawBuilding(DeckBuilding* deckBuilding) {
+	Building* buildingDrawn = deckBuilding->draw();
 	buildings->push_back(buildingDrawn);
 }
 
@@ -181,10 +187,8 @@ void Player::drawHarvestTile(DeckHarvestTile deck, int no) {
 
 void Player::calculateResources(Map board, bool itIsTheShipmentTile) {
 	CountResources* score = (new CountResources());
-	vector<int> resources = score->calculResourceMarkers(board, itIsTheShipmentTile);
+	vector<int> resources = score->calculResourceMarkers(board);
 	hand->exchange(resources);
-	
-	
 }
 
 
@@ -200,6 +204,7 @@ void Player::calculateResources(Map board, bool itIsTheShipmentTile) {
  bool Player::buildVillage(int buildingIndex, int row, int col) {
 	 
 	 Building* building = (*buildings).at(buildingIndex);
+	 
 	if ((*vb).canBuild(building, row, col)) { 
 		(*vb).build(building, row, col);
 		return true;

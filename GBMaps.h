@@ -97,6 +97,7 @@ public:
     void display();
     bool oneTileLeft();
     void replaceResourcesShipmentTile(vector<int*>* newResources);
+    bool lastTilePlacedIsShipmentTile();
     void resetCounted();
 
 private:
