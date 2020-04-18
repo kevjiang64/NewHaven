@@ -11,7 +11,7 @@ enum LabelType {Meadow, Quarry, Forest, Wheatfield};
 class HarvestTile {
 	private:
 		int* topLeft;
-		int* resources;
+		vector<int>* resources;
 
 	public:
 		HarvestTile();
@@ -19,23 +19,23 @@ class HarvestTile {
 		HarvestTile(vector<int>* vectorResources);
 		void display();
 		void completeDisplay();
-		void setResources(int r, int i) { resources[i] = r;  };
+		void setResources(int r, int index) { resources->insert(resources->begin() + index, r);  };
 		void setTopLeft(int tl) { *topLeft = tl;  };
-		int* getResources() { return resources; };
+		vector<int>* getResources() { return resources; };
 		int* getTopLeft() { return topLeft; };
 };
 
 class DeckHarvestTile {
 	private:
         int* count;
-        HarvestTile* allTiles;
+        vector<HarvestTile>* allTiles;
 
 	public:
 		DeckHarvestTile();
 		~DeckHarvestTile();
 		void setCount(int c) { count = &c; };
 		int* getCount() { return count; };
-        HarvestTile* getAllHarvestTiles() { return allTiles; };
+        vector<HarvestTile>* getAllHarvestTiles() { return allTiles; };
         HarvestTile draw();
 
 };

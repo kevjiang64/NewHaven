@@ -11,41 +11,41 @@ using namespace std;
 
 HarvestTile::HarvestTile() {
     topLeft = (int*)malloc(2*sizeof(int));
-    resources = new int[4];
+    resources = new vector<int>;
     
     //create counts to keep track of the resources (limited to 3 per harvest tiles)
     int wheatCount = 0, sheepCount = 0, timberCount = 0, stoneCount = 0, index = 0;
 
     while (index < 4) {
-        
+
         //generate random numbers for the resources
         mt19937 rng;
         rng.seed(random_device()());
         uniform_int_distribution<mt19937::result_type> dist;
-        
+
         int output = dist(rng) % 4;
-        
+
         if (index == 0)
             *topLeft = 0;
 
         if ((output == 0 && wheatCount >= 3) || (output == 1 && sheepCount >= 3) || (output == 2 && timberCount >= 3) || (output == 3 && stoneCount >= 3))
             continue;
-        
+
         if(index == 3) {
             bool ok = false;
             for (int i = 0; i<3; i++) {
-                if (output == resources[i])
+                if (output == resources->at(i))
                     ok = true;
             }
-            
+
             if (wheatCount > 1 || sheepCount > 1 || timberCount > 1 || stoneCount > 1)
             ok = true;
-            
+
             if (!ok)
                 continue;
         }
 
-        resources[index] = output;
+        resources->insert(resources->begin() + index, output);
         index++;
 
         //add resource to the count
@@ -71,9 +71,9 @@ HarvestTile::HarvestTile() {
 HarvestTile::HarvestTile(vector<int>* vectorResources) {
     topLeft = new int(0);
     
-    resources = new int[4];
+    resources = new vector<int>;
     for (int i = 0; i < 4; i++) {
-        resources[i] = vectorResources->at(i);
+        resources->at(i) = vectorResources->at(i);
     }
 }
 
@@ -88,7 +88,7 @@ HarvestTile::~HarvestTile() {
 void HarvestTile::display() {
     
     string firstResourceChar;
-    switch (resources[0])
+    switch (resources->at(0))
     {
     case 0: firstResourceChar = "M";
         break;
@@ -100,7 +100,7 @@ void HarvestTile::display() {
         break;
     }
     string secondResourceChar;
-    switch (resources[1])
+    switch (resources->at(1))
     {
     case 0: secondResourceChar = "M";
         break;
@@ -112,7 +112,7 @@ void HarvestTile::display() {
         break;
     }
     cout << "|" << firstResourceChar << " " << secondResourceChar << "|" << endl;
-    switch (resources[3])
+    switch (resources->at(3))
     {
     case 0: firstResourceChar = "M";
         break;
@@ -123,7 +123,7 @@ void HarvestTile::display() {
     case 3: firstResourceChar = "W";
         break;
     }
-    switch (resources[2])
+    switch (resources->at(2))
     {
     case 0: secondResourceChar = "M";
         break;
@@ -142,7 +142,7 @@ void HarvestTile::completeDisplay() {
     cout << "Resources of the harvest tile: ";
 
     for (int i = 0; i < 4; i++) {
-        int value = this->getResources()[i];
+        int value = this->getResources()->at(i);
 
         switch (value) {
         case 0:
@@ -167,20 +167,430 @@ void HarvestTile::completeDisplay() {
 
 DeckHarvestTile::DeckHarvestTile() {
 	count = new int(0);
-    allTiles = new HarvestTile[60];
+    allTiles = new vector<HarvestTile>;
     
-    //create 60 tiles at the beginning
-    for (int i=0; i<60; i++) {
+    //create 60 tiles not randomly at the beginning
+    for (int i = 0; i < 60; i++) {
         HarvestTile tile;
-        allTiles[i] = tile;
+        if (i >= 0 && i < 2) {
+            tile.setTopLeft(3);
+            tile.setResources(3, 0);
+            tile.setResources(3, 1);
+            tile.setResources(1, 2);
+            tile.setResources(1, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >= 2 && i < 4) {
+            tile.setTopLeft(2);
+            tile.setResources(2, 0);
+            tile.setResources(0, 1);
+            tile.setResources(2, 2);
+            tile.setResources(1, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >= 4 && i < 6) {
+            tile.setTopLeft(2);
+            tile.setResources(2, 0);
+            tile.setResources(3, 1);
+            tile.setResources(2, 2);
+            tile.setResources(1, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >= 6 && i < 8) {
+            tile.setTopLeft(0);
+            tile.setResources(0, 0);
+            tile.setResources(1, 1);
+            tile.setResources(0, 2);
+            tile.setResources(3, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >= 8 && i < 10) {
+            tile.setTopLeft(2);
+            tile.setResources(2, 0);
+            tile.setResources(0, 1);
+            tile.setResources(2, 2);
+            tile.setResources(1, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 10) {
+            tile.setTopLeft(2);
+            tile.setResources(2, 0);
+            tile.setResources(3, 1);
+            tile.setResources(0, 2);
+            tile.setResources(2, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 11) {
+            tile.setTopLeft(2);
+            tile.setResources(2, 0);
+            tile.setResources(2, 1);
+            tile.setResources(2, 2);
+            tile.setResources(1, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >= 12 && i < 14) {
+            tile.setTopLeft(3);
+            tile.setResources(3, 0);
+            tile.setResources(0, 1);
+            tile.setResources(3, 2);
+            tile.setResources(2, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >= 14 && i < 16) {
+            tile.setTopLeft(1);
+            tile.setResources(1, 0);
+            tile.setResources(0, 1);
+            tile.setResources(1, 2);
+            tile.setResources(3, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >= 16 && i < 18) {
+            tile.setTopLeft(1);
+            tile.setResources(1, 0);
+            tile.setResources(2, 1);
+            tile.setResources(1, 2);
+            tile.setResources(3, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 18) {
+            tile.setTopLeft(0);
+            tile.setResources(0, 0);
+            tile.setResources(0, 1);
+            tile.setResources(0, 2);
+            tile.setResources(1, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 19) {
+            tile.setTopLeft(0);
+            tile.setResources(0, 0);
+            tile.setResources(0, 1);
+            tile.setResources(0, 2);
+            tile.setResources(3, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 20) {
+            tile.setTopLeft(2);
+            tile.setResources(2, 0);
+            tile.setResources(1, 1);
+            tile.setResources(0, 2);
+            tile.setResources(2, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 21) {
+            tile.setTopLeft(1);
+            tile.setResources(1, 0);
+            tile.setResources(1, 1);
+            tile.setResources(1, 2);
+            tile.setResources(3, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >= 22 && i < 24) {
+            tile.setTopLeft(1);
+            tile.setResources(1, 0);
+            tile.setResources(0, 1);
+            tile.setResources(1, 2);
+            tile.setResources(2, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >= 24 && i < 26) {
+            tile.setTopLeft(1);
+            tile.setResources(1, 0);
+            tile.setResources(2, 1);
+            tile.setResources(0, 2);
+            tile.setResources(0, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >= 26 && i < 28) {
+            tile.setTopLeft(3);
+            tile.setResources(3, 0);
+            tile.setResources(1, 1);
+            tile.setResources(3, 2);
+            tile.setResources(2, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 28) {
+            tile.setTopLeft(1);
+            tile.setResources(1, 0);
+            tile.setResources(1, 1);
+            tile.setResources(1, 2);
+            tile.setResources(0, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 29) {
+            tile.setTopLeft(0);
+            tile.setResources(0, 0);
+            tile.setResources(1, 1);
+            tile.setResources(2, 2);
+            tile.setResources(0, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 30) {
+            tile.setTopLeft(1);
+            tile.setResources(1, 0);
+            tile.setResources(2, 1);
+            tile.setResources(3, 2);
+            tile.setResources(1, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 31) {
+            tile.setTopLeft(0);
+            tile.setResources(1, 0);
+            tile.setResources(0, 1);
+            tile.setResources(2, 2);
+            tile.setResources(1, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >=32 && i < 34) {
+            tile.setTopLeft(2);
+            tile.setResources(2, 0);
+            tile.setResources(3, 1);
+            tile.setResources(2, 2);
+            tile.setResources(3, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >=34 && i < 36) {
+            tile.setTopLeft(0);
+            tile.setResources(0, 0);
+            tile.setResources(1, 1);
+            tile.setResources(0, 2);
+            tile.setResources(1, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 36) {
+            tile.setTopLeft(0);
+            tile.setResources(0, 0);
+            tile.setResources(3, 1);
+            tile.setResources(2, 2);
+            tile.setResources(0, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 37) {
+            tile.setTopLeft(2);
+            tile.setResources(2, 0);
+            tile.setResources(1, 1);
+            tile.setResources(3, 2);
+            tile.setResources(2, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 38) {
+            tile.setTopLeft(1);
+            tile.setResources(1, 0);
+            tile.setResources(3, 1);
+            tile.setResources(0, 2);
+            tile.setResources(1, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 39) {
+            tile.setTopLeft(3);
+            tile.setResources(3, 0);
+            tile.setResources(3, 1);
+            tile.setResources(3, 2);
+            tile.setResources(2, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >= 40 && i < 42) {
+            tile.setTopLeft(2);
+            tile.setResources(2, 0);
+            tile.setResources(3, 1);
+            tile.setResources(2, 2);
+            tile.setResources(3, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >=42 && i < 44) {
+            tile.setTopLeft(0);
+            tile.setResources(0, 0);
+            tile.setResources(3, 1);
+            tile.setResources(0, 2);
+            tile.setResources(2, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 44) {
+            tile.setTopLeft(3);
+            tile.setResources(3, 0);
+            tile.setResources(0, 1);
+            tile.setResources(2, 2);
+            tile.setResources(3, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i== 45) {
+            tile.setTopLeft(2);
+            tile.setResources(2, 0);
+            tile.setResources(2, 1);
+            tile.setResources(2, 2);
+            tile.setResources(0, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 46) {
+            tile.setTopLeft(1);
+            tile.setResources(1, 0);
+            tile.setResources(1, 1);
+            tile.setResources(1, 2);
+            tile.setResources(2, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 47) {
+            tile.setTopLeft(2);
+            tile.setResources(2, 0);
+            tile.setResources(2, 1);
+            tile.setResources(2, 2);
+            tile.setResources(3, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >=48 && i < 50) {
+            tile.setTopLeft(2);
+            tile.setResources(2, 0);
+            tile.setResources(0, 1);
+            tile.setResources(2, 2);
+            tile.setResources(0, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >=50 && i < 52) {
+            tile.setTopLeft(3);
+            tile.setResources(3, 0);
+            tile.setResources(1, 1);
+            tile.setResources(3, 2);
+            tile.setResources(0, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >=52 && i < 54) {
+            tile.setTopLeft(0);
+            tile.setResources(0, 0);
+            tile.setResources(3, 1);
+            tile.setResources(0, 2);
+            tile.setResources(3, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 54) {
+            tile.setTopLeft(3);
+            tile.setResources(3, 0);
+            tile.setResources(3, 1);
+            tile.setResources(3, 2);
+            tile.setResources(0, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 55) {
+            tile.setTopLeft(3);
+            tile.setResources(3, 0);
+            tile.setResources(1, 1);
+            tile.setResources(0, 2);
+            tile.setResources(3, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 56) {
+            tile.setTopLeft(3);
+            tile.setResources(3, 0);
+            tile.setResources(3, 1);
+            tile.setResources(3, 2);
+            tile.setResources(1, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i == 57) {
+            tile.setTopLeft(0);
+            tile.setResources(0, 0);
+            tile.setResources(0, 1);
+            tile.setResources(0, 2);
+            tile.setResources(2, 3);
+            
+            allTiles->push_back(tile);
+        }
+        
+        if (i >=58 && i < 60) {
+            tile.setTopLeft(3);
+            tile.setResources(3, 0);
+            tile.setResources(1, 1);
+            tile.setResources(2, 2);
+            tile.setResources(3, 3);
+            
+            allTiles->push_back(tile);
+        }
     }
 };
 
 DeckHarvestTile::~DeckHarvestTile() {
-	//delete count;
+//	if (count != nullptr) delete count;
 };
 
 HarvestTile DeckHarvestTile::draw() {
+    
+     HarvestTile thisTile;
     
     if (*count >= 60) {
 		cout << "There is no harvest tile left." << endl;
@@ -196,9 +606,17 @@ HarvestTile DeckHarvestTile::draw() {
     
     else {
         (*count)++;
+        
+        mt19937 rng;
+        rng.seed(random_device()());
+        uniform_int_distribution<mt19937::result_type> dist;
+        
+        int index = dist(rng) % 60;
+        thisTile = allTiles->at(index);
+        allTiles->erase(allTiles->begin() + index);
     }
     
-    return allTiles[(*count)-1];
+    return thisTile;
 };
 
 // BUILDING
@@ -519,7 +937,7 @@ Hand::Hand() {
 }
 
 Hand::~Hand() {
-	
+    delete resourceMarkers;
 }
 
 void Hand::exchange(vector<int> resources) {

@@ -15,7 +15,7 @@
 #include "Part6.h"
 #include "GameObservers.h"
 #include <random>
-#include <list>;
+#include <list>
 
 using namespace std;
 
@@ -160,10 +160,10 @@ bool Player::placeShipmentTile(int row, int col, Map* board, DeckHarvestTile dec
 
 void Player::turnShipmentTile(Map* board) {
 	if (board->lastTilePlacedIsShipmentTile()) {
-		int* resourcesTile = tiles->at(2).getResources();
+		vector<int>* resourcesTile = tiles->at(2).getResources();
 		vector<int*>* vectorResourcesTile = new vector<int*>();
 		for (int i = 0; i < 4; i++) {
-			int* theResource = new int(resourcesTile[i]);
+			int* theResource = new int(resourcesTile->at(i));
 			vectorResourcesTile->push_back(theResource);
 		}
 		board->replaceResourcesShipmentTile(vectorResourcesTile);

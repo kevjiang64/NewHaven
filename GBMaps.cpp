@@ -280,13 +280,13 @@ vector<Map::Node*> Map::placeHarvestTile(HarvestTile tile, int row, int col) {
     vector<Node*> newNodes = *(ptrNewNodes);
     for (int i = *(tile.getTopLeft()); i < 4; i++) {
         Node* newNode = new Node();
-        newNode->setResourceType(&(tile.getResources()[i]));
+        newNode->setResourceType(&(tile.getResources()->at(i)));
         newNodes.push_back(newNode);
         
     }
     for (int i = 0; i < *(tile.getTopLeft()); i++) {
         Node* newNode = new Node();
-        newNode->setResourceType(&(tile.getResources()[i]));
+        newNode->setResourceType(&(tile.getResources()->at(i)));
         newNodes.push_back(newNode);
         
     }

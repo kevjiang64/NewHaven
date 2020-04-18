@@ -13,7 +13,7 @@
 #include "Resources.h"
 #include "GBMaps.h"
 #include "Part6.h"
-#include <list>;
+#include <list>
 #include "GameObservers.h"
 
 
