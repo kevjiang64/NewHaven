@@ -71,7 +71,7 @@ HarvestTile::HarvestTile() {
 HarvestTile::HarvestTile(vector<int>* vectorResources) {
     topLeft = new int(0);
     
-    resources = new vector<int>;
+    resources = new vector<int>(4);
     for (int i = 0; i < 4; i++) {
         resources->at(i) = vectorResources->at(i);
     }
