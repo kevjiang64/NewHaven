@@ -36,6 +36,7 @@ VGMap::VGMap(int row, int col, string name)
 		}
 		points = new int();
 		*points = 0;
+		nbBuildings = new int(0);
 	}
 	else
 	{
@@ -290,6 +291,7 @@ bool VGMap::canBuild(Building* building, int row, int col) {
 void VGMap::build(Building* building, int row, int col) {
 	//if (canBuild(building, row, col)) {
 		(*board)[row][col].setBuilding(building);
+		(*nbBuildings)++;
 	//}
 }
 

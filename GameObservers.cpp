@@ -60,6 +60,7 @@ void placeTileObserver::update()
 void placeTileObserver::display()
 {
 	cout << "tile observer" << endl;
+	_subject->getHand()->printResources();
 }
 countBuildingObserver::countBuildingObserver(Player* aPlayer)
 {
@@ -80,6 +81,7 @@ void countBuildingObserver::update()
 void countBuildingObserver::display()
 {
 	cout << "count building observer" << endl;
+	cout << "The number of building on the board of player #" << _subject->getID() << " is: " << _subject->getVillageBoard()->getNbBuildings() << endl;
 }
 
 decreaseResourcesObserver::decreaseResourcesObserver(Player* aPlayer)
@@ -101,6 +103,7 @@ void decreaseResourcesObserver::update()
 void decreaseResourcesObserver::display()
 {
 	cout << "decrease resources observer" << endl;
+	_subject->getHand()->printResources();
 }
 
 statsObserver::statsObserver(vector<Player*>* vectorPlayer)
@@ -125,6 +128,14 @@ void statsObserver::update()
 
 void statsObserver::display()
 {
-	cout << "statsObserver" << endl;
+	cout << "statsObserver : " << endl;
+	for (int i = 0; i < _subject->size(); i++) {
+		Player* currentPlayer = _subject->at(i);
+		cout << "Player #" << currentPlayer->getID() << endl;
+		currentPlayer->getVillageBoard()->displayVGmap();
+		currentPlayer->getVillageBoard()->countPoints();
+		currentPlayer->getVillageBoard()->getPoints();
+		currentPlayer->getHand()->printResources();
+	}
 }
 
