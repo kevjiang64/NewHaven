@@ -45,6 +45,7 @@ public:
     void resourceTracker();
     void calculateResources(Map board, bool itIsTheShipmentTile);
     bool buildVillage(int buildingIndex, int row, int col);
+    void removeUsedResources(Building* building);
     void displayState();
     void resetResourceMarkers();
     void turnShipmentTile(Map* board);

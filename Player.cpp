@@ -214,6 +214,7 @@ void Player::calculateResources(Map board, bool itIsTheShipmentTile) {
 	 
 	if ((*vb).canBuild(building, row, col)) { 
 		(*vb).build(building, row, col);
+		removeUsedResources(building);
 		notify(false);
 		return true;
 	}
@@ -222,6 +223,15 @@ void Player::calculateResources(Map board, bool itIsTheShipmentTile) {
 		return false;
 	}
 }
+
+ void Player::removeUsedResources(Building* building)
+ {
+	 int buildingResource = building->getLabel();
+	 int resourceAmount = building->getNumber();
+
+	 hand->getResourceMarkers()->at(buildingResource) -= resourceAmount;
+
+ }
 
  void Player::displayState() {
 	 cout << "\nPlayer #" << *id << "\n" << endl;

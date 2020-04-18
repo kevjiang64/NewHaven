@@ -134,7 +134,7 @@ void statsObserver::display()
 		cout << "Player #" << currentPlayer->getID() << endl;
 		currentPlayer->getVillageBoard()->displayVGmap();
 		currentPlayer->getVillageBoard()->countPoints();
-		currentPlayer->getVillageBoard()->getPoints();
+		cout << "Number of colonists attracted: " << currentPlayer->getVillageBoard()->getPoints() << endl;
 		currentPlayer->getHand()->printResources();
 	}
 }

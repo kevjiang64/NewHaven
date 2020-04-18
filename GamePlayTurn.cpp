@@ -147,7 +147,6 @@ void buildPlayerVillage(Player* player)
 	//Reducing the number of resources of player's hand
 	if (result)
 	{
-		removeUsedResources(player, index);
 		vector<Building*>* buildings = player->getBuildings();
 		buildings->erase(buildings->begin() + index);
 	}
@@ -171,14 +170,7 @@ bool enoughResources(Player* player,int index)
 	return (player->getHand()->getResourceMarkers()->at(buildingResource) >= resourceAmount);
 }
 //Remove used resources
-void removeUsedResources(Player* player, int index)
-{
-	int buildingResource = player->getBuildings()->at(index)->getLabel();
-	int resourceAmount = player->getBuildings()->at(index)->getNumber();
-	
-	player->getHand()->getResourceMarkers()->at(buildingResource) -= resourceAmount;
-	
-}
+
 
 void endOfTurn(Player* activePlayer, vector<Building*>* buildingsOnBoard, DeckBuilding* deck, vector<Player*>* players, Map* board) {
 	activePlayer->turnShipmentTile(board);
@@ -458,6 +450,9 @@ void transferResourceMarkers(vector<Player*>* players, int i) {
 	else {
 		players->at(i+1)->setHand(prevHand);
 	}
+	
+	Hand* currentHand = new Hand();
+	players->at(i)->setHand(currentHand);
 	
 }
 
