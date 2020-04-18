@@ -80,7 +80,7 @@ Map* selectBoard(int nbPlayers) {
 		decreaseResourcesObserver* decreaseResourcesObs = new decreaseResourcesObserver(player);
 		(*players)[i] = player;
 	}
-
+	statsObserver* statsObs = new statsObserver(players);
 	return players;
 }
 

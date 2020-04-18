@@ -103,5 +103,28 @@ void decreaseResourcesObserver::display()
 	cout << "decrease resources observer" << endl;
 }
 
+statsObserver::statsObserver(vector<Player*>* vectorPlayer)
+{
+	_subject = vectorPlayer;
+	for (int i = 0; i < vectorPlayer->size(); i++) {
+		_subject->at(i)->attach(this, false);
+	}
+}
 
+statsObserver::~statsObserver()
+{
+	for (int i = 0; i < _subject->size(); i++) {
+		_subject->at(i)->detach(this, false);
+	}
+}
+
+void statsObserver::update()
+{
+	display();
+}
+
+void statsObserver::display()
+{
+	cout << "statsObserver" << endl;
+}
 
