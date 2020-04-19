@@ -363,6 +363,7 @@ void buildingSequence(vector<Player*>* players, int nbPlayers, int index) {
 		
 		if (!resourcesEmpty(activePlayer)) {
 			cout << "\nPlayer #" << activePlayer->getID() << ":" << endl;
+            activePlayer->getHand()->printResources();
 			cout << "\nHere are your buildings: " << endl;
 			vector<Building*>* buildings = activePlayer->getBuildings();
 			for (int i = 0; i < buildings->size(); i++) {
@@ -384,7 +385,6 @@ void buildingSequence(vector<Player*>* players, int nbPlayers, int index) {
 			while (answer.compare("y") == 0 && !resourcesEmpty(activePlayer))
 			{
 				buildPlayerVillage(activePlayer);
-
 				cout << "\nHere are your buildings: " << endl;
 				vector<Building*>* buildings = activePlayer->getBuildings();
 				for (int i = 0; i < buildings->size(); i++) {
