@@ -519,6 +519,7 @@ void oneTurn(int indexActivePlayer, Map* board, DeckHarvestTile* deckTiles, vect
 	Player* activePlayer = players->at(indexActivePlayer);
 	cout << "\nPlayer #" << activePlayer->getID() << " it is your turn!" << endl;
 	activePlayer->displayState();
+	activePlayer->notify(3);
 	placeTile(activePlayer, board, deckTiles);
 	//activePlayer->getHand()->printResources();
 	buildingSequence(players, nbPlayers, indexActivePlayer);

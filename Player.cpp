@@ -50,9 +50,11 @@ Player::Player() {
 	vector<GameObserver*>* _observersTile = new vector<GameObserver*>();
 	vector<GameObserver*>* _observersBuild = new vector<GameObserver*>();
 	vector<GameObserver*>* _observersEnd = new vector<GameObserver*>();
+	vector<GameObserver*>* _observersTurn = new vector<GameObserver*>();
 	_obs->push_back(_observersTile);
 	_obs->push_back(_observersBuild);
 	_obs->push_back(_observersEnd);
+	_obs->push_back(_observersTurn);
 }
 
 //Copy constructors of VillageBoard, Building and HarvestTile have to be defined

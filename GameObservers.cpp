@@ -112,6 +112,7 @@ statsObserver::statsObserver(vector<Player*>* vectorPlayer)
 	_subject = vectorPlayer;
 	for (int i = 0; i < vectorPlayer->size(); i++) {
 		_subject->at(i)->attach(this, 1);
+		_subject->at(i)->attach(this, 3);
 	}
 }
 
@@ -119,6 +120,7 @@ statsObserver::~statsObserver()
 {
 	for (int i = 0; i < _subject->size(); i++) {
 		_subject->at(i)->detach(this, 1);
+		_subject->at(i)->detach(this, 3);
 	}
 }
 
