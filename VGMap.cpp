@@ -200,6 +200,7 @@ int VGMap::countPoints()
 			else totalPoints += 3 + abs(3 - (col+1));
 		}
 	}
+	*points = totalPoints;
 	return totalPoints;
 }
 //Check if it's the first building of the inputed resource

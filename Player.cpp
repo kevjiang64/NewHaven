@@ -43,9 +43,16 @@ Player::Player() {
 	shipmentTileUsed = new bool(false);
 
 	hand = new Hand();
+
+	winner = new bool(false);
 	
-	_observersTile = new vector<GameObserver*>();
-	_observersBuild = new vector<GameObserver*>();
+	_obs = new vector<vector<GameObserver*>*>();
+	vector<GameObserver*>* _observersTile = new vector<GameObserver*>();
+	vector<GameObserver*>* _observersBuild = new vector<GameObserver*>();
+	vector<GameObserver*>* _observersEnd = new vector<GameObserver*>();
+	_obs->push_back(_observersTile);
+	_obs->push_back(_observersBuild);
+	_obs->push_back(_observersEnd);
 }
 
 //Copy constructors of VillageBoard, Building and HarvestTile have to be defined
@@ -88,7 +95,7 @@ bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarv
 			calculateResources(*board, false);
 			drawHarvestTile(deck, 0);
 			cout << "board: " << board->getMapNodes()->at(0)->getCol() << endl;
-			notify(true);
+			notify(0);
 			return true;
 		}
 		else {
@@ -102,7 +109,7 @@ bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarv
 			vector<Map::Node*> nodesJustPlaced = board->placeHarvestTile((*tiles).at(1), row, col);
 			calculateResources(*board, false);
 			drawHarvestTile(deck, 1);
-			notify(true);
+			notify(0);
 			return true;
 		}
 		else {
@@ -149,7 +156,7 @@ bool Player::placeShipmentTile(int row, int col, Map* board, DeckHarvestTile dec
 		
 		*shipmentTileUsed = true;
 		cout << "Your shipment tile has been played and is no longer available." << endl;
-		notify(true);
+		notify(0);
 		return true;
 	}
 	else {
@@ -215,7 +222,7 @@ void Player::calculateResources(Map board, bool itIsTheShipmentTile) {
 	if ((*vb).canBuild(building, row, col)) { 
 		(*vb).build(building, row, col);
 		removeUsedResources(building);
-		notify(false);
+		notify(1);
 		return true;
 	}
 	else {
@@ -231,6 +238,11 @@ void Player::calculateResources(Map board, bool itIsTheShipmentTile) {
 
 	 hand->getResourceMarkers()->at(buildingResource) -= resourceAmount;
 
+ }
+
+ void Player::countPoints() {
+	 vb->countPoints();
+	 notify(2);
  }
 
  void Player::displayState() {
@@ -257,36 +269,21 @@ void Player::calculateResources(Map board, bool itIsTheShipmentTile) {
 
 
  //Subject
-  void Player::attach(GameObserver* o, bool tileList)
+  void Player::attach(GameObserver* o, int noList)
  {
-	  
-	  if (tileList) {
-		  _observersTile->push_back(o);
-	  }
-	  else {
-		  _observersBuild->push_back(o);
-	  }
+	  _obs->at(noList)->push_back(o);
  }
 
- void Player::detach(GameObserver* o, bool tileList)
+ void Player::detach(GameObserver* o, int noList)
  {
-	 if (tileList) _observersTile->erase(std::remove(_observersTile->begin(), _observersTile->end(), o), _observersTile->end());
-	 else _observersBuild->erase(std::remove(_observersBuild->begin(), _observersBuild->end(), o), _observersBuild->end());
+	 _obs->at(noList)->erase(std::remove(_obs->at(noList)->begin(), _obs->at(noList)->end(), o), _obs->at(noList)->end());
  }
 
- void Player::notify(bool tileList) 
- {
-	 
-	 if (tileList) {
-		 for (int i = 0; i < _observersTile->size(); i++) {
-			 _observersTile->at(i)->update();
-		 }
-	 }
-	 else {
-		 for (int i = 0; i < _observersBuild->size(); i++) {
-			 _observersBuild->at(i)->update();
-		 }
-	 }
+ void Player::notify(int noList) 
+ { 
+	for (int i = 0; i < _obs->at(noList)->size(); i++) {
+		_obs->at(noList)->at(i)->update();
+	}
  }
 
 

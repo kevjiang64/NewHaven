@@ -72,6 +72,19 @@ private:
 	vector<Player*>* _subject;
 };
 
+class winnerObserver : public GameObserver
+{
+public:
+	winnerObserver() {};
+	winnerObserver(vector<Player*>* aVectorPlayer);
+	~winnerObserver();
+	void display();
+	//Overrride GameObserver's update
+	void update();
+private:
+	vector<Player*>* _subject;
+};
+
 //Default model for Subject
 /*class Subject
 {

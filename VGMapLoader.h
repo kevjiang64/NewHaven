@@ -21,7 +21,7 @@ private:
     VGMap* testMap;
 };
 
-bool fexists(ifstream& input);
+bool fexists(std::string input);
 int checkValidRow(ifstream& input);
 int checkValidColumn(ifstream& input);
 string checkValidName(ifstream& input, string fileName);

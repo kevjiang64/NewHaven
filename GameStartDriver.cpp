@@ -81,6 +81,7 @@ Map* selectBoard(int nbPlayers) {
 		(*players)[i] = player;
 	}
 	statsObserver* statsObs = new statsObserver(players);
+	winnerObserver* winObs = new winnerObserver(players);
 	return players;
 }
 
@@ -88,13 +89,14 @@ Map* selectBoard(int nbPlayers) {
 void assignVillageBoards(vector<Player*>* players, int nbPlayers) {
 	int row, col;
 	string board;
+	string inputString("valid.txt");
 	ifstream input("valid.txt");
 	VGMap* playerBoard1, *playerBoard2, *playerBoard3, *playerBoard4;
 	
 	for (int i = 0; i < nbPlayers; i++)
 	{
 		//Check if the ifstream is still open
-		if (fexists(input))
+		if (fexists(inputString))
 		{
 			//Different name for each player
 			if (i == 0)

@@ -23,7 +23,6 @@ int main() {
 	assignVillageBoards(players, nbPlayers);
 	vector<Building*>* buildingsOnBoard = drawBuildingsOnBoard(deckBuildings); 
 	displayAtGameStart(nbPlayers, players, board, buildingsOnBoard);
-
 	
 	// player with smallest ID will begin
 	cout << "\n\nThe game starts" << endl;

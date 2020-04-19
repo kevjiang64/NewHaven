@@ -30,9 +30,9 @@ private:
     vector<HarvestTile>* tiles;
     Hand* hand;
     bool* shipmentTileUsed;
-   
-    vector<GameObserver*>* _observersTile;
-    vector<GameObserver*>* _observersBuild;
+    bool* winner;
+
+    vector<vector<GameObserver*>*>* _obs;
 
     bool placeShipmentTile(int row, int col, Map* board, DeckHarvestTile deck);
 
@@ -49,22 +49,25 @@ public:
     void displayState();
     void resetResourceMarkers();
     void turnShipmentTile(Map* board);
+    void countPoints();
     //getters
     vector<Building*>* getBuildings() { return buildings; };
     vector<HarvestTile>* getTiles() { return tiles; };
-     Hand* getHand() { return hand;  };
-     VGMap* getVillageBoard() { return vb; };
-     bool getShipmentTileUsed() { return *shipmentTileUsed; };
-     int getID() { return *id; };
+    Hand* getHand() { return hand; };
+    VGMap* getVillageBoard() { return vb; };
+    bool getShipmentTileUsed() { return *shipmentTileUsed; };
+    int getID() { return *id; };
+    bool getWinner() { return *winner; };
      //setters
      void setVillageBoard(VGMap* board) { vb = board; };
      void setID(int* i) { id = i; };
      void setHand(Hand* newHand) { hand = newHand; };
+     void setWinner(bool win) { *winner = win; };
 
      //Subject
-     virtual void attach(GameObserver* o, bool tileList);
-     virtual void detach(GameObserver* o, bool tileList);
-     virtual void notify(bool tileList);
+     virtual void attach(GameObserver* o, int noList);
+     virtual void detach(GameObserver* o, int noList);
+     virtual void notify(int noList);
     
 };
 

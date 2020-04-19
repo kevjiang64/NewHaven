@@ -139,3 +139,53 @@ void statsObserver::display()
 	}
 }
 
+winnerObserver::winnerObserver(vector<Player*>* vectorPlayer)
+{
+	_subject = vectorPlayer;
+	for (int i = 0; i < vectorPlayer->size(); i++) {
+		_subject->at(i)->attach(this, false);
+	}
+}
+
+winnerObserver::~winnerObserver()
+{
+	for (int i = 0; i < _subject->size(); i++) {
+		_subject->at(i)->detach(this, false);
+	}
+}
+
+void winnerObserver::update()
+{
+	display();
+}
+
+void winnerObserver::display()
+{
+	cout << "winner observer : " << endl;
+	vector<int>* indexWinners = new vector<int>();
+	for (int i = 0; i < _subject->size(); i++) {
+		if (_subject->at(i)->getWinner()) {
+			indexWinners->push_back(i);
+		}
+	}
+	if (indexWinners->size() == 0) cout << "Error, no winner!" << endl;
+	else if (indexWinners->size() == 1) {
+		cout << "\n\nThe winner is: Player #" << _subject->at(indexWinners->at(0))->getID();
+	}
+	else {
+		cout << "\n\nIt is a tie!" << endl;
+		cout << "\n\nThe winners are: Player #" << _subject->at(0)->getID();
+		for (int i = 0; i < indexWinners->size(); i++) {
+			if (i == indexWinners->size() - 1) {
+				cout << " and Player #" << _subject->at(indexWinners->at(i))->getID();
+			}
+			else {
+				cout << ", Player #" << _subject->at(indexWinners->at(i))->getID();
+			}
+			
+		}
+	}
+	cout << " with " << _subject->at(indexWinners->at(0))->getVillageBoard()->getPoints() << " points!" << endl;
+	cout << "\nCongratulations!!" << endl;
+}
+

@@ -13,95 +13,79 @@
 //Method to check if the game is finished and outputs the results
 void gameTie(vector<Player*>* players) {
 
-    int* scores = new int[players->size()];
-
-    //fill up the array of scores
-    for (int i = 0; i < players->size(); i++) {
-        scores[i] = players->at(i)->getVillageBoard()->countPoints();
-    }
-
-    //find the max score of the players in the score array
-    int max = scores[0];
-    for (int i = 1; i < players->size(); i++) {
-        if (scores[i] > max) {
-            max = scores[i];
+        int* scores = new int[players->size()];
+        
+        //fill up the array of scores
+        for (int i = 0; i < players->size(); i++) {
+            players->at(i)->countPoints();
+            scores[i] = players->at(i)->getVillageBoard()->getPoints();
         }
-    }
-
-    //check if there is a tie
-    int count = 0;
-    vector<Player*>* tiedPlayers = new vector<Player*>(players->size());
-    vector<bool>* tied = new vector<bool>(players->size());
-    for (int i = 0; i < players->size(); i++) {
-
-        if (max == scores[i]) {
-
-            count++;
-            tiedPlayers->at(i) = players->at(i);
-
+        
+        //find the max score of the players in the score array
+        int max = scores[0];
+        for (int i = 1; i < players->size(); i++) {
+            if (scores[i] > max) {
+                max = scores[i];
+            }
         }
-    }
-
-    //if there is a tie enter this
-    if (count >= 2) {
-
-        vector<int>* winner = new vector<int>();
-        winner = fewestEmptySpaces(tiedPlayers, tied);
-
-        //displays the winner/winners (in case of a shared win)
-        cout << "The winner is: ";
-        for (int i = 0; i < winner->size(); i++) {
-            cout << players->at(winner->at(i))->getID() << endl;
-
-            //check if there is a tie
-            int count = 0;
-            vector<Player*>* tiedPlayers = new vector<Player*>(players->size());
-            vector<bool>* tied = new vector<bool>(players->size());
-            for (int i = 0; i < players->size(); i++) {
-
-                if (max == scores[i]) {
-
-                    count++;
-                    tiedPlayers->at(i) = players->at(i);
-                    tied->at(i) = true;
-                }
+        
+        //check if there is a tie
+        int count = 0;
+        vector<Player*>* tiedPlayers = new vector<Player*>(players->size());
+        vector<bool>* tied = new vector<bool>(players->size());
+        for (int i = 0; i < players->size(); i++) {
+            
+            if (max == scores[i]) {
+                
+                count++;
+                tiedPlayers->at(i) = players->at(i);
+                tied->at(i) = true;
             }
-
-            //if there is a tie enter this
-            if (count >= 2) {
-                vector<int>* winner = new vector<int>();
-                winner = fewestEmptySpaces(tiedPlayers, tied);
-
-                //displays the winner/winners (in case of a shared win)
-                if (winner->size() == 1) {
-                    cout << "\nThe winner is: ";
-                    cout << players->at(winner->at(0))->getID() << endl;
-                    cout << "With " << max << " points!" << endl;
-                }
-                else {
-                    cout << "\nThe winners are: ";
-                    cout << players->at(winner->at(0))->getID();
-                    for (int i = 1; i < winner->size(); i++) {
-                        cout << ", " << players->at(winner->at(i))->getID();
-                    }
-                    cout << "\nWith " << max << " points!" << endl;
-                }
-
+        }
+        
+        //if there is a tie enter this
+        if (count >= 2) {
+            vector<int>* winner = new vector<int>();
+            winner = fewestEmptySpaces(tiedPlayers, tied);
+            for (int i = 0; i < winner->size(); i++) {
+                players->at(winner->at(i))->setWinner(true);
             }
-            //no tie; displays the winner, and their points
-            else {
+            players->at(0)->notify(2);
 
+            //displays the winner/winners (in case of a shared win)
+            if (winner->size() == 1) {
                 cout << "\nThe winner is: ";
-                for (int i = 0; i < players->size(); i++) {
-                    if (max == players->at(i)->getVillageBoard()->countPoints()) {
-                        cout << players->at(i)->getID() << endl;
-                    }
-                }
+                cout << players->at(winner->at(0))->getID() << endl;
                 cout << "With " << max << " points!" << endl;
             }
+            else {
+                cout << "\nThe winners are: ";
+                cout << players->at(winner->at(0))->getID();
+                for (int i = 1; i < winner->size(); i++) {
+                    cout <<", " << players->at(winner->at(i))->getID();
+                }
+                cout << "\nWith " << max << " points!" << endl;
+            }
+            
         }
-    }
+
+        //no tie; displays the winner, and their points
+        else {
+            
+            cout << "\nThe winner is: ";
+            for (int i = 0; i < players->size(); i++) {
+                if (max == players->at(i)->getVillageBoard()->countPoints()) {
+                    players->at(i)->setWinner(true);
+                    cout << players->at(i)->getID() << endl;
+                }
+            }
+            players->at(0)->notify(2);
+            cout << "With " << max << " points!" << endl;
+        }
+ 
+   
 }
+
 //returns the index of the player between the ones indicated
 //modified this function
 vector<int>* fewestEmptySpaces(vector<Player*>* players, vector<bool>* tied) {
@@ -208,7 +192,7 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
     vector<Player*>* playerVector2 = new vector<Player*>();
     vector<Player*>* playerVector3 = new vector<Player*>();
     vector<Player*>* playerVector4 = new vector<Player*>();
-
+    
     Player* player1 = new Player();
     Player* player2 = new Player();
     Player* player3 = new Player();
@@ -217,7 +201,7 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
     Player* player6 = new Player();
     Player* player7 = new Player();
     Player* player8 = new Player();
-
+   
     //Case 1: Player 1 has more points than Player 2
     DeckBuilding* deckBuildings = new DeckBuilding();
 
@@ -226,21 +210,15 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
     player1->getVillageBoard()->build(deckBuildings->draw(), 3, 3);
     player1->getVillageBoard()->build(deckBuildings->draw(), 3, 4);
     player1->getVillageBoard()->build(deckBuildings->draw(), 3, 0);
-<<<<<<< HEAD
-
-
-    player2->getVillageBoard()->build(deckBuildings->draw(), 2, 1);
-=======
     
     Building* building1 = deckBuildings->draw();
     building1->setFlipped(true);
     player2->getVillageBoard()->build(building1, 2, 1);
->>>>>>> bc196cbef84fb4f415f98ccf0dd3992677835d3a
     player2->getVillageBoard()->build(deckBuildings->draw(), 2, 2);
     player2->getVillageBoard()->build(deckBuildings->draw(), 2, 3);
     player2->getVillageBoard()->build(deckBuildings->draw(), 2, 4);
     player2->getVillageBoard()->build(deckBuildings->draw(), 2, 0);
-
+    
     playerVector1->push_back(player1);
     playerVector1->push_back(player2);
 
@@ -251,7 +229,7 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
 
     gameTie(playerVector1);
 
-
+    
     //case 2: Both players have equal points, however player 3 wins since they have more buildings on their board.
     player3->getVillageBoard()->build(deckBuildings->draw(), 3, 1);
     player3->getVillageBoard()->build(deckBuildings->draw(), 3, 2);
@@ -291,11 +269,11 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
     player6->getVillageBoard()->build(deckBuildings->draw(), 3, 0);
 
     //Player5 will have 2 buildings leftover 
-    player5->drawBuilding(*(deckBuildings));
-    player5->drawBuilding(*(deckBuildings));
+    player5->drawBuilding((deckBuildings));
+    player5->drawBuilding((deckBuildings));
 
     //Player6 will have 1 building leftover 
-    player6->drawBuilding(*(deckBuildings));
+    player6->drawBuilding((deckBuildings));
 
     playerVector3->push_back(player5);
     playerVector3->push_back(player6);
@@ -321,12 +299,12 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
     player8->getVillageBoard()->build(deckBuildings->draw(), 3, 0);
 
     //Player7 will have 2 buildings leftover 
-    player7->drawBuilding(*(deckBuildings));
-    player7->drawBuilding(*(deckBuildings));
+    player7->drawBuilding((deckBuildings));
+    player7->drawBuilding((deckBuildings));
 
     //Player8 will have 2 building leftover 
-    player8->drawBuilding(*(deckBuildings));
-    player8->drawBuilding(*(deckBuildings));
+    player8->drawBuilding((deckBuildings));
+    player8->drawBuilding((deckBuildings));
 
     playerVector4->push_back(player7);
     playerVector4->push_back(player8);
@@ -337,9 +315,6 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
     player8->getVillageBoard()->displayVGmap();
 
     gameTie(playerVector4);
-
-
-    //Fix Memory Leaks
 
     delete player1;
     delete player2;
@@ -360,4 +335,3 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
 
     return 0;
 }*/
-
