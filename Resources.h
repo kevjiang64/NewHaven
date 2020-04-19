@@ -28,15 +28,15 @@ class HarvestTile {
 class DeckHarvestTile {
 	private:
         int* count;
-        vector<HarvestTile>* allTiles;
+        vector<HarvestTile*>* allTiles;
 
 	public:
 		DeckHarvestTile();
 		~DeckHarvestTile();
 		void setCount(int c) { count = &c; };
 		int* getCount() { return count; };
-        vector<HarvestTile>* getAllHarvestTiles() { return allTiles; };
-        HarvestTile draw();
+        vector<HarvestTile*>* getAllHarvestTiles() { return allTiles; };
+        HarvestTile* draw();
 
 };
 

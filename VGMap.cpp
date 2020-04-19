@@ -81,13 +81,15 @@ VGMap::VGMap()
 };
 
 VGMap::~VGMap() {
-	/*if (board != nullptr) delete board;
+	if (board != nullptr) delete board;
 	if (points != nullptr) delete points;
 	if (nameOfBoard != nullptr) delete nameOfBoard;
+    if (nbBuildings != nullptr) delete nbBuildings;
 
 	board = nullptr;
 	points = nullptr;
-	nameOfBoard = nullptr;*/
+	nameOfBoard = nullptr;
+    nbBuildings = nullptr;
 }
 
 VGMap::Node::Node() {

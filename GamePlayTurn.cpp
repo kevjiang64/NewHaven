@@ -18,8 +18,8 @@ void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck) {
 	cout << "\nHere is the board: " << endl;
 	board->display();
 	cout << "\nHere are the tile you possess: " << endl;
-	activePlayer->getTiles()->at(0).display();
-	activePlayer->getTiles()->at(1).display();
+	activePlayer->getTiles()->at(0)->display();
+	activePlayer->getTiles()->at(1)->display();
 	if (!activePlayer->getShipmentTileUsed()) {
 		cout << "You can also play your shipment tile" << endl;
 	}

@@ -27,7 +27,7 @@ private:
     static int* currentId;
     VGMap* vb;
     vector<Building*>* buildings;
-    vector<HarvestTile>* tiles;
+    vector<HarvestTile*>* tiles;
     Hand* hand;
     bool* shipmentTileUsed;
     bool* winner;
@@ -52,7 +52,7 @@ public:
     void countPoints();
     //getters
     vector<Building*>* getBuildings() { return buildings; };
-    vector<HarvestTile>* getTiles() { return tiles; };
+    vector<HarvestTile*>* getTiles() { return tiles; };
     Hand* getHand() { return hand; };
     VGMap* getVillageBoard() { return vb; };
     bool getShipmentTileUsed() { return *shipmentTileUsed; };

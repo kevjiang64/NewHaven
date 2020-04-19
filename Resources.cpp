@@ -10,8 +10,8 @@ using namespace std;
 // HARVEST TILE
 
 HarvestTile::HarvestTile() {
-    topLeft = (int*)malloc(2*sizeof(int));
-    resources = new vector<int>;
+    topLeft = new int(0);
+    resources = new vector<int>();
     
     //create counts to keep track of the resources (limited to 3 per harvest tiles)
     int wheatCount = 0, sheepCount = 0, timberCount = 0, stoneCount = 0, index = 0;
@@ -78,11 +78,11 @@ HarvestTile::HarvestTile(vector<int>* vectorResources) {
 }
 
 HarvestTile::~HarvestTile() {
-	/*if (topLeft != nullptr) delete topLeft;
-    if (resources != nullptr) delete[] resources;
+	if (topLeft != nullptr) delete topLeft;
+    if (resources != nullptr) delete resources;
 
     topLeft = nullptr;
-    resources = nullptr;*/
+    resources = nullptr;
 };
 
 void HarvestTile::display() {
@@ -167,417 +167,417 @@ void HarvestTile::completeDisplay() {
 
 DeckHarvestTile::DeckHarvestTile() {
 	count = new int(0);
-    allTiles = new vector<HarvestTile>;
+    allTiles = new vector<HarvestTile*>;
     
     //create 60 tiles not randomly at the beginning
     for (int i = 0; i < 60; i++) {
-        HarvestTile tile;
+        HarvestTile* tile = new HarvestTile();
         if (i >= 0 && i < 2) {
-            tile.setTopLeft(3);
-            tile.setResources(3, 0);
-            tile.setResources(3, 1);
-            tile.setResources(1, 2);
-            tile.setResources(1, 3);
+            tile->setTopLeft(3);
+            tile->setResources(3, 0);
+            tile->setResources(3, 1);
+            tile->setResources(1, 2);
+            tile->setResources(1, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >= 2 && i < 4) {
-            tile.setTopLeft(2);
-            tile.setResources(2, 0);
-            tile.setResources(0, 1);
-            tile.setResources(2, 2);
-            tile.setResources(1, 3);
+            tile->setTopLeft(2);
+            tile->setResources(2, 0);
+            tile->setResources(0, 1);
+            tile->setResources(2, 2);
+            tile->setResources(1, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >= 4 && i < 6) {
-            tile.setTopLeft(2);
-            tile.setResources(2, 0);
-            tile.setResources(3, 1);
-            tile.setResources(2, 2);
-            tile.setResources(1, 3);
+            tile->setTopLeft(2);
+            tile->setResources(2, 0);
+            tile->setResources(3, 1);
+            tile->setResources(2, 2);
+            tile->setResources(1, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >= 6 && i < 8) {
-            tile.setTopLeft(0);
-            tile.setResources(0, 0);
-            tile.setResources(1, 1);
-            tile.setResources(0, 2);
-            tile.setResources(3, 3);
+            tile->setTopLeft(0);
+            tile->setResources(0, 0);
+            tile->setResources(1, 1);
+            tile->setResources(0, 2);
+            tile->setResources(3, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >= 8 && i < 10) {
-            tile.setTopLeft(2);
-            tile.setResources(2, 0);
-            tile.setResources(0, 1);
-            tile.setResources(2, 2);
-            tile.setResources(1, 3);
+            tile->setTopLeft(2);
+            tile->setResources(2, 0);
+            tile->setResources(0, 1);
+            tile->setResources(2, 2);
+            tile->setResources(1, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 10) {
-            tile.setTopLeft(2);
-            tile.setResources(2, 0);
-            tile.setResources(3, 1);
-            tile.setResources(0, 2);
-            tile.setResources(2, 3);
+            tile->setTopLeft(2);
+            tile->setResources(2, 0);
+            tile->setResources(3, 1);
+            tile->setResources(0, 2);
+            tile->setResources(2, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 11) {
-            tile.setTopLeft(2);
-            tile.setResources(2, 0);
-            tile.setResources(2, 1);
-            tile.setResources(2, 2);
-            tile.setResources(1, 3);
+            tile->setTopLeft(2);
+            tile->setResources(2, 0);
+            tile->setResources(2, 1);
+            tile->setResources(2, 2);
+            tile->setResources(1, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >= 12 && i < 14) {
-            tile.setTopLeft(3);
-            tile.setResources(3, 0);
-            tile.setResources(0, 1);
-            tile.setResources(3, 2);
-            tile.setResources(2, 3);
+            tile->setTopLeft(3);
+            tile->setResources(3, 0);
+            tile->setResources(0, 1);
+            tile->setResources(3, 2);
+            tile->setResources(2, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >= 14 && i < 16) {
-            tile.setTopLeft(1);
-            tile.setResources(1, 0);
-            tile.setResources(0, 1);
-            tile.setResources(1, 2);
-            tile.setResources(3, 3);
+            tile->setTopLeft(1);
+            tile->setResources(1, 0);
+            tile->setResources(0, 1);
+            tile->setResources(1, 2);
+            tile->setResources(3, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >= 16 && i < 18) {
-            tile.setTopLeft(1);
-            tile.setResources(1, 0);
-            tile.setResources(2, 1);
-            tile.setResources(1, 2);
-            tile.setResources(3, 3);
+            tile->setTopLeft(1);
+            tile->setResources(1, 0);
+            tile->setResources(2, 1);
+            tile->setResources(1, 2);
+            tile->setResources(3, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 18) {
-            tile.setTopLeft(0);
-            tile.setResources(0, 0);
-            tile.setResources(0, 1);
-            tile.setResources(0, 2);
-            tile.setResources(1, 3);
+            tile->setTopLeft(0);
+            tile->setResources(0, 0);
+            tile->setResources(0, 1);
+            tile->setResources(0, 2);
+            tile->setResources(1, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 19) {
-            tile.setTopLeft(0);
-            tile.setResources(0, 0);
-            tile.setResources(0, 1);
-            tile.setResources(0, 2);
-            tile.setResources(3, 3);
+            tile->setTopLeft(0);
+            tile->setResources(0, 0);
+            tile->setResources(0, 1);
+            tile->setResources(0, 2);
+            tile->setResources(3, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 20) {
-            tile.setTopLeft(2);
-            tile.setResources(2, 0);
-            tile.setResources(1, 1);
-            tile.setResources(0, 2);
-            tile.setResources(2, 3);
+            tile->setTopLeft(2);
+            tile->setResources(2, 0);
+            tile->setResources(1, 1);
+            tile->setResources(0, 2);
+            tile->setResources(2, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 21) {
-            tile.setTopLeft(1);
-            tile.setResources(1, 0);
-            tile.setResources(1, 1);
-            tile.setResources(1, 2);
-            tile.setResources(3, 3);
+            tile->setTopLeft(1);
+            tile->setResources(1, 0);
+            tile->setResources(1, 1);
+            tile->setResources(1, 2);
+            tile->setResources(3, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >= 22 && i < 24) {
-            tile.setTopLeft(1);
-            tile.setResources(1, 0);
-            tile.setResources(0, 1);
-            tile.setResources(1, 2);
-            tile.setResources(2, 3);
+            tile->setTopLeft(1);
+            tile->setResources(1, 0);
+            tile->setResources(0, 1);
+            tile->setResources(1, 2);
+            tile->setResources(2, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >= 24 && i < 26) {
-            tile.setTopLeft(1);
-            tile.setResources(1, 0);
-            tile.setResources(2, 1);
-            tile.setResources(0, 2);
-            tile.setResources(0, 3);
+            tile->setTopLeft(1);
+            tile->setResources(1, 0);
+            tile->setResources(2, 1);
+            tile->setResources(0, 2);
+            tile->setResources(0, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >= 26 && i < 28) {
-            tile.setTopLeft(3);
-            tile.setResources(3, 0);
-            tile.setResources(1, 1);
-            tile.setResources(3, 2);
-            tile.setResources(2, 3);
+            tile->setTopLeft(3);
+            tile->setResources(3, 0);
+            tile->setResources(1, 1);
+            tile->setResources(3, 2);
+            tile->setResources(2, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 28) {
-            tile.setTopLeft(1);
-            tile.setResources(1, 0);
-            tile.setResources(1, 1);
-            tile.setResources(1, 2);
-            tile.setResources(0, 3);
+            tile->setTopLeft(1);
+            tile->setResources(1, 0);
+            tile->setResources(1, 1);
+            tile->setResources(1, 2);
+            tile->setResources(0, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 29) {
-            tile.setTopLeft(0);
-            tile.setResources(0, 0);
-            tile.setResources(1, 1);
-            tile.setResources(2, 2);
-            tile.setResources(0, 3);
+            tile->setTopLeft(0);
+            tile->setResources(0, 0);
+            tile->setResources(1, 1);
+            tile->setResources(2, 2);
+            tile->setResources(0, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 30) {
-            tile.setTopLeft(1);
-            tile.setResources(1, 0);
-            tile.setResources(2, 1);
-            tile.setResources(3, 2);
-            tile.setResources(1, 3);
+            tile->setTopLeft(1);
+            tile->setResources(1, 0);
+            tile->setResources(2, 1);
+            tile->setResources(3, 2);
+            tile->setResources(1, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 31) {
-            tile.setTopLeft(0);
-            tile.setResources(1, 0);
-            tile.setResources(0, 1);
-            tile.setResources(2, 2);
-            tile.setResources(1, 3);
+            tile->setTopLeft(0);
+            tile->setResources(1, 0);
+            tile->setResources(0, 1);
+            tile->setResources(2, 2);
+            tile->setResources(1, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >=32 && i < 34) {
-            tile.setTopLeft(2);
-            tile.setResources(2, 0);
-            tile.setResources(3, 1);
-            tile.setResources(2, 2);
-            tile.setResources(3, 3);
+            tile->setTopLeft(2);
+            tile->setResources(2, 0);
+            tile->setResources(3, 1);
+            tile->setResources(2, 2);
+            tile->setResources(3, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >=34 && i < 36) {
-            tile.setTopLeft(0);
-            tile.setResources(0, 0);
-            tile.setResources(1, 1);
-            tile.setResources(0, 2);
-            tile.setResources(1, 3);
+            tile->setTopLeft(0);
+            tile->setResources(0, 0);
+            tile->setResources(1, 1);
+            tile->setResources(0, 2);
+            tile->setResources(1, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 36) {
-            tile.setTopLeft(0);
-            tile.setResources(0, 0);
-            tile.setResources(3, 1);
-            tile.setResources(2, 2);
-            tile.setResources(0, 3);
+            tile->setTopLeft(0);
+            tile->setResources(0, 0);
+            tile->setResources(3, 1);
+            tile->setResources(2, 2);
+            tile->setResources(0, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 37) {
-            tile.setTopLeft(2);
-            tile.setResources(2, 0);
-            tile.setResources(1, 1);
-            tile.setResources(3, 2);
-            tile.setResources(2, 3);
+            tile->setTopLeft(2);
+            tile->setResources(2, 0);
+            tile->setResources(1, 1);
+            tile->setResources(3, 2);
+            tile->setResources(2, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 38) {
-            tile.setTopLeft(1);
-            tile.setResources(1, 0);
-            tile.setResources(3, 1);
-            tile.setResources(0, 2);
-            tile.setResources(1, 3);
+            tile->setTopLeft(1);
+            tile->setResources(1, 0);
+            tile->setResources(3, 1);
+            tile->setResources(0, 2);
+            tile->setResources(1, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 39) {
-            tile.setTopLeft(3);
-            tile.setResources(3, 0);
-            tile.setResources(3, 1);
-            tile.setResources(3, 2);
-            tile.setResources(2, 3);
+            tile->setTopLeft(3);
+            tile->setResources(3, 0);
+            tile->setResources(3, 1);
+            tile->setResources(3, 2);
+            tile->setResources(2, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >= 40 && i < 42) {
-            tile.setTopLeft(2);
-            tile.setResources(2, 0);
-            tile.setResources(3, 1);
-            tile.setResources(2, 2);
-            tile.setResources(3, 3);
+            tile->setTopLeft(2);
+            tile->setResources(2, 0);
+            tile->setResources(3, 1);
+            tile->setResources(2, 2);
+            tile->setResources(3, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >=42 && i < 44) {
-            tile.setTopLeft(0);
-            tile.setResources(0, 0);
-            tile.setResources(3, 1);
-            tile.setResources(0, 2);
-            tile.setResources(2, 3);
+            tile->setTopLeft(0);
+            tile->setResources(0, 0);
+            tile->setResources(3, 1);
+            tile->setResources(0, 2);
+            tile->setResources(2, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 44) {
-            tile.setTopLeft(3);
-            tile.setResources(3, 0);
-            tile.setResources(0, 1);
-            tile.setResources(2, 2);
-            tile.setResources(3, 3);
+            tile->setTopLeft(3);
+            tile->setResources(3, 0);
+            tile->setResources(0, 1);
+            tile->setResources(2, 2);
+            tile->setResources(3, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i== 45) {
-            tile.setTopLeft(2);
-            tile.setResources(2, 0);
-            tile.setResources(2, 1);
-            tile.setResources(2, 2);
-            tile.setResources(0, 3);
+            tile->setTopLeft(2);
+            tile->setResources(2, 0);
+            tile->setResources(2, 1);
+            tile->setResources(2, 2);
+            tile->setResources(0, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 46) {
-            tile.setTopLeft(1);
-            tile.setResources(1, 0);
-            tile.setResources(1, 1);
-            tile.setResources(1, 2);
-            tile.setResources(2, 3);
+            tile->setTopLeft(1);
+            tile->setResources(1, 0);
+            tile->setResources(1, 1);
+            tile->setResources(1, 2);
+            tile->setResources(2, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 47) {
-            tile.setTopLeft(2);
-            tile.setResources(2, 0);
-            tile.setResources(2, 1);
-            tile.setResources(2, 2);
-            tile.setResources(3, 3);
+            tile->setTopLeft(2);
+            tile->setResources(2, 0);
+            tile->setResources(2, 1);
+            tile->setResources(2, 2);
+            tile->setResources(3, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >=48 && i < 50) {
-            tile.setTopLeft(2);
-            tile.setResources(2, 0);
-            tile.setResources(0, 1);
-            tile.setResources(2, 2);
-            tile.setResources(0, 3);
+            tile->setTopLeft(2);
+            tile->setResources(2, 0);
+            tile->setResources(0, 1);
+            tile->setResources(2, 2);
+            tile->setResources(0, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >=50 && i < 52) {
-            tile.setTopLeft(3);
-            tile.setResources(3, 0);
-            tile.setResources(1, 1);
-            tile.setResources(3, 2);
-            tile.setResources(0, 3);
+            tile->setTopLeft(3);
+            tile->setResources(3, 0);
+            tile->setResources(1, 1);
+            tile->setResources(3, 2);
+            tile->setResources(0, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >=52 && i < 54) {
-            tile.setTopLeft(0);
-            tile.setResources(0, 0);
-            tile.setResources(3, 1);
-            tile.setResources(0, 2);
-            tile.setResources(3, 3);
+            tile->setTopLeft(0);
+            tile->setResources(0, 0);
+            tile->setResources(3, 1);
+            tile->setResources(0, 2);
+            tile->setResources(3, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 54) {
-            tile.setTopLeft(3);
-            tile.setResources(3, 0);
-            tile.setResources(3, 1);
-            tile.setResources(3, 2);
-            tile.setResources(0, 3);
+            tile->setTopLeft(3);
+            tile->setResources(3, 0);
+            tile->setResources(3, 1);
+            tile->setResources(3, 2);
+            tile->setResources(0, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 55) {
-            tile.setTopLeft(3);
-            tile.setResources(3, 0);
-            tile.setResources(1, 1);
-            tile.setResources(0, 2);
-            tile.setResources(3, 3);
+            tile->setTopLeft(3);
+            tile->setResources(3, 0);
+            tile->setResources(1, 1);
+            tile->setResources(0, 2);
+            tile->setResources(3, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 56) {
-            tile.setTopLeft(3);
-            tile.setResources(3, 0);
-            tile.setResources(3, 1);
-            tile.setResources(3, 2);
-            tile.setResources(1, 3);
+            tile->setTopLeft(3);
+            tile->setResources(3, 0);
+            tile->setResources(3, 1);
+            tile->setResources(3, 2);
+            tile->setResources(1, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i == 57) {
-            tile.setTopLeft(0);
-            tile.setResources(0, 0);
-            tile.setResources(0, 1);
-            tile.setResources(0, 2);
-            tile.setResources(2, 3);
+            tile->setTopLeft(0);
+            tile->setResources(0, 0);
+            tile->setResources(0, 1);
+            tile->setResources(0, 2);
+            tile->setResources(2, 3);
             
             allTiles->push_back(tile);
         }
         
         if (i >=58 && i < 60) {
-            tile.setTopLeft(3);
-            tile.setResources(3, 0);
-            tile.setResources(1, 1);
-            tile.setResources(2, 2);
-            tile.setResources(3, 3);
+            tile->setTopLeft(3);
+            tile->setResources(3, 0);
+            tile->setResources(1, 1);
+            tile->setResources(2, 2);
+            tile->setResources(3, 3);
             
             allTiles->push_back(tile);
         }
@@ -585,22 +585,25 @@ DeckHarvestTile::DeckHarvestTile() {
 };
 
 DeckHarvestTile::~DeckHarvestTile() {
-//	if (count != nullptr) delete count;
+    if (count != nullptr) delete count;
+    if (allTiles != nullptr) delete allTiles;
+    count = nullptr;
+    allTiles = nullptr;
 };
 
-HarvestTile DeckHarvestTile::draw() {
+HarvestTile* DeckHarvestTile::draw() {
     
-     HarvestTile thisTile;
+     HarvestTile* thisTile = new HarvestTile();
     
     if (*count >= 60) {
 		cout << "There is no harvest tile left." << endl;
-        HarvestTile emptyTile;
+        HarvestTile* emptyTile = new HarvestTile();
         
         //set everything to -1 and return an empty tile
         for (int i=0; i<4; i++) {
-             emptyTile.setResources(-1, i);
+             emptyTile->setResources(-1, i);
         }
-        emptyTile.setTopLeft(-1);
+        emptyTile->setTopLeft(-1);
         return emptyTile;
     }
     

@@ -31,14 +31,14 @@ Player::Player() {
 
 	buildings = new vector<Building*>;
 	
-	tiles = new vector<HarvestTile>;
+	tiles = new vector<HarvestTile*>;
 	
 	HarvestTile* tile1 = new HarvestTile();
 	HarvestTile* tile2 = new HarvestTile();
 	HarvestTile* shipmentTile = new HarvestTile();
-	(*tiles).push_back(*tile1);
-	(*tiles).push_back(*tile2);
-	tiles->push_back(*shipmentTile);
+	(*tiles).push_back(tile1);
+	(*tiles).push_back(tile2);
+	tiles->push_back(shipmentTile);
 
 	shipmentTileUsed = new bool(false);
 
@@ -90,8 +90,8 @@ Player::~Player() {
 bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarvestTile deck, int topLeftCorner) {
 	if (noTile == 0) {
 		if (board->validPosition(row, col)) {
-			tiles->at(0).setTopLeft(topLeftCorner);
-			vector<Map::Node*> nodesJustPlaced = board->placeHarvestTile((*tiles).at(0), row, col);
+			tiles->at(0)->setTopLeft(topLeftCorner);
+			vector<Map::Node*> nodesJustPlaced = board->placeHarvestTile(*(tiles->at(0)), row, col);
 			calculateResources(*board, false);
 			drawHarvestTile(deck, 0);
 			cout << "board: " << board->getMapNodes()->at(0)->getCol() << endl;
@@ -105,8 +105,8 @@ bool Player::placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarv
 	}
 	else if (noTile == 1) {
 		if (board->validPosition(row, col)) {
-			tiles->at(1).setTopLeft(topLeftCorner);
-			vector<Map::Node*> nodesJustPlaced = board->placeHarvestTile((*tiles).at(1), row, col);
+			tiles->at(1)->setTopLeft(topLeftCorner);
+			vector<Map::Node*> nodesJustPlaced = board->placeHarvestTile(*(tiles->at(1)), row, col);
 			calculateResources(*board, false);
 			drawHarvestTile(deck, 1);
 			notify(0);
@@ -167,7 +167,7 @@ bool Player::placeShipmentTile(int row, int col, Map* board, DeckHarvestTile dec
 
 void Player::turnShipmentTile(Map* board) {
 	if (board->lastTilePlacedIsShipmentTile()) {
-		vector<int>* resourcesTile = tiles->at(2).getResources();
+		vector<int>* resourcesTile = tiles->at(2)->getResources();
 		vector<int*>* vectorResourcesTile = new vector<int*>();
 		for (int i = 0; i < 4; i++) {
 			int* theResource = new int(resourcesTile->at(i));
@@ -187,12 +187,12 @@ void Player::drawHarvestTile(DeckHarvestTile deck, int no) {
 	//create a harvest tile and put it in the empty spot
 	//should I use the deck instead??
 	if (no == 0) {
-		HarvestTile tile = deck.draw();
-		(*tiles)[0] = tile;
+		HarvestTile* tile = deck.draw();
+		tiles->at(0) = tile;
 	} 
 	else if (no == 1) {
-		HarvestTile tile = deck.draw();
-		(*tiles)[1] = tile;
+		HarvestTile* tile = deck.draw();
+		tiles->at(1) = tile;
 	} 
 	else {
 		cout << "Error with the tile number";
@@ -252,7 +252,7 @@ void Player::calculateResources(Map board, bool itIsTheShipmentTile) {
 	cout << "" << endl;
 	cout << "Harvest tiles: " << endl;
 	for (int i = 0; i < 2; i++) {
-		tiles->at(i).display();
+		tiles->at(i)->display();
 	}
 	if (*shipmentTileUsed) cout << "The shipment tile has been used." << endl;
 	else cout << "The shipment tile has not been used." << endl;
