@@ -154,7 +154,7 @@ void buildPlayerVillage(Player* player)
 		player->getBuildings()->at(index)->setNumber(originalBuildingNumber);
 	}
 	//Showing player's new resources
-	player->getHand()->printResources();
+	//player->getHand()->printResources();
 }
 
 //Check if player has enough resources
@@ -243,11 +243,11 @@ void endTurnDrawBuildingFromBoard(Player* activePlayer, vector<Building*>* build
 }
 
  void endTurnResetResourceMarkers(vector<Player*>* players) {
-	 cout << "at the beginning of reset" << endl;
+	 
 	for (int i = 0; i < players->size(); i++) {
 		players->at(i)->resetResourceMarkers();
 	}
-	cout << "at the end of reset" << endl;
+	
 }
 
 void endTurnDrawNewBuildingsToBoard(vector<Building*>* buildingsOnBoard, DeckBuilding* deck) {
@@ -360,7 +360,7 @@ void buildingSequence(vector<Player*>* players, int nbPlayers, int index) {
 		//construire autant de building qu'il veut
 		string answer;
 		//Asking if they want to build
-		cout << "before resourceEmpty i=" << players->at(indexPlayer)->getHand()->getResourceMarkers()->size() << endl;
+		
 		if (!resourcesEmpty(activePlayer)) {
 			cout << "\nPlayer #" << activePlayer->getID() << ":" << endl;
 			cout << "\nHere are your buildings: " << endl;
@@ -520,7 +520,7 @@ void oneTurn(int indexActivePlayer, Map* board, DeckHarvestTile* deckTiles, vect
 	cout << "\nPlayer #" << activePlayer->getID() << " it is your turn!" << endl;
 	activePlayer->displayState();
 	placeTile(activePlayer, board, deckTiles);
-	activePlayer->getHand()->printResources();
+	//activePlayer->getHand()->printResources();
 	buildingSequence(players, nbPlayers, indexActivePlayer);
 	endOfTurn(activePlayer, buildingsOnBoard, deckBuildings, players, board);
 }

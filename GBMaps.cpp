@@ -450,6 +450,7 @@ void Map::display() {
                 for (int i = 0; i < mapNodes->size(); i++) {
                     if (mapNodes->at(i)->getRow() == row && mapNodes->at(i)->getCol() == col) {
                         firstResource = *(mapNodes->at(i)->getResourceType());
+                        
                     }
                 }
                 if (firstResource == -1) {
@@ -477,6 +478,7 @@ void Map::display() {
                             break;
                         case 3: firstResourceChar = "W";
                             break;
+                        default: firstResourceChar = "L";
                         }
                         string secondResourceChar;
                         switch (secondResource)
@@ -489,6 +491,7 @@ void Map::display() {
                             break;
                         case 3: secondResourceChar = "W";
                             break;
+                        default: secondResourceChar = "L";
                         }
                         cout << "|" << firstResourceChar << " " << secondResourceChar;
                     }

@@ -242,7 +242,7 @@ void Player::calculateResources(Map board, bool itIsTheShipmentTile) {
 
  void Player::countPoints() {
 	 vb->countPoints();
-	 notify(2);
+	 //notify(2);
  }
 
  void Player::displayState() {

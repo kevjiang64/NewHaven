@@ -234,6 +234,7 @@ void placeTilesFromLoader(string fileName, Map* board) {
             
             HarvestTile* newTile = new HarvestTile(vectorResources);
             board->placeHarvestTile(*newTile, 2, 2);
+            cout << "resources " << *(board->getMapNodes()->at(0)->getResourceType()) << endl;
         }
         if (str.find("Tile2") != std::string::npos)
         {

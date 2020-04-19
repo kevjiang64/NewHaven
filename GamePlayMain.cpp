@@ -39,6 +39,11 @@ int main() {
 	}
 	gameTie(players);
 
+	delete buildingsOnBoard;
+	delete players;
+	delete deckBuildings;
+	delete deckTiles;
+	delete board;
 
 	return 0;
 }

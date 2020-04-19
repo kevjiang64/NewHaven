@@ -40,7 +40,7 @@ class VGMap
     //Getters
     inline vector<vector<Node>> getBoard(){ return *board; };
     inline int getPoints(){ return *points; };
-    inline int* getNbBuildings() { return nbBuildings; };
+    inline int getNbBuildings() { return *nbBuildings; };
     //Methods
     int countPoints();
     bool checkFirst(int resource);

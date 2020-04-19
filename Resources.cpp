@@ -78,11 +78,11 @@ HarvestTile::HarvestTile(vector<int>* vectorResources) {
 }
 
 HarvestTile::~HarvestTile() {
-	if (topLeft != nullptr) delete topLeft;
+	/*if (topLeft != nullptr) delete topLeft;
     if (resources != nullptr) delete resources;
 
     topLeft = nullptr;
-    resources = nullptr;
+    resources = nullptr;*/
 };
 
 void HarvestTile::display() {
@@ -585,10 +585,10 @@ DeckHarvestTile::DeckHarvestTile() {
 };
 
 DeckHarvestTile::~DeckHarvestTile() {
-    if (count != nullptr) delete count;
+    /*if (count != nullptr) delete count;
     if (allTiles != nullptr) delete allTiles;
     count = nullptr;
-    allTiles = nullptr;
+    allTiles = nullptr;*/
 };
 
 HarvestTile* DeckHarvestTile::draw() {
@@ -950,7 +950,7 @@ void Hand::exchange(vector<int> resources) {
 }
 
 void Hand::printResources() {
-    cout << "\nResources:\nMeadow: " << (*resourceMarkers).at(0) << "\nQuarry: " << (*resourceMarkers).at(1) << "\nForest: " << (*resourceMarkers).at(2) << "\nWheatfield:" << (*resourceMarkers).at(3) << endl;
+    cout << "\nResource markers:\nMeadow: " << (*resourceMarkers).at(0) << "\nQuarry: " << (*resourceMarkers).at(1) << "\nForest: " << (*resourceMarkers).at(2) << "\nWheatfield:" << (*resourceMarkers).at(3) << endl;
 }
 
 void Hand::resetResourceMarkers() {

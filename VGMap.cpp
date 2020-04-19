@@ -34,9 +34,7 @@ VGMap::VGMap(int row, int col, string name)
 				node.setAdjNode(vect);
 			}
 		}
-		points = new int();
-		*points = 0;
-		nbBuildings = new int(0);
+		
 	}
 	else
 	{
@@ -48,6 +46,10 @@ VGMap::VGMap(int row, int col, string name)
 			cout << "The inputed value for the board is not valid" << "\n";
 		exit(0);
 	}
+	points = new int();
+	*points = 0;
+	nbBuildings = new int();
+	*nbBuildings = 0;
 };
 //VgMap Default Constructor 
 VGMap::VGMap()
@@ -78,6 +80,8 @@ VGMap::VGMap()
 	}
 	points = new int();
 	*points = 0;
+	nbBuildings = new int();
+	*nbBuildings = 0;
 };
 
 VGMap::~VGMap() {
@@ -293,8 +297,8 @@ bool VGMap::canBuild(Building* building, int row, int col) {
 
 void VGMap::build(Building* building, int row, int col) {
 	//if (canBuild(building, row, col)) {
-		(*board)[row][col].setBuilding(building);
-		(*nbBuildings)++;
+	(*board)[row][col].setBuilding(building);
+	nbBuildings = new int(*nbBuildings + 1);
 	//}
 }
 

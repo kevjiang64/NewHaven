@@ -50,10 +50,10 @@ void gameTie(vector<Player*>* players) {
             for (int i = 0; i < winner->size(); i++) {
                 players->at(winner->at(i))->setWinner(true);
             }
-            players->at(0)->notify(2);
+            
 
             //displays the winner/winners (in case of a shared win)
-            if (winner->size() == 1) {
+            /*if (winner->size() == 1) {
                 cout << "\nThe winner is: ";
                 cout << players->at(winner->at(0))->getID() << endl;
                 cout << "With " << max << " points!" << endl;
@@ -65,24 +65,24 @@ void gameTie(vector<Player*>* players) {
                     cout <<", " << players->at(winner->at(i))->getID();
                 }
                 cout << "\nWith " << max << " points!" << endl;
-            }
+            }*/
             
         }
 
         //no tie; displays the winner, and their points
         else {
             
-            cout << "\nThe winner is: ";
+            //cout << "\nThe winner is: ";
             for (int i = 0; i < players->size(); i++) {
-                if (max == players->at(i)->getVillageBoard()->countPoints()) {
+                if (max == players->at(i)->getVillageBoard()->getPoints()) {
                     players->at(i)->setWinner(true);
-                    cout << players->at(i)->getID() << endl;
+                    //cout << "\nwinner true" << endl;
+                    //cout << players->at(i)->getID() << endl;
                 }
             }
-            players->at(0)->notify(2);
-            cout << "With " << max << " points!" << endl;
+           // cout << "With " << max << " points!" << endl;
         }
- 
+        players->at(0)->notify(2);
    
 }
 
@@ -123,7 +123,7 @@ vector<int>* fewestEmptySpaces(vector<Player*>* players, vector<bool>* tied) {
                 tiedAgain->at(i) = false;
             }
         }
-        leastBuildingsLeftOver(players, tiedAgain);
+        indexesWinners = leastBuildingsLeftOver(players, tiedAgain);
     }
     else {
         
@@ -176,6 +176,7 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
     else {
         int i = 0;
         while (true) {
+            
             if (tied->at(i) && buildingsLeftover->at(i) == maxScore) {
                 vector<int>* indexesWinners = new vector<int>();
                 indexesWinners->push_back(i);
@@ -187,7 +188,7 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
 }
 
 /*int main() {
-
+    
     vector<Player*>* playerVector1 = new vector<Player*>();
     vector<Player*>* playerVector2 = new vector<Player*>();
     vector<Player*>* playerVector3 = new vector<Player*>();
@@ -201,10 +202,34 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
     Player* player6 = new Player();
     Player* player7 = new Player();
     Player* player8 = new Player();
-   
+
+    countBuildingObserver* countObs1 = new countBuildingObserver(player1);
+    decreaseResourcesObserver* decreaseResourcesObs1 = new decreaseResourcesObserver(player1);
+    countBuildingObserver* countObs2 = new countBuildingObserver(player2);
+    decreaseResourcesObserver* decreaseResourcesObs2 = new decreaseResourcesObserver(player2);
+    countBuildingObserver* countObs3 = new countBuildingObserver(player3);
+	decreaseResourcesObserver* decreaseResourcesObs3 = new decreaseResourcesObserver(player3);
+    countBuildingObserver* countObs4 = new countBuildingObserver(player4);
+    decreaseResourcesObserver* decreaseResourcesObs4 = new decreaseResourcesObserver(player4);
+    countBuildingObserver* countObs5 = new countBuildingObserver(player5);
+    decreaseResourcesObserver* decreaseResourcesObs5 = new decreaseResourcesObserver(player5);
+    countBuildingObserver* countObs6 = new countBuildingObserver(player6);
+    decreaseResourcesObserver* decreaseResourcesObs6 = new decreaseResourcesObserver(player6);
+    countBuildingObserver* countObs7 = new countBuildingObserver(player7);
+    decreaseResourcesObserver* decreaseResourcesObs7 = new decreaseResourcesObserver(player7);
+    countBuildingObserver* countObs8 = new countBuildingObserver(player8);
+    decreaseResourcesObserver* decreaseResourcesObs8 = new decreaseResourcesObserver(player8);
+
+
+    
     //Case 1: Player 1 has more points than Player 2
     DeckBuilding* deckBuildings = new DeckBuilding();
+    
+    playerVector1->push_back(player1);
+    playerVector1->push_back(player2);
 
+    
+    
     player1->getVillageBoard()->build(deckBuildings->draw(), 3, 1);
     player1->getVillageBoard()->build(deckBuildings->draw(), 3, 2);
     player1->getVillageBoard()->build(deckBuildings->draw(), 3, 3);
@@ -219,8 +244,8 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
     player2->getVillageBoard()->build(deckBuildings->draw(), 2, 4);
     player2->getVillageBoard()->build(deckBuildings->draw(), 2, 0);
     
-    playerVector1->push_back(player1);
-    playerVector1->push_back(player2);
+    statsObserver* statsObs1 = new statsObserver(playerVector1);
+    winnerObserver* winObs1 = new winnerObserver(playerVector1);
 
     cout << "\nPlayer #" << player1->getID() << endl;
     player1->getVillageBoard()->displayVGmap();
@@ -247,6 +272,8 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
     
     playerVector2->push_back(player3);
     playerVector2->push_back(player4);
+    statsObserver* statsObs2 = new statsObserver(playerVector2);
+    winnerObserver* winObs2 = new winnerObserver(playerVector2);
 
     cout << "\nPlayer #" << player3->getID() << endl;
     player3->getVillageBoard()->displayVGmap();
@@ -277,6 +304,8 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
 
     playerVector3->push_back(player5);
     playerVector3->push_back(player6);
+    statsObserver* statsObs3 = new statsObserver(playerVector3);
+    winnerObserver* winObs3 = new winnerObserver(playerVector3);
 
     cout << "\nPlayer #" << player5->getID() << endl;
     player5->getVillageBoard()->displayVGmap();
@@ -308,6 +337,8 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
 
     playerVector4->push_back(player7);
     playerVector4->push_back(player8);
+    statsObserver* statsObs4 = new statsObserver(playerVector4);
+    winnerObserver* winObs4 = new winnerObserver(playerVector4);
 
     cout << "\nPlayer #" << player7->getID() << endl;
     player7->getVillageBoard()->displayVGmap();
@@ -316,22 +347,41 @@ vector<int>* leastBuildingsLeftOver(vector<Player*>* players, vector<bool>* tied
 
     gameTie(playerVector4);
 
-    delete player1;
-    delete player2;
-    delete player3;
-    delete player4;
-    delete player5;
-    delete player6;
-    delete player7;
-    delete player8;
-
     delete playerVector1;
     delete playerVector2;
     delete playerVector3;
     delete playerVector4;
-
+    
     delete deckBuildings;
     delete building1;
+
+    delete statsObs1;
+    delete statsObs2;
+    delete statsObs3;
+    delete statsObs4;
+
+    delete winObs1;
+    delete winObs2;
+    delete winObs3;
+    delete winObs4;
+
+    delete countObs1;
+    delete countObs2;
+    delete countObs3;
+    delete countObs4;
+    delete countObs5;
+    delete countObs6;
+    delete countObs7;
+    delete countObs8;
+
+    delete decreaseResourcesObs1;
+    delete decreaseResourcesObs2;
+    delete decreaseResourcesObs3;
+    delete decreaseResourcesObs4;
+    delete decreaseResourcesObs5;
+    delete decreaseResourcesObs6;
+    delete decreaseResourcesObs7;
+    delete decreaseResourcesObs8;
 
     return 0;
 }*/

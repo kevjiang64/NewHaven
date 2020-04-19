@@ -44,13 +44,13 @@ placeTileObserver::placeTileObserver(Player* aPlayer)
 {
 	
 	_subject = aPlayer;
-	_subject->attach(this, true);
+	_subject->attach(this, 0);
 	
 }
 
 placeTileObserver::~placeTileObserver()
 {
-	_subject->detach(this, true);
+	_subject->detach(this, 0);
 }
 
 void placeTileObserver::update()
@@ -59,18 +59,19 @@ void placeTileObserver::update()
 }
 void placeTileObserver::display()
 {
-	cout << "tile observer" << endl;
+	cout << "\n-----------------------------" << endl;
+	cout << "Player #" << _subject->getID() << " has placed a tile on the board!" << endl;
 	_subject->getHand()->printResources();
 }
 countBuildingObserver::countBuildingObserver(Player* aPlayer)
 {
 	_subject = aPlayer;
-	_subject->attach(this, false);
+	_subject->attach(this, 1);
 }
 
 countBuildingObserver::~countBuildingObserver()
 {
-	_subject->detach(this, false);
+	_subject->detach(this, 1);
 }
 
 void countBuildingObserver::update()
@@ -80,19 +81,20 @@ void countBuildingObserver::update()
 
 void countBuildingObserver::display()
 {
-	cout << "count building observer" << endl;
-	cout << "The number of building on the board of player #" << _subject->getID() << " is: " << _subject->getVillageBoard()->getNbBuildings() << endl;
+	cout << "\n-----------------------------" << endl;
+	cout << "Player #" << _subject->getID() << " placed a building!" << endl;
+	cout << "\nThe number of buildings on the board of player #" << _subject->getID() << " is: " << (_subject->getVillageBoard()->getNbBuildings()) << endl;
 }
 
 decreaseResourcesObserver::decreaseResourcesObserver(Player* aPlayer)
 {
 	_subject = aPlayer;
-	_subject->attach(this, false);
+	_subject->attach(this, 1);
 }
 
 decreaseResourcesObserver::~decreaseResourcesObserver()
 {
-	_subject->detach(this, false);
+	_subject->detach(this, 1);
 }
 
 void decreaseResourcesObserver::update()
@@ -102,7 +104,6 @@ void decreaseResourcesObserver::update()
 
 void decreaseResourcesObserver::display()
 {
-	cout << "decrease resources observer" << endl;
 	_subject->getHand()->printResources();
 }
 
@@ -110,14 +111,14 @@ statsObserver::statsObserver(vector<Player*>* vectorPlayer)
 {
 	_subject = vectorPlayer;
 	for (int i = 0; i < vectorPlayer->size(); i++) {
-		_subject->at(i)->attach(this, false);
+		_subject->at(i)->attach(this, 1);
 	}
 }
 
 statsObserver::~statsObserver()
 {
 	for (int i = 0; i < _subject->size(); i++) {
-		_subject->at(i)->detach(this, false);
+		_subject->at(i)->detach(this, 1);
 	}
 }
 
@@ -128,29 +129,30 @@ void statsObserver::update()
 
 void statsObserver::display()
 {
-	cout << "statsObserver : " << endl;
+	cout << "\n-------Game statistics : -------" << endl;
 	for (int i = 0; i < _subject->size(); i++) {
 		Player* currentPlayer = _subject->at(i);
-		cout << "Player #" << currentPlayer->getID() << endl;
+		cout << "\nPlayer #" << currentPlayer->getID() << endl;
 		currentPlayer->getVillageBoard()->displayVGmap();
 		currentPlayer->getVillageBoard()->countPoints();
-		cout << "Number of colonists attracted: " << currentPlayer->getVillageBoard()->getPoints() << endl;
+		cout << "\nNumber of colonists attracted: " << currentPlayer->getVillageBoard()->getPoints() << endl;
 		currentPlayer->getHand()->printResources();
 	}
+	cout << "----------------------------------" << endl;
 }
 
 winnerObserver::winnerObserver(vector<Player*>* vectorPlayer)
 {
 	_subject = vectorPlayer;
 	for (int i = 0; i < vectorPlayer->size(); i++) {
-		_subject->at(i)->attach(this, false);
+		_subject->at(i)->attach(this, 2);
 	}
 }
 
 winnerObserver::~winnerObserver()
 {
 	for (int i = 0; i < _subject->size(); i++) {
-		_subject->at(i)->detach(this, false);
+		_subject->at(i)->detach(this, 2);
 	}
 }
 
@@ -161,7 +163,7 @@ void winnerObserver::update()
 
 void winnerObserver::display()
 {
-	cout << "winner observer : " << endl;
+	
 	vector<int>* indexWinners = new vector<int>();
 	for (int i = 0; i < _subject->size(); i++) {
 		if (_subject->at(i)->getWinner()) {
@@ -171,11 +173,13 @@ void winnerObserver::display()
 	if (indexWinners->size() == 0) cout << "Error, no winner!" << endl;
 	else if (indexWinners->size() == 1) {
 		cout << "\n\nThe winner is: Player #" << _subject->at(indexWinners->at(0))->getID();
+		cout << " with " << _subject->at(indexWinners->at(0))->getVillageBoard()->getPoints() << " points!" << endl;
+		cout << "\nCongratulations!!\n" << endl;
 	}
 	else {
 		cout << "\n\nIt is a tie!" << endl;
-		cout << "\n\nThe winners are: Player #" << _subject->at(0)->getID();
-		for (int i = 0; i < indexWinners->size(); i++) {
+		cout << "\nThe winners are: Player #" << _subject->at(0)->getID();
+		for (int i = 1; i < indexWinners->size(); i++) {
 			if (i == indexWinners->size() - 1) {
 				cout << " and Player #" << _subject->at(indexWinners->at(i))->getID();
 			}
@@ -184,8 +188,15 @@ void winnerObserver::display()
 			}
 			
 		}
+		cout << " with " << _subject->at(indexWinners->at(0))->getVillageBoard()->getPoints() << " points!" << endl;
+		cout << "\nCongratulations!!\n" << endl;
 	}
-	cout << " with " << _subject->at(indexWinners->at(0))->getVillageBoard()->getPoints() << " points!" << endl;
-	cout << "\nCongratulations!!" << endl;
+
+	cout << "All scores: " << endl;
+	for (int i = 0; i < _subject->size(); i++) {
+		cout << "Player #" << _subject->at(i)->getID() << ": " << _subject->at(i)->getVillageBoard()->getPoints() << endl;
+	}
+	
+	
 }
 
