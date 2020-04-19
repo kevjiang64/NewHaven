@@ -25,9 +25,15 @@ VGMapLoader::VGMapLoader(int row, int col)
 	testMap = new VGMap(row, col, "Milford");
 }
 
-bool fexists(ifstream& input)
+bool fexists(std::string fileName)
 {
-	return input.is_open();
+    ifstream ifile(fileName);
+    if (ifile.good() == false) {
+        cout << "This file does not exists! Please make sure the naming is correct." << endl;
+        return ifile.bad();
+    }
+    else
+        return ifile.good();
 }
 
 int checkValidRow(ifstream& input)

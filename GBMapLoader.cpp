@@ -23,7 +23,12 @@ GBMapLoader::GBMapLoader(int numOfPlayers, std::vector<Map::Node*> initTile)
 bool checkFile(std::string fileName)
 {
     ifstream ifile(fileName);
-    return ifile.good();
+    if (ifile.good() == false) {
+        cout << "This file does not exists! Please make sure the naming is correct." << endl;
+        return ifile.bad();
+    }
+    else
+        return ifile.good();
 }
 
 int checkValidPlayerNum(std::string file)
