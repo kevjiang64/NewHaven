@@ -233,7 +233,7 @@ void placeTilesFromLoader(string fileName, Map* board) {
             }
             
             HarvestTile* newTile = new HarvestTile(vectorResources);
-            board->placeHarvestTile(*newTile, 2, 2);
+            board->placeHarvestTile(newTile, 2, 2);
             cout << "resources " << *(board->getMapNodes()->at(0)->getResourceType()) << endl;
         }
         if (str.find("Tile2") != std::string::npos)
@@ -256,7 +256,7 @@ void placeTilesFromLoader(string fileName, Map* board) {
             }
 
             HarvestTile* newTile = new HarvestTile(vectorResources);
-            board->placeHarvestTile(*newTile, 2, 10);
+            board->placeHarvestTile(newTile, 2, 10);
         }
         if (str.find("Tile3") != std::string::npos)
         {
@@ -278,7 +278,7 @@ void placeTilesFromLoader(string fileName, Map* board) {
             }
 
             HarvestTile* newTile = new HarvestTile(vectorResources);
-            board->placeHarvestTile(*newTile, 10, 10);
+            board->placeHarvestTile(newTile, 10, 10);
         }
         if (str.find("Tile4") != std::string::npos)
         {
@@ -300,7 +300,7 @@ void placeTilesFromLoader(string fileName, Map* board) {
             }
 
             HarvestTile* newTile = new HarvestTile(vectorResources);
-            board->placeHarvestTile(*newTile, 10, 2);
+            board->placeHarvestTile(newTile, 10, 2);
         }
     }
 

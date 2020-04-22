@@ -63,7 +63,7 @@ void placeTile(Player* activePlayer, Map* board, DeckHarvestTile* deck) {
 		cin >> enteredTopLeft;
 	}
 	
-	bool tilePlaced = activePlayer->placeHarvestTile(enteredNumTile - 1, (enteredRow - 1) * 2, (enteredCol - 1) * 2, board, *deck, enteredTopLeft - 1);
+	bool tilePlaced = activePlayer->placeHarvestTile(enteredNumTile - 1, (enteredRow - 1) * 2, (enteredCol - 1) * 2, board, deck, enteredTopLeft - 1);
 	if (!tilePlaced) {
 		cout << "Error! The tile cannot be placed, please try again!" << endl;
 		placeTile(activePlayer, board, deck);

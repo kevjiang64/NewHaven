@@ -34,14 +34,14 @@ private:
 
     vector<vector<GameObserver*>*>* _obs;
 
-    bool placeShipmentTile(int row, int col, Map* board, DeckHarvestTile deck);
+    bool placeShipmentTile(int row, int col, Map* board);
 
 public:
     Player();
     ~Player();
-    bool placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarvestTile deck, int topLeftCorner);
+    bool placeHarvestTile(int noTile, int row, int col, Map* board, DeckHarvestTile* deck, int topLeftCorner);
     void drawBuilding(DeckBuilding* deckBuilding);
-    void drawHarvestTile(DeckHarvestTile deck, int no);
+    void drawHarvestTile(DeckHarvestTile* deck, int no);
     void resourceTracker();
     void calculateResources(Map board, bool itIsTheShipmentTile);
     bool buildVillage(int buildingIndex, int row, int col);

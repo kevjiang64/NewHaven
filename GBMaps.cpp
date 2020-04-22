@@ -274,19 +274,19 @@ void Map::dfs(std::set<int*>* visitedNodes, Node* node, bool nodeTest) {
 *  From a Harvest Tile, creates 4 new nodes, sets their adjacency just within the tile (since no position), and places it in the map
 * row and col are the position of the top left resource
 */
-vector<Map::Node*> Map::placeHarvestTile(HarvestTile tile, int row, int col) {
+vector<Map::Node*> Map::placeHarvestTile(HarvestTile* tile, int row, int col) {
     //create nodes from the tile
     vector<Node*>* ptrNewNodes = new vector<Node*>;
     vector<Node*> newNodes = *(ptrNewNodes);
-    for (int i = *(tile.getTopLeft()); i < 4; i++) {
+    for (int i = *(tile->getTopLeft()); i < 4; i++) {
         Node* newNode = new Node();
-        newNode->setResourceType(&(tile.getResources()->at(i)));
+        newNode->setResourceType(&(tile->getResources()->at(i)));
         newNodes.push_back(newNode);
         
     }
-    for (int i = 0; i < *(tile.getTopLeft()); i++) {
+    for (int i = 0; i < *(tile->getTopLeft()); i++) {
         Node* newNode = new Node();
-        newNode->setResourceType(&(tile.getResources()->at(i)));
+        newNode->setResourceType(&(tile->getResources()->at(i)));
         newNodes.push_back(newNode);
         
     }

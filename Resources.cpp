@@ -78,12 +78,12 @@ HarvestTile::HarvestTile(vector<int>* vectorResources) {
 }
 
 HarvestTile::~HarvestTile() {
-	/*if (topLeft != nullptr) delete topLeft;
+	if (topLeft != nullptr) delete topLeft;
     if (resources != nullptr) delete resources;
 
     topLeft = nullptr;
-    resources = nullptr;*/
-};
+    resources = nullptr;
+}
 
 void HarvestTile::display() {
     
@@ -585,10 +585,10 @@ DeckHarvestTile::DeckHarvestTile() {
 };
 
 DeckHarvestTile::~DeckHarvestTile() {
-    /*if (count != nullptr) delete count;
+    if (count != nullptr) delete count;
     if (allTiles != nullptr) delete allTiles;
     count = nullptr;
-    allTiles = nullptr;*/
+    allTiles = nullptr;
 };
 
 HarvestTile* DeckHarvestTile::draw() {
