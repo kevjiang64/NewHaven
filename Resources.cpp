@@ -615,8 +615,13 @@ HarvestTile* DeckHarvestTile::draw() {
         uniform_int_distribution<mt19937::result_type> dist;
         
         int index = dist(rng) % 60;
-        thisTile = allTiles->at(index);
-        allTiles->erase(allTiles->begin() + index);
+        try {
+            thisTile = allTiles->at(index);
+            allTiles->erase(allTiles->begin() + index);
+        }
+        catch (const out_of_range& oor) {
+            cerr << "Out of Range error: " << oor.what() << '\n';
+        }
     }
     
     return thisTile;
